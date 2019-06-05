@@ -49,3 +49,6 @@ https://www.jianshu.com/p/f062c9ff7b48
 
 
 https://blog.csdn.net/csdnear/article/details/79426915
+
+cnpm mac安装
+sudo npm install -g cnpm –registry=https://registry.npm.taobao.org –verbose
