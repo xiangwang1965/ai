@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="main">
     <router-link to="login">{{ msg }}</router-link>
   </div>
 </template>
@@ -17,18 +17,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.main{
+    background: rgba(9,9,9,0.50);
+    border: 1px solid #979797;
+    box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.50);
+    width:100%;
+    height:100%;
 }
 </style>
