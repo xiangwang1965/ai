@@ -2,7 +2,9 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import { getToken } from '@/services/auth/utils'
 import config from '@/config'
+import Qs from 'qs'
 // 创建axios实例
+console.log(config.API_URL)
 const api = axios.create({
   baseURL: config.API_URL, // 后台 api 的 url
   timeout: 30000,     // 请求超时时间
@@ -14,7 +16,13 @@ const api = axios.create({
 // request拦截器
 api.interceptors.request.use(config => {
   // config.headers['token'] = getToken()
-  config.headers['Authorization'] = getToken()
+//   config.headers['Authorization'] = getToken()
+    config.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
+    // transformRequest: [function (data, headers) {
+    //     // Do whatever you want to transform the data
+    //     // return Qs.stringify(data);
+    //     return data
+    //   }]
   return config
 }, error => {
   // Do something with request error
@@ -24,7 +32,7 @@ api.interceptors.request.use(config => {
 
 // respone拦截器
 api.interceptors.response.use(res => {
-  if (res.data.status_code === 401) { // TODO
+  if (res.data.code == 422) { // TODO
     Message.error(res.data.message || 'token过期,请退出重新登录')
     window.location.href = config.LOGIN_URL
   }

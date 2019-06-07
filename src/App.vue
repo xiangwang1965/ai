@@ -23,7 +23,7 @@ export default {
     }
   },
   created () {
-    this.setRole()
+    // this.setRole()
   },
   methods: {
     setRole () {
