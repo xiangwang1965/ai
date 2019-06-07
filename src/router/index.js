@@ -7,6 +7,7 @@ const home = () => import('@/views/home')
 const notFound = () => import('@/views/notFound')
 
 const auth = () => import('@/views/auth')
+const thirdPartAuth = () => import('@/views/auth/thirdpartauth')
 const classroom = () => import('@/views/classroom')// 班级管理
 const classroomWrap = () => import('@/views/classroom/detailWrap')// 班级容器
 const createClass = () => import('@/views/classroom/createclass')// 创建班级
@@ -138,15 +139,16 @@ const coursewareDownloadWrap = r => require.ensure([], () => r(require('@/views/
 const coursewareDownloadList = r => require.ensure([], () => r(require('@/views/wisroom/download')), 'coursewareDownloadList')// 课件下载容器
 
 Vue.use(Router)
+
 function requireAuth (to, from, next) {
   var firstPage = '/'
-  debugger
   if (!authUtils.loggedIn()) {
-      firstPage = '/auth'
     if (location.search.toLowerCase().indexOf('token') !== -1) {
-    } else {
-      
+      // if (!authUtils.thirdLoggedIn()) {
+      firstPage = '/thirdPartAuth'
+      // }
     }
+      firstPage = '/auth'
   } else {
     // 验证有登录信息再判断重定向
     // 根据是否为平台双师来判断首页是什么
@@ -212,7 +214,6 @@ function requireAuth (to, from, next) {
     if (roleList.indexOf('面授主讲') >= 0 && (roleList.indexOf('校长') < 0 && roleList.indexOf('校区主管') < 0 && roleList.indexOf('双师主管') < 0 && roleList.indexOf('魔法双师主管') < 0 && roleList.indexOf('AI主管') < 0 && roleList.indexOf('前台') < 0 && roleList.indexOf('教务') < 0)) {
       firstPage = '/teaching'
     }
-    
     // redirect中没有next则不执行
     typeof next === 'function' && next()
   }
