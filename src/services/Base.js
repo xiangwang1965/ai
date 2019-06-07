@@ -12,27 +12,6 @@ class Base {
    * @param { Boolean } mute 是否loading，默认false
    */
   sendGet (url, params, mute = false) {
-      console.log(url);
-    // 根据业务决定是否不显示loading
-    // if (!mute && params) {
-    //   console.log('.' + params.target)
-    //   var loadingInstance = Loading.service({
-    //     text: '加载中',
-    //     target: ('.' + params.target)
-    //   })
-    // }
-    // return api.get(url, { params }).then(response => {
-    //   setTimeout(() => {
-    //     (!mute && params) && loadingInstance.close()
-    //   }, 500)
-    //   return response.data
-    // }).catch(() => {
-    //   setTimeout(() => {
-    //     (!mute && params) && loadingInstance.close()
-    //   }, 500)
-    //   console.log('get error')
-    // })
-    debugger
     return api.get(url, { params }).then(response => {
       return response.data
     }).catch(() => {
