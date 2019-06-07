@@ -36,6 +36,7 @@ export default {
   },
   created(){
     this.getData();
+    this.getStudent();
   },
   methods:{
     handleChange(val){
@@ -49,6 +50,14 @@ export default {
       classApi.getData(params).then(res => {
         console.log(res);
       });
+    },
+    getStudent(){
+      let params = {
+        clsId:1
+      }
+      classApi.getStudent(params).then(res => {
+        console.log(res);
+      })
     }
   }
 }
