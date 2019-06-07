@@ -145,10 +145,10 @@ function requireAuth (to, from, next) {
   if (!authUtils.loggedIn()) {
     if (location.search.toLowerCase().indexOf('token') !== -1) {
       // if (!authUtils.thirdLoggedIn()) {
-      firstPage = '/thirdPartAuth'
+      firstPage = '/auth/login'
       // }
     }
-      firstPage = '/thirdPartAuth'
+      firstPage = '/auth/login'
   } else {
     // 验证有登录信息再判断重定向
     // 根据是否为平台双师来判断首页是什么

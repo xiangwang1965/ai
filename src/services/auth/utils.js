@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import { MAIN_URL } from '@/config'
 import authApi from './index'
 // 认证信息包括 token && 需要在发请求时带在 header 上
-const TOKEN_KEY = 'ADMIN_TOKEN'
+const TOKEN_KEY = 'tocken'
 // 登录后的用户信息
 const USER_KEY = 'USER_INFO'
 const EXPIRES = 1 // 24 小时过期

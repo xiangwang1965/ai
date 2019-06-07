@@ -4,8 +4,8 @@ import store from '@/vuex/store.js'
 class Auth extends Base {
   constructor () {
     super()
-    this.authUrl = '/auth'
-    this.loginUrl = '/auth/login'
+    this.authUrl = '/ws/api/user/login2'
+    this.loginUrl = '/ws/api/user/login2'
     this.codeLoginUrl = '/auth/code_login'
     this.logoutUrl = '/auth/logout'
     this.queryUserInfoUrl = '/auth/current'
@@ -19,9 +19,9 @@ class Auth extends Base {
   auth (params) {
     params.type = 2
     return this.sendPost(this.authUrl, params).then(res => {
-      if (res.status_code === 200) {
+      if (res.code == '001') {
         authUtils.removeToken()
-        // 只有一个直接登录
+        // 只有一个yonghu     直接登录
         if (res.data.users.length === 1) {
           return this.login({
             id: res.data.users[0].id, // TODO 如果登录在这里用需要判断学校个数来提示选择
@@ -38,7 +38,6 @@ class Auth extends Base {
       })
     })
   }
-
   /**
    * 登录接口
    * @param { Object } params {id, token, type: 1 教师APP、2教师PC、3学生端}
@@ -46,28 +45,14 @@ class Auth extends Base {
   login (params) {
     params.type = 2
     return this.sendPost(this.loginUrl, params).then(res => {
-      if (res.status_code === 200) {
+      if (res.code == '001') {
         authUtils.setToken(res.data.token)
-        let { id, name, role_name, school, avatar_url } = res.data.user
-        let brands = ''
-        this.$store.state.brandList = school.brands
-        school.brands.map((v, i) => {
-          brands += ',' + v.name
-        })
+        let { id, name, user_type, username } = res.data
         authUtils.setUser({
           id,
           name,
-          role_name,
-          school_id: school.id,
-          school_name: school.name,
-          third_part: school.third_part,
-          brands: brands.substring(1, brands.length),
-          brandList: JSON.stringify(school.brands),
-          permissions: school.permissions ? school.permissions : 'academic_affairs',
-          is_self_live: school.is_self_live,
-          avatar_url,
-          is_teach: school.is_teach,
-          is_live: school.is_live
+          user_type,
+          username
         })
       }
       this.handleError(res, {
