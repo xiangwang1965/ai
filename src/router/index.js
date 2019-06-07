@@ -30,19 +30,14 @@ Vue.use(Router)
 
 function requireAuth(to, from, next) {
     var firstPage = '/'
+    debugger;
     if (!authUtils.loggedIn()) {
-        if (location.search.toLowerCase().indexOf('token') !== -1) {
-            // if (!authUtils.thirdLoggedIn()) {
-            firstPage = '/thirdPartAuth'
-            // }
-        } else {
-            firstPage = '/home'
-        }
+        firstPage = '/auth/login'
     } else {
+        firstPage = '/class'
 
-
-        // redirect中没有next则不执行
-        typeof next === 'function' && next()
+    // redirect中没有next则不执行
+    typeof next === 'function' && next()
     }
     return firstPage
 }
@@ -72,10 +67,13 @@ const router = new Router({
         {
             path: '/',
             component: home,
+            redirect:requireAuth,
+            beforeEnter: requireAuth,
             children: [
                 {
                     path: '/class',
                     component: classroomWrap,
+                    beforeEnter: requireAuth,
                     children: [
                         { path: '/', name: 'classroom', component: classroom }
                     ]
@@ -83,6 +81,7 @@ const router = new Router({
                 {
                     path: '/teacher',
                     component: teacherWrap,
+                    beforeEnter: requireAuth,
                     children: [
                         { path: '/', name: 'teacher', component: teacher }
                     ]
@@ -90,6 +89,7 @@ const router = new Router({
                 {
                     path: '/buy',
                     component: buyWrap,
+                    beforeEnter: requireAuth,
                     children: [
                         { path: '/', name: 'buy', component: buy}
                     ]
@@ -97,6 +97,7 @@ const router = new Router({
                 {
                     path: '/course',
                     component: courseWrap,
+                    beforeEnter: requireAuth,
                     children: [
                         { path: '/', name: 'course', component: course }
                     ]
