@@ -23,5 +23,10 @@ export default {
 }
 </script>
 <style scoped>
-
+ #studentPage {
+     min-height:100%;
+     min-width:100%;
+     width:100vw;
+     height:100vh;
+ }
 </style>

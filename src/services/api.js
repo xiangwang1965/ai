@@ -15,13 +15,11 @@ const api = axios.create({
 
 // request拦截器
 api.interceptors.request.use(config => {
-    config.headers['token'] = getToken()
-    config.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
-    // transformRequest: [function (data, headers) {
-    //     // Do whatever you want to transform the data
-    //     // return Qs.stringify(data);
-    //     return data
-    //   }]
+    if (config.url.indexOf("/ws/api/user/login2") !== -1) {
+        config.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
+    } else {
+        config.headers['token'] = getToken()
+    }
   return config
 }, error => {
   // Do something with request error
@@ -33,7 +31,7 @@ api.interceptors.request.use(config => {
 api.interceptors.response.use(res => {
   if (res.data.code == 422) { // TODO
     Message.error(res.data.message || 'token过期,请退出重新登录')
-    window.location.href = config.LOGIN_URL
+    window.location.href = '/auth/login'
   }
   if (res.data.status_code === 200 && res.data) {
     res.data.ok = true

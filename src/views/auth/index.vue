@@ -37,7 +37,6 @@ export default {
   },
   methods: {
     handleLogin () {
-        debugger;
       authApi.login(this.form).then(res => {
         if (res.code == '001') {
           res.multiple ? this.doToggle(res) : this.$router.push({ path: '/class' })
