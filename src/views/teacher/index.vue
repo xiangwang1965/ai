@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import studentApi from '@/services/student'
+import teacherApi from '@/services/teacher'
 import pagination from '@/components/pagination'
 import { requireAgainPage } from '@/utils'
 export default {
@@ -116,7 +116,7 @@ export default {
     refresh (index) {
       this.params.page = (index && typeof index === 'number') ? index : this.params.page
       this.loading = true
-      studentApi.query(this.params).then(res => {
+      teacherApi.query(this.params).then(res => {
         setTimeout(() => {
           this.loading = false
         }, 300)
