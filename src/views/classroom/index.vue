@@ -12,7 +12,8 @@
            </div>
            <div class="classList"></div>
          </div>
-        </div> 
+        </div>
+        <el-button type="default" class="cac-button-one">管理</el-button>
     </div>
     <div class="center"></div>
     <div class="right">
@@ -23,6 +24,13 @@
           <span class="active">学员管理</span>
         </div>
       </div>
+      <el-input
+        placeholder="请输入内容"
+        v-model="input4">
+        <i slot="prefix" class="el-input__icon el-icon-search"></i>
+        <el-button slot="append" icon="el-icon-search"></el-button>
+      </el-input>
+      <el-button type="default" class="cac-button-one">管理</el-button>
     </div>
   </div>
 </template>
@@ -68,6 +76,11 @@ export default {
       width:513px;
       position:relative;
       height:100%;
+      .el-button{
+        position:absolute;
+        left:16vw;
+        top:70vh;
+      };
       .title{
         position:absolute;
         left:18px;
@@ -175,6 +188,17 @@ export default {
         position:absolute;
         top:10px;
         left:0px;
+      }
+      .el-button{
+        position:absolute;
+        left:18vw;
+        top:70vh;
+      };
+      .el-input{
+        width:18vw;
+        position:absolute;
+        left:20vw;
+        top:15vh;
       }
       .tabs{
         width:574px;
