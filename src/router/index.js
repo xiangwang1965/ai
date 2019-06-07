@@ -138,7 +138,6 @@ const coursewareDownloadWrap = r => require.ensure([], () => r(require('@/views/
 const coursewareDownloadList = r => require.ensure([], () => r(require('@/views/wisroom/download')), 'coursewareDownloadList')// 课件下载容器
 
 Vue.use(Router)
-debugger
 function requireAuth (to, from, next) {
   var firstPage = '/'
   debugger
