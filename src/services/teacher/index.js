@@ -3,7 +3,7 @@ import CRUD from '../CRUD'
 class Teacher extends CRUD {
   constructor () {
     super()
-    this.queryUrl = '/students/add-list'
+    this.queryUrl = '/ws/api/user/getTeachers'
     this.createUrl = '/students/add'
     this.updateUrl = '/students/modify'
     this.queryDetailUrl = '/students'
@@ -14,8 +14,8 @@ class Teacher extends CRUD {
     return this.sendGet(this.queryStudenEditUrl)
   }
   // 获取某学生的详细信息
-  queryDetail (params) {
-    return this.sendGet(this.queryDetailUrl, params)
+  querylist (params) {
+    return this.sendGet(this.queryUrl, params)
   }
   // 获取某学生的班级信息
   queryClass (params) {
