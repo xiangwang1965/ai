@@ -69,45 +69,9 @@ Vue.directive('scrollBar', {
     }
   }
 })
-// if (location.search.toLowerCase().indexOf('token') !== -1) {
-//   const TOKEN_KEY = 'ADMIN_TOKEN'
-//   // 登录后的用户信息
-//   const EXPIRES = 1 // 24 小时过期
-//   if (location.search) {
-//     let searchArr = location.search.substring(1, location.search.length).split('&')
-//     searchArr.map((v, i) => {
-//       let objArr = v.split('=')
-//       if (objArr[0] === 'token') {
-//         Cookies.set(TOKEN_KEY, objArr[1], { expires: EXPIRES, domain: MAIN_URL })
-//         // Cookies.set(TOKEN_KEY, objArr[1], { expires: EXPIRES, domain: WB_MAIN_URL })
-//         Cookies.set('FROM_URL', 'wisroom', { expires: EXPIRES, domain: MAIN_URL })
-//         // Cookies.set('FROM_URL', 'wisroom', { expires: EXPIRES, domain: WB_MAIN_URL })
-//       }
-//     })
-//   }
-//   authApi.fetchSchool().then(res => {
-//     let { id, name, role_name, school, avatar_url, is_teach, is_live } = res.data.users[0]
-//     this.setUser({
-//       id,
-//       name,
-//       role_name,
-//       school_id: school.id,
-//       school_name: school.name,
-//       third_part: school.third_part,
-//       is_self_live: school.is_self_live,
-//       avatar_url,
-//       is_teach,
-//       is_live
-//     })
-//   })
-// }
+
 
 Vue.use(ElementUI)
-
-// router.beforeEach((to, from, next) => {
-//   document.title = to.meta.title ? '学校管理-' + to.meta.title : '学校管理'
-//   next()
-// })
 
 /* eslint-disable no-new */
 new Vue({

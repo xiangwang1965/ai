@@ -33,7 +33,7 @@ export default {
 
 <style scoped>
 .homeView {
-  height: 100%;
+  height:100%;
 }
 .homeView .mainContainer {
   min-width: 1280px;
