@@ -15,7 +15,7 @@ const api = axios.create({
 
 // request拦截器
 api.interceptors.request.use(config => {
-  // config.headers['token'] = getToken()
+    config.headers['token'] = getToken()
 //   config.headers['Authorization'] = getToken()
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
     // transformRequest: [function (data, headers) {
