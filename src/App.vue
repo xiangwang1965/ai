@@ -1,64 +1,79 @@
 <template>
   <div id="app">
-    <transition name="fade" mode="out-in">
-      <router-view></router-view>
+    <transition>
+      <router-view/>
     </transition>
+    <dialogs></dialogs>
   </div>
 </template>
 
 <script>
+import dialogs from '@/dialogs'
+import authUtils from '@/services/auth/utils'
+import authApi from '@/services/auth'
+import eventHub from '@/utils/eventHub'
 export default {
-    name: 'App'
+  name: 'app',
+  components: {
+    dialogs
+  },
+  beforeCreate () {
+    if (location.search.toLowerCase().indexOf('token') !== -1) {
+      authUtils.thirdLoggedIn()
+    }
+  },
+  created () {
+    this.setRole()
+  },
+  methods: {
+    setRole () {
+      let params = {
+        'type': 2
+      }
+      authApi.queryUserInfo(params).then(res => {
+        let { id, name, role_name, school, avatar_url, is_teach, is_live } = res.data
+        let brands = ''
+        this.$store.state.brandList = school.brands
+        school.brands.map((v, i) => {
+          brands += ',' + v.name
+        })
+        authUtils.setUser({
+          id,
+          name,
+          role_name,
+          school_id: school.id,
+          school_name: school.name,
+          third_part: school.third_part,
+          brands: brands.substring(1, brands.length),
+          brandList: JSON.stringify(school.brands),
+          permissions: school.permissions ? school.permissions : 'academic_affairs',
+          is_self_live: school.is_self_live,
+          avatar_url,
+          is_teach,
+          is_live,
+          is_content: school.is_content
+        })
+        // app中派发user更新
+        eventHub.$emit('updateUser', authUtils.getUser())
+      })
+    }
+  }
 }
 </script>
 
+<style src="normalize.css/normalize.css"></style>
+<style src="./styles/common.css"></style>
 <style>
+html,
 body {
-  margin: 0px;
-  padding: 0px;
-  /*background: url(assets/bg1.jpg) center !important;
-		background-size: cover;*/
-  /* background: #1F2D3D;*/
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
-    Microsoft YaHei, SimSun, sans-serif;
-  font-size: 14px;
-  -webkit-font-smoothing: antialiased;
+  height: 100%;
 }
 #app {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  width: 100%;
-}
-
-.el-submenu [class^="fa"] {
-  vertical-align: baseline;
-  margin-right: 10px;
-}
-
-.el-menu-item [class^="fa"] {
-  vertical-align: baseline;
-  margin-right: 10px;
-}
-
-.toolbar {
-  background: #f2f2f2;
-  padding: 10px;
-/*border:1px solid #dfe6ec;*/
-  margin: 10px 0px;
-
-}
-.el-form-item {
-    margin-bottom: 10px;
-  }
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.2s ease;
-}
-
-.fade-enter,
-.fade-leave-active {
-  opacity: 0;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  height: 100%;
 }
 </style>
