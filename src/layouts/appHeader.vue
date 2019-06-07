@@ -26,6 +26,7 @@
   import authUtils from '@/services/auth/utils'
   import authApi from '@/services/auth'
   import eventHub from '@/utils/eventHub'
+  import PermissionApi from '@/services/permission'
   import { WB_MAIN_URL, WISROOM_URL, MAIN_URL } from '@/config'
   import Cookies from 'js-cookie'
   export default {
