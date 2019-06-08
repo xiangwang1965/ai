@@ -34,7 +34,7 @@
          <div>
             <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
            合计<span>{{totalPrice}}</span>
-           <button>结算</button>
+           <button @click="payHandle">结算</button>
           </div>
       </div>
     </div>
@@ -42,6 +42,7 @@
 </template>
 <script>
 import buyApi from "@/services/buy";
+
 export default {
   data() {
     return {
@@ -84,6 +85,7 @@ export default {
   },
   created() {
     this.getData(1);
+    this.$router.push('/success');
   },
   methods: {
     switchTab(index) {
@@ -155,6 +157,16 @@ export default {
         let checkedCount = value.length;
         this.checkAll = checkedCount === this.switchData.length;
         this.isIndeterminate = checkedCount > 0 && checkedCount < this.switchData.length;
+      },
+      payHandle(){
+          if (this.totalPrice > 0) {
+              buyApi.queryPayImg({price:this.totalPrice}).then(res => {
+                if (res.code === "001") {
+
+                // this.dataList = res.data;
+                }
+      });
+          }
       }
   }
 };
