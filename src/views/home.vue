@@ -55,7 +55,7 @@ export default {
   /* background-image: url(../../static/img/logo-footer.png);
   background-repeat: no-repeat;
   background-position: 45% 95%; */
-  background-color: #FFF;
+  background-color: #f9fafc;
 }
 .addBody{
   min-height: 100%;

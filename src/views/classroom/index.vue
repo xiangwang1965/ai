@@ -1,19 +1,93 @@
 <template>
   <div class="classContainer">
     <div class="left">
-     <h1 class="title">班级管理</h1>
-        <div class="round"></div>
-        <p class="p">当前课程</p>
-        <p class="btn">历史班级</p>
-        <div class="sideContainer">
-         <div class="item">
-           <div class="classTitle orange">
-             <p class="txt orange">1234</p>
-           </div>
-           <div class="classList"></div>
-         </div>
+      <h1 class="title">班级管理</h1>
+      <div class="round"></div>
+      <p class="p">当前课程</p>
+      <p class="btn">历史班级</p>
+      <div class="sideContainer">
+        <div class="item">
+          <div class="classTitle orange" @click="getData(1)">
+            <p class="txt orange">Scratch</p>
+          </div>
+          <el-collapse-transition>
+            <ul class="classList one" v-show="show1">
+              <li :class="{active:currentClass == item.id}" v-for="(item,index) in courseList.course1" :key="index" @click="getStudent(item)"> 
+                <div class="top" style="height:50%">
+                  <span class="one">{{item.name}}</span>
+                  <span class="two orange">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
+                </div>
+                <div class="bottom" style="height:50%;">
+                  <span class="three orange">{{item.courseName}}</span>
+                  <span class="four orange">{{item.teacherName}}</span>
+                </div>
+              </li>
+            </ul>
+          </el-collapse-transition>
+          <div class="nodata" v-show="nodata1">暂无数据</div>
         </div>
-        <el-button type="default" class="cac-button-one">管理</el-button>
+        <div class="item">
+          <div class="classTitle green" @click="getData(2)">
+            <p class="txt green">Python</p>
+          </div>
+          <el-collapse-transition>
+            <ul class="classList two" v-show="show2">
+              <li v-for="(item,index) in courseList.course2" :key="index">
+                <div class="top" style="height:50%">
+                  <span class="one green">{{item.name}}</span>
+                  <span class="two green">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
+                </div>
+                <div class="bottom" style="height:50%;">
+                  <span class="three green">{{item.courseName}}</span>
+                  <span class="four green">{{item.teacherName}}</span>
+                </div>
+              </li>
+            </ul>
+          </el-collapse-transition>
+          <div class="nodata" v-show="nodata2">暂无数据</div>
+        </div>
+        <div class="item">
+          <div class="classTitle red" @click="getData(3)">
+            <p class="txt red">NOIP</p>
+          </div>
+          <el-collapse-transition>
+            <ul class="classList three" v-show="show3">
+              <li v-for="(item,index) in courseList.course3" :key="index">
+                <div class="top" style="height:50%">
+                  <span class="one">{{item.name}}</span>
+                  <span class="two red">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
+                </div>
+                <div class="bottom" style="height:50%;">
+                  <span class="three red">{{item.courseName}}</span>
+                  <span class="four red">{{item.teacherName}}</span>
+                </div>
+              </li>
+            </ul>
+          </el-collapse-transition>
+          <div class="nodata" v-show="nodata3">暂无数据</div>
+        </div>
+        <div class="item">
+          <div class="classTitle purple" @click="getData(4)">
+            <p class="txt purple">AI</p>
+          </div>
+          <el-collapse-transition>
+            <ul class="classList four" v-show="show4">
+              <li v-for="(item,index) in courseList.course4" :key="index">
+                <div class="top" style="height:50%">
+                  <span class="one">{{item.name}}</span>
+                  <span class="two purpe">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
+                </div>
+                <div class="bottom" style="height:50%;">
+                  <span class="three purpe">{{item.courseName}}</span>
+                  <span class="four purpe">{{item.teacherName}}</span>
+                </div>
+              </li>
+            </ul>
+          </el-collapse-transition>
+          <div class="nodata" v-show="nodata4">暂无数据</div>
+        </div>
+      </div>
+      <el-button type="default" @click="showManage2 = true" class="cac-button-one">管理</el-button>
     </div>
     <div class="center"></div>
     <div class="right">
@@ -24,210 +98,434 @@
           <span class="active">学员管理</span>
         </div>
       </div>
-      <el-input
-        placeholder="请输入内容"
-        v-model="input4">
+      <el-input placeholder="请输入内容" class="search_btn" v-model="input4">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
-      <el-button type="default" class="cac-button-one">管理</el-button>
+      <div class="rightInfo">
+        <ul>
+          <li>
+            <p style="color:#FFC151;line-height:84px;">班级信息</p>
+          </li>
+          <li>
+            <p>{{startDate}}</p>
+            <p>{{startTime}}-{{endTime}}</p>
+            <p>时间</p>
+          </li>
+          <li>
+            <p class="big">{{level}}</p>
+            <p style="margin-top:3px">等级</p>
+          </li>
+          <li>
+            <p class="big">{{stuCnt}}</p>
+            <p style="margin-top:3px">班级人数</p>
+          </li>
+        </ul>
+        <ul class="students">
+          <li v-for="item in studentsList" :key="item.id">
+            <span class="name">{{item.name}}</span>
+            <i class="search"></i>
+            <span class="edit"></span>
+          </li>
+        </ul>
+      </div>
+      <el-button @click="showManage1 = true" type="default" class="manage2 cac-button-one">管理</el-button>
     </div>
+    <el-dialog style="height:100vh;overflow:hidden;" title="学生管理" width="80%" :visible.sync="showManage1">
+       <studentManage></studentManage>
+    </el-dialog>
+    <el-dialog style="height:100vh;overflow:hidden;" title="班级管理" width="80%" :visible.sync="showManage2">
+       <classManage></classManage>
+    </el-dialog>
   </div>
 </template>
 <script>
-import classApi from '@/services/classroom'
+import classApi from "@/services/classroom";
+import studentManage from './studentManage';
+import classManage from './classManage';
 export default {
-  data(){
+  data() {
     return {
-      activeNames: ['1']
-    }
+      activeNames: ["1"],
+      courseList: {
+        course1: [],
+        course2: [],
+        course3: [],
+        course4: []
+      },
+      studentsList:[],
+      show1: false,
+      show2: false,
+      show3: false,
+      show4: false,
+      nodata1:false,
+      nodata2:false,
+      nodata3:false,
+      nodata4:false,
+      classTitle:'',
+      startDatae:'',
+      startTime:'',
+      endTime:'',
+      level:'',
+      stuCnt:'',
+      isFirst:true,
+      currentClass:'',
+      showManage1:true,
+      showManage2:false
+  
+    };
   },
-  created(){
-    this.getData();
+  created() {
+    this.getData(1);
     this.getStudent();
   },
-  methods:{
-    handleChange(val){
+  components:{
+    studentManage,
+    classManage
+  },
+  methods: {
+    handleChange(val) {
       console.log(val);
     },
-    getData(){
+    getData(typeId) {
       let params = {
-        schoolId:1,
-        typeId:1
+        schoolId: 1,
+        typeId: typeId
+      };
+      let that = this;
+      this["show" + typeId] = !this["show" + typeId];
+      if (!this.courseList['course'+ typeId.length]) {
+        classApi.getData(params).then(res => {
+          if (res.data && res.data.length) {
+            this.courseList["course" + typeId] = Object.assign({}, res.data);
+            if(this.isFirst){
+              this.getStudent(res.data[0]);
+              this.currentClass = res.data[0].id;
+            }
+          } else {
+            this.courseList["course" + typeId] = [];
+            this['nodata' + typeId] = true;
+          }
+        });
+      } else {
       }
-      classApi.getData(params).then(res => {
-        console.log(res);
-      });
     },
-    getStudent(){
+    getStudent(item) {
+      this.classTitle = item.name;
+      this.startDate = item.startDate;
+      this.beginTime = item.beginTime;
+      this.endTime = item.endTime;
+      this.level = item.level;
+      this.stuCnt = item.stuCnt;
+      this.currentClass = item.id;
       let params = {
-        clsId:1
-      }
+        clsId: item.id
+      };
       classApi.getStudent(params).then(res => {
-        console.log(res);
-      })
+        this.studentsList = res.data;
+      });
     }
   }
-}
+};
 </script>
 <style lang="less">
-  .classContainer{
-    .left{
-      width:513px;
-      position:relative;
-      height:100%;
-      .el-button{
-        position:absolute;
-        left:16vw;
-        top:70vh;
-      };
-      .title{
-        position:absolute;
-        left:18px;
-      }
-      .round{
-        width:10px;
-        height:10px;
-        border: 2px solid #4592FE;
-        border-radius: 50%;
-        position:absolute;
-        top:43px;
-      }
-      .p{
-        position:absolute;
-        left:26px;
-        top:40px;
-        font-family: 'HYQiHei-EES';
-        font-size: 15px;
-        color:#4592FE;
-        letter-spacing: 1.5px;
-      }
-      .btn{
-        background: #4592FE;
-        border-radius: 5px;
-        font-family: 'HYQiHei-EES';
-        font-size: 15px;
-        color: #FFFFFF;
-        letter-spacing: 1.5px;
-        width:70px;
-        height:23px;
-        line-height:23px;
-        position:absolute;
-        left:307px;
-        top:40px;
-        padding:0 2px;
-      }
-      .sideContainer{
-        position:absolute;
-        width:413px;
-        height:300px;
-        left:0px;
-        top:60px;
-        .item{
-          .classTitle{
-            width:450px;
-            height:36px;
-            .txt{
-              width:115px;
-              height:35px;
-              line-height: 35px;
-              text-align: center;
-              font-family: 'HYQiHei-GZS';
-              font-size: 14px;
-              color: #FFFFFF;
-              letter-spacing: 0;
-              text-align: center;
-              border-radius: 6px 6px 0px 0px;
-              &.orange{
-              background:#FFC151;
-              }
-              &.green{
-                background:#6EDBEF;
-              }
-              &.red{
-                background:#FF696C;
-              }
-              &.purple{
-                background:#8B90FF;
-              }
+@orange:#ffc151;
+@green:#6edbef;
+@red:#ff696c;
+@purpe:#8b90ff;
+.classContainer {
+  padding:20px 20px;
+  .left {
+    width: 513px;
+    position: relative;
+    left:-3vw;
+    height: 100%;
+    .el-button {
+      position: absolute;
+      left: 16vw;
+      top: 70vh;
+    }
+    .title {
+      position: absolute;
+      left: 18px;
+    }
+    .round {
+      width: 10px;
+      height: 10px;
+      border: 2px solid #4592fe;
+      border-radius: 50%;
+      position: absolute;
+      top: 43px;
+    }
+    .p {
+      position: absolute;
+      left: 26px;
+      top: 40px;
+      font-family: "HYQiHei-EES";
+      font-size: 15px;
+      color: #4592fe;
+      letter-spacing: 1.5px;
+    }
+    .btn {
+      background: #4592fe;
+      border-radius: 5px;
+      font-family: "HYQiHei-EES";
+      font-size: 15px;
+      color: #ffffff;
+      letter-spacing: 1.5px;
+      width: 70px;
+      height: 23px;
+      line-height: 23px;
+      position: absolute;
+      left: 307px;
+      top: 40px;
+      padding: 0 2px;
+    }
+    .sideContainer {
+      position: absolute;
+      width: 413px;
+      height: 50vh;
+      left: 0px;
+      top: 60px;
+      .item {
+        margin:15px 0px;
+        .classTitle {
+          width: 450px;
+          height: 36px;
+          .txt {
+            width: 115px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            font-family: "HYQiHei-GZS";
+            font-size: 14px;
+            color: #ffffff;
+            letter-spacing: 0;
+            text-align: center;
+            border-radius: 6px 6px 0px 0px;
+            &.orange {
+              background: @orange;
             }
-            &.orange{
-              border-bottom:3px solid #FFC151;
+            &.green {
+              background: @green;
             }
-            &.green{
-              border-bottom:3px solid #6EDBEF;
+            &.red {
+              background: @red;
             }
-            &.red{
-              border-bottom:3px solid #FF696C;
+            &.purple {
+              background: @purpe;
             }
-            &.purple{
-              border-bottom:3px solid #8B90FF;
-              }
+          }
+          &.orange {
+            border-bottom: 3px solid @orange;
+          }
+          &.green {
+            border-bottom: 3px solid @green;
+          }
+          &.red {
+            border-bottom: 3px solid @red;
+          }
+          &.purple {
+            border-bottom: 3px solid @purpe;
           }
           
         }
-      }
-    }
-    .center{
-      width:1px;
-      height:400px;
-      background:#b6b6b6;
-      position:absolute;
-      top:20%;
-      left:46%;
-    }
-    .right{
-      position:relative;
-      left:50%;top:0;
-      .h3{
-        font-family: HYQiHei-GZS;
-        font-size: 16px;
-        color: #FFFFFF;
-        letter-spacing: 0;
-        text-align: center;
-        position:absolute;
-        top:10px;
-        left:0px;
-      }
-      .el-button{
-        position:absolute;
-        left:18vw;
-        top:70vh;
-      };
-      .el-input{
-        width:18vw;
-        position:absolute;
-        left:20vw;
-        top:15vh;
-      }
-      .tabs{
-        width:574px;
-        height:80px;
-        background: #FFFFFF;
-        position:absolute;
-        left:0px;
-        top:0px;
-        border-bottom: 3px solid #FFC151;
-        div{
-          position:absolute;
-          left:0px;
-          top:42px;
-          span{
-            display: inline-block;
-            background: #FFD893;
-            border-radius: 6px 6px 0px 0px;
-            font-family: 'HYQiHei-GZS';
-            font-size: 14px;
-            color: #FFFFFF;
-            width:80px;
-            height:35px;
-            letter-spacing: 0;
-            text-align: center;
-            line-height:35px;
-            &.active{background:#FFC151}
+        .nodata{
+          width:100%;
+          height:50px;
+          line-height: 50px;
+          text-align: center;
+          color:#ccc
+        }
+        .classList {
+          overflow: auto;
+          &.one{
+            li{
+              &.active{
+                background:@orange;
+              }
+            }
           }
+          &.two{
+            li{
+              &.active{
+                background:@green;
+              }
+            }
+          }
+          &.three{
+            li{
+              &.active{
+                background:@red;
+              }
+            }
+          }
+          &.four{
+            li{
+              &.active{
+                background:@purpe;
+              }
+            }
+          }
+          li{
+            width:100%;
+            height:58px;
+            background:#fff;
+            border-radius: 20px;
+            padding:10px 20px;
+            margin:10px 0px;
+            div{
+              &.bottom{margin-top:3px;}
+              .one{
+              font-family: HYQiHei-GZS;
+              font-size: 16px;
+              letter-spacing: 0;
+              float:left;
+              }
+            .two{
+              float:right;
+              font-size:14px;
+              &.orange{color:@orange}
+              &.green{color:@green}
+              &.red{color:@red}
+              &.purpe{color:@purpe}
+            }
+            .three{
+              float:left;
+              font-size:14px;
+              &.orange{color:@orange}
+              &.green{color:@green}
+              &.red{color:@red}
+              &.purpe{color:@purpe}
+            }
+            .four{
+              float:right;
+              font-size:12px;
+              font-family: HYQiHei-FZS;
+              font-size: 14px;
+              color: @orange;
+              letter-spacing: 0;
+              &.orange{color:@orange}
+              &.green{color:@green}
+              &.red{color:@red}
+              &.purpe{color:@purpe}
+            }
+            }
+            &.active{
+              div > .one{color:#fff}
+              div > .two{color:#fff}
+              div > .three{color:#fff}
+              div > .four{color:#fff}
+            }
+          }  
         }
       }
     }
   }
+  .center {
+    width: 1px;
+    height: 400px;
+    background: #b6b6b6;
+    position: absolute;
+    top: 20vh;
+    left: 45vw;
+  }
+  .right {
+    position: relative;
+    left: 45vw;
+    width:40vw;
+    height:100vh;
+    top: 0;
+    .h3 {
+      font-family: HYQiHei-GZS;
+      font-size: 16px;
+      color: #ffffff;
+      letter-spacing: 0;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      left: 0px;
+    }
+    .search_btn {
+      float:right;
+      margin-right:130px;
+      margin-top:20px;
+    }
+    .el-input {
+      width: 18vw;
+    }
+    .manage2{
+      float:left;
+      margin-top:200px;
+      margin-left:150px;
+    }
+    .tabs {
+      width:30vw;
+      height: 80px;
+      float:left;
+      border-bottom: 3px solid #ffc151;
+      div {
+        float:left;
+        margin-top:45px;
+        span {
+          display: inline-block;
+          background: #ffd893;
+          border-radius: 6px 6px 0px 0px;
+          font-family: "HYQiHei-GZS";
+          font-size: 14px;
+          color: #ffffff;
+          width: 80px;
+          height: 35px;
+          letter-spacing: 0;
+          text-align: center;
+          line-height: 35px;
+          &.active {
+            background: #ffc151;
+          };
+          &:last-child{margin-left:-5px;}
+        }
+      }
+    }
+    .rightInfo{
+      float:left;
+      width:428px;
+      height:104px;
+      background:#ffffff;
+      padding:10px 0;
+      border-radius: 20px;
+      margin-top:20px;
+      li{
+        float:left;
+        width:107px;
+        height:84px;
+        line-height: 64px;
+        border-right:1px solid #b9b9b9;
+        p{
+          width:107px;
+          height:18px;
+          color:#9B9B9B;
+          font-family: HYQiHei-GZS;
+          font-size: 12px;
+          letter-spacing: 0;
+          text-align: center;
+          &.big{font-size:24px;}
+        }
+        &:last-child{border-right:none}
+      }
+    }
+    .students{
+      width:428px;
+      float:left;
+      li{
+        margin-top:20px;
+        height:66px;
+        border:none;
+        border-radius: 42px;
+        background:#ffffff;
+        width:100%;
+      }
+    }
+    
+  }
+}
 </style>

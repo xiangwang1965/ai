@@ -3,7 +3,6 @@
   <div id='footerpage' class="footer">
     <!--<img src="../../static/img/logo-footer.png">-->
     <!--<div class="line"></div>-->
-    <p class="copyright">京ICP备18011062号-1</p>
   </div>
 </template>
 

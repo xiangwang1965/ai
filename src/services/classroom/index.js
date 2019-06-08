@@ -8,13 +8,11 @@ class Classroom extends CRUD {
 
   getData(params){
     return this.sendGet(this.dataUrl,params).then(res => {
-      this.handleError(res); 
       return res;
     });
   }
   getStudent(params){
     return this.sendGet(this.studentUtl,params).then(res => {
-      this.handleError(res);
       return res;
     })
   }

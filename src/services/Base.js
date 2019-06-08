@@ -38,7 +38,7 @@ class Base {
    * @param { success | error | errorOnly } options 成功或失败的 msg, errorOnly 只提示错误消息
    */
   handleError (data, options = {}) {
-    if (data.status_code === 200) {
+    if (data.code === '001') {
       !options.errorOnly && Message.success(options.success || '操作成功')
     } else {
       Message.error(data.message || options.error || '操作失败')
