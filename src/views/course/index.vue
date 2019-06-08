@@ -16,7 +16,9 @@
                     订单编号：
                     <span>{{item.orderNo}}</span>
                   </p>
-                  <p id="state">已完成</p>
+                  <p id="state" v-if="item.status == '0'">进行中</p>
+                    <p id="state" v-else-if="item.status == '2'">作废</p>
+                      <p id="state" v-else>已完成</p>
                 </div>
                 <div class="content clearfix">
                   <img id="contentPic" :src="url" alt>
@@ -50,7 +52,7 @@ import courseApi from "@/services/course";
 export default {
   data() {
     return {
-      tabList:[
+    tabList:[
           {
               id:'1',
               name:'全部订单'
@@ -135,9 +137,7 @@ export default {
     .sideContainer {
       position: absolute;
       width: 500px;
-      height: 300px;
       left: 0px;
-      top: 60px;
       .item {
         .tabs {
           width: 500px;
