@@ -95,12 +95,14 @@
                   <p>初级课程</p>
                 </div>
               </div>
+               <i></i>
               <div class="flex">
                 <div class="lock lockup">
                   <p>level2</p>
                   <p>中级课程</p>
                 </div>
               </div>
+               <i></i>
               <div class="flex">
                 <div class="lock lockup">
                   <p>level2</p>
@@ -122,12 +124,14 @@
                   <p>初级课程</p>
                 </div>
               </div>
+               <i></i>
               <div class="flex">
                 <div class="lock lockup">
                   <p>level2</p>
                   <p>中级课程</p>
                 </div>
               </div>
+               <i></i>
               <div class="flex">
                 <div class="lock lockup">
                   <p>level2</p>
@@ -149,12 +153,14 @@
                   <p>初级课程</p>
                 </div>
               </div>
+               <i></i>
               <div class="flex">
                 <div class="lock lockup">
                   <p>level2</p>
                   <p>中级课程</p>
                 </div>
               </div>
+               <i></i>
               <div class="flex">
                 <div class="lock lockup">
                   <p>level2</p>
