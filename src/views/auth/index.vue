@@ -9,7 +9,7 @@
       <el-form-item class="label" prop="passwd">
         <el-input type="password" class="form-control" prefix-icon="el-icon-key" v-model="form.passwd" placeholder=密码 ></el-input>
       </el-form-item>
-      <el-button type="primary" round icon="el-icon-search" @click="handleLogin">登录</el-button>
+      <el-button type="primary" round @click="handleLogin">登录</el-button>
       </el-form>
     <toggleSchool v-if="multiple" :users="users" v-on:school="doLogin"></toggleSchool>
   </div>

@@ -32,7 +32,6 @@ class Base {
     //   }, 500)
     //   console.log('get error')
     // })
-    debugger
     return api.get(url, { params }).then(response => {
       return response.data
     }).catch(() => {
