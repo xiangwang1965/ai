@@ -1543,6 +1543,11 @@ button:focus {
   text-align: center;
 
 }
+.el-message-box__status.el-icon-warning {
+    color: #E6A23C;
+    margin-top: -60px;
+    margin-left: -60px;
+}
 .students li span{
   display:inline-block;
   float:left;

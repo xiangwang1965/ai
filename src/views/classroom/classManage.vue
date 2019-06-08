@@ -4,12 +4,12 @@
         <div class="left-item">
             <div class="h3">现有班级</div>
             <ul class="students">
-                <li>
+                <li v-for="item in data" :class="{active:currentClass=== item.id}" @click="getStudent(item)" :key="item.id">
                     <div>
-                        <p style="margin-left:-30px;">PYTHON编程一班</p>
-                        <p style="margin-top:4px;">时间：周三(10:00-12:00)</p>
+                        <p>{{item.courseName}}</p>
+                        <p style="margin-top:4px;">时间：{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</p>
                     </div>
-                    <i class="el-icon-delete"></i>
+                    <i class="el-icon-delete" @click="showDeleteConfirm(item)"></i>
                 </li>
             </ul>
             <div class="info" @click="showCreate = true">
@@ -17,11 +17,14 @@
             </div>
         </div>
         <div class="right-item">
-            <div class="h3">班级</div>
+            <div class="h3">班级信息</div>
             <div class="infoCon">
                 <ul>
                     <li>
-                        <p><span>姓名</span>：刘洋</p>
+                        <p><span>班级</span>：{{className}}</p>
+                        <p><span>课程</span>：{{course}}</p>
+                        <p><span>机构</span>：{{school}}</p>
+                        <p><span>教师</span>：{{teacher}}</p>
                     </li>
                 </ul>
             </div>
@@ -36,15 +39,73 @@
 </template>
 <script>
 import createClass from "./createClass";
+import classApi from '../../services/classroom';
 export default {
+    props:['data'],
     data(){
         return {
             defaultImg:'../../static/img/student.png',
-            showCreate:false
+            showCreate:false,
+            currentClass:'',
+            className:'',
+            course:'',
+            school:'',
+            teacher:''
+        }
+    },
+    watch:{
+        data(){
+            this.setRight(this.data[0]);
         }
     },
     components:{
         createClass
+    },
+    methods:{
+        setRight(data){
+            if(!data){
+                this.className = '';
+                this.course = '';
+                this.school = '';
+                this.teacher = '';
+                return;
+            }
+            this.currentClass = data.id;
+            this.className = data.name;
+            this.course = data.courseName;
+            this.school = '机构名字';
+            this.teacher = data.teachName;
+        },
+        showDeleteConfirm(item){
+            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center:false,
+            }).then(() => {
+                let params = {
+                    clsId:item.id
+                }
+                debugger
+                classApi.deleteClass(params).then(res => {
+                    debugger;
+                    this.data.forEach((cla,index) => {
+                        if(cla.id === item.id){
+                            this.data.splice(index,1);
+                        }
+                    })
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                })
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });          
+            });
+        }
     }
 }
 </script>
@@ -61,6 +122,7 @@ export default {
         line-height:44px;
         border-bottom:@bottom;
         color:#000;
+        text-align: center;
     }
     .studentManage{
         height:50vh;
@@ -75,6 +137,8 @@ export default {
             ul{
                 margin:0 auto;
                 padding:0 5px;
+                height:240px;
+                overflow: auto;
                 li{
                     height:44px;
                     border-bottom: 1px solid #979797;
@@ -82,11 +146,15 @@ export default {
                     div{
                         float:left;
                         margin-left:0px;
+                        width:280px;
                         p{font-size:12px;}
                     }
                     i{
                         margin-top:15px;
-                        margin-left:100px;
+                        margin-right:0px;
+                    }
+                    &.active{
+                        background:rgba(#F3F6FC);
                     }
 
                 }

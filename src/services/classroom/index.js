@@ -4,6 +4,7 @@ class Classroom extends CRUD {
     super()
     this.dataUrl = '/ws/api/class/currentCls'
     this.studentUtl = '/ws/api/class/clsStudents';
+    this.deleteUrl = '/ws/api/class/delCls';
   }
 
   getData(params){
@@ -13,6 +14,11 @@ class Classroom extends CRUD {
   }
   getStudent(params){
     return this.sendGet(this.studentUtl,params).then(res => {
+      return res;
+    })
+  }
+  deleteClass(params){
+    return this.sendPost(this.deleteUrl,params).then(res => {
       return res;
     })
   }

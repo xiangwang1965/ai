@@ -3,9 +3,9 @@
     <div class="left">
       <h1 class="title">班级管理</h1>
       <div class="round"></div>
-      <p class="p">当前课程</p>
+      <p class="p">当前班级</p>
       <p class="btn">历史班级</p>
-      <div class="sideContainer">
+      <div class="sideContainer" style="z-index:100">
         <div class="item">
           <div class="classTitle orange" @click="getData(1)">
             <p class="txt orange">Scratch</p>
@@ -22,9 +22,9 @@
                   <span class="four orange">{{item.teacherName}}</span>
                 </div>
               </li>
+              <div class="nodata" v-show="nodata1">暂无数据</div>
             </ul>
           </el-collapse-transition>
-          <div class="nodata" v-show="nodata1">暂无数据</div>
         </div>
         <div class="item">
           <div class="classTitle green" @click="getData(2)">
@@ -42,9 +42,9 @@
                   <span class="four green">{{item.teacherName}}</span>
                 </div>
               </li>
+              <div class="nodata" v-show="nodata2">暂无数据</div>
             </ul>
           </el-collapse-transition>
-          <div class="nodata" v-show="nodata2">暂无数据</div>
         </div>
         <div class="item">
           <div class="classTitle red" @click="getData(3)">
@@ -62,9 +62,9 @@
                   <span class="four red">{{item.teacherName}}</span>
                 </div>
               </li>
+              <div class="nodata" v-show="nodata3">暂无数据</div>
             </ul>
           </el-collapse-transition>
-          <div class="nodata" v-show="nodata3">暂无数据</div>
         </div>
         <div class="item">
           <div class="classTitle purple" @click="getData(4)">
@@ -82,12 +82,12 @@
                   <span class="four purpe">{{item.teacherName}}</span>
                 </div>
               </li>
+              <div class="nodata" v-show="nodata4">暂无数据</div>
             </ul>
           </el-collapse-transition>
-          <div class="nodata" v-show="nodata4">暂无数据</div>
         </div>
       </div>
-      <el-button type="default" @click="showManage2 = true" class="cac-button-one">管理</el-button>
+      <el-button type="default" @click="handleManage1" style="z-index:999" class="cac-button-one">管理</el-button>
     </div>
     <div class="center"></div>
     <div class="right">
@@ -131,11 +131,11 @@
       </div>
       <el-button @click="showManage1 = true" type="default" class="manage2 cac-button-one">管理</el-button>
     </div>
-    <el-dialog style="height:100vh;overflow:hidden;" title="学生管理" width="80%" :visible.sync="showManage1">
+    <el-dialog center style="height:100vh;overflow:hidden;" title="学生管理" width="80%" :visible.sync="showManage2">
        <studentManage></studentManage>
     </el-dialog>
-    <el-dialog style="height:100vh;overflow:hidden;" title="班级管理" width="80%" :visible.sync="showManage2">
-       <classManage></classManage>
+    <el-dialog center append-to-body lock-scroll="true" style="height:100vh;overflow:hidden;" title="班级管理" width="80%" :visible.sync="showManage1">
+       <classManage :data="currentList"></classManage>
     </el-dialog>
   </div>
 </template>
@@ -170,14 +170,24 @@ export default {
       stuCnt:'',
       isFirst:true,
       currentClass:'',
-      showManage1:true,
-      showManage2:false
+      showManage1:false,
+      showManage2:false,
+      currentType:'',
+      currentList:[]
   
     };
   },
   created() {
     this.getData(1);
     this.getStudent();
+  },
+  mounted(){
+    let that = this;
+    window.addEventListener('scroll',function(e){
+      if(this.showManage1){
+        e.preventDefault();
+      }
+    },false)
   },
   components:{
     studentManage,
@@ -187,27 +197,39 @@ export default {
     handleChange(val) {
       console.log(val);
     },
+    handleManage1(){
+      this.showManage1 = true;
+    },
     getData(typeId) {
       let params = {
         schoolId: 1,
         typeId: typeId
       };
       let that = this;
+      for(let i = 1; i <= 4;i++){
+        if(typeId !== i){
+          this['show' + i] = false;
+        }
+      }
       this["show" + typeId] = !this["show" + typeId];
       if (!this.courseList['course'+ typeId.length]) {
         classApi.getData(params).then(res => {
           if (res.data && res.data.length) {
             this.courseList["course" + typeId] = Object.assign({}, res.data);
+            this.currentList = res.data;
             if(this.isFirst){
               this.getStudent(res.data[0]);
               this.currentClass = res.data[0].id;
+              this['nodata' + typeId] = false;
             }
           } else {
             this.courseList["course" + typeId] = [];
+            this.currentList = [];
             this['nodata' + typeId] = true;
           }
         });
       } else {
+        this.currentList = this.courseList['course'+ typeId.length];
       }
     },
     getStudent(item) {
@@ -218,6 +240,7 @@ export default {
       this.level = item.level;
       this.stuCnt = item.stuCnt;
       this.currentClass = item.id;
+      this.currentType = typeId;
       let params = {
         clsId: item.id
       };
@@ -243,7 +266,7 @@ export default {
     .el-button {
       position: absolute;
       left: 16vw;
-      top: 70vh;
+      top: 85vh;
     }
     .title {
       position: absolute;
@@ -455,9 +478,9 @@ export default {
       width: 18vw;
     }
     .manage2{
-      float:left;
-      margin-top:200px;
-      margin-left:150px;
+      position:absolute;
+      top:85vh;
+      left:150px;
     }
     .tabs {
       width:30vw;
