@@ -1,30 +1,30 @@
 <template>
   <div class="authView">
-    <el-form
-      class="loginForm"
-      ref="form"
-      :model="form"
-      size="mini"
-      @keyup.enter.native="handleLogin"
-    >
-     <h1 class="title">登录</h1>
-     <span class="minTit">LOGIN RIGEST</span>
-      <span class="tit2">欢迎您回来</span>
+    <div class="loginForm">
+     <h1 class="title">忘记密码</h1>
+     <span class="minTit">FORGET PASSWORD</span>
       <div class="login">
-        <div class="inputstyle input_username">
+        <div class="inputstyle input_username" v-show="!pwdBoxShow">
             <img :src="urls.username">
-            <input type="text" v-model="form.uid" placeholder="账号" mexlength="11"></input>
+            <input type="text" v-model="form.phone" placeholder="请输入登录手机号" mexlength="11"></input>
         </div>
-        <div class="inputstyle input_password">
-          <img class="passwordCode" :src="urls.pwd">
-          <input id="password" type="password" v-model="form.passwd" placeholder=密码>
+        <div class="inputstyle input_password" v-show="!pwdBoxShow">
+            <img class="codeImg" :src="urls.code" alt="">
+            <input id="codeInput" v-model="form.code" type="text" placeholder="请输入验证码">
+            <a class="getCode" @click="getCode">{{codeText}}</a>
         </div>
-         <el-button class="btn" type="primary" round @click="handleLogin">登录</el-button>
-        <a id="forget" @click="goForget">忘记密码?</a>
-        <!--<p class="prompt">账号错误</p>-->
-        <p class="phone"></p>
+        <el-button v-show="!pwdBoxShow" class="btn" type="primary" round @click="pwdBoxHandle">下一步</el-button>
+        <div class="inputstyle input_username" v-show="pwdBoxShow">
+            <input v-model="pwd.first" class="confirmInput" id="passwordOne"  type="password" placeholder="请输入新的密码" />
+        </div>
+        <div class="inputstyle input_password" v-show="pwdBoxShow">
+           <input class="confirmInput" v-model="pwd.second" id="passwordTwo" type="password" placeholder="请再次输入密码" />
+        </div>
+        <el-button v-show="pwdBoxShow" class="btn" type="primary" round @click="resetPwdHandle">提交</el-button>
+        <a id="forget" v-show="pwdBoxShow" @click="hideBoxHandle">返回</a>
       </div>
-    </el-form>
+      </div>
+    <!-- <appHeader is-login></appHeader> -->
   </div>
 </template>
 
@@ -37,15 +37,22 @@ export default {
     return {
     urls:{
         username: "../../static/img/username.png",
-        pwd:"../../static/img/password.png",
+        code:"../../static/img/code.png",
     },
       multiple: false,
       users: [],
       token: "",
       form: {
-        uid: "",
-        passwd: ""
-      }
+        phone: "",
+        code: ""
+      },
+      pwd:{
+        first:'',
+        second:''
+      },
+      codeText:'获取验证码',
+      validCode: true,
+      pwdBoxShow:false
     };
   },
   components: {
@@ -53,15 +60,51 @@ export default {
     toggleSchool
   },
   methods: {
-    goForget(){
-        this.$router.push('forget');
+    //倒计时
+	sms (){
+        console.log('ab');
+        let time = 60;
+        if (this.validCode) {
+            this.validCode = false;
+            var t = setInterval(()=> {
+                time--;
+               this.codeText= time + "秒后重新获取";
+                if (time == 0) {
+                    clearInterval(t);
+                    this.codeText = "重新获取";
+                    this.validCode = true;
+                }
+            },1000)
+        }
     },
-    handleLogin() {
-      authApi.login(this.form).then(res => {
+    getCode(){
+        this.sms();
+        let params = {
+            phone:this.form.phone
+        }
+        authApi.getCode(params).then(res => {
+        if (res.code == "001")  {
+            console.log(res);
+        }
+      });
+
+    },
+    resetPwdHandle() {
+        if (this.pwd.first !== this.pwd.second ) {
+            this.$message({
+                message:'两次密码输入不一致',
+                type:'error'
+            });
+            return false;
+        }
+        let params = {
+            phone:this.form.phone,
+            verificode:this.form.code,
+            passwd:this.pwd.first
+        }
+      authApi.upadtePwd(params).then(res => {
         if (res.code == "001") {
-          res.multiple
-            ? this.doToggle(res)
-            : this.$router.push({ path: "/class" });
+            console.log(res);
         }
       });
     },
@@ -70,20 +113,28 @@ export default {
       this.users = res.data.users;
       this.token = res.data.token;
     },
-    doLogin(data) {
-      if (data === true) {
-        this.multiple = false;
-        return false;
+    pwdBoxHandle() {
+        if (!this.form.phone) {
+            this.$message({
+            message: '请输入手机号码',
+            type:'error'
+          })
+          return false;
+      } else if (!this.form.code) {
+        this.$message({
+            message: '请输入验证码',
+            type:'error'
+          })
+          return false;
       }
-      data.token = this.token;
-      authApi.login(data).then(res => {
-        if (res.ok) {
-          this.$router.push({ path: "/" });
-        }
-      });
+      this.pwdBoxShow = true;
+    },
+    hideBoxHandle(){
+        this.pwdBoxShow = false;
     }
   }
 };
+
 </script>
 
 <style scoped>
@@ -223,10 +274,12 @@ text-align: center;
   height: 56px;
   display: block;
   float: left;
-  font-size: 14px;
-  color: #ccc;
   line-height: 56px;
   text-align: center;
+  font-family: HYQiHei-FZS;
+  font-size: 13px;
+  color: #357BDE;
+  letter-spacing: 2.05px;
 }
 .confirmInput {
   margin-left: 30px;
