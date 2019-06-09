@@ -5,6 +5,9 @@ class Classroom extends CRUD {
     this.dataUrl = '/ws/api/class/currentCls'
     this.studentUtl = '/ws/api/class/clsStudents';
     this.deleteUrl = '/ws/api/class/delCls';
+    this.courseOptionsUrl = '/ws/api/class/getCourseByShoolId';
+    this.tearcherOptionsUrl = '/ws/api/user/getTeachers';
+    this.addClassUrl = '/ws/api/class/addCls';
   }
 
   getData(params){
@@ -19,6 +22,21 @@ class Classroom extends CRUD {
   }
   deleteClass(params){
     return this.sendPost(this.deleteUrl,params).then(res => {
+      return res;
+    })
+  }
+  getCourseOptions(){
+    return this.sendGet(this.courseOptionsUrl).then(res => {
+      return res;
+    })
+  }
+  getTeachersOptions(params){
+    return this.sendGet(this.tearcherOptionsUrl,params).then(res => {
+      return res
+    })
+  }
+  createClass(params){
+    return this.sendPost(this.addClassUrl,params).then(res => {
       return res;
     })
   }

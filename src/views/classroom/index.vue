@@ -12,7 +12,7 @@
           </div>
           <el-collapse-transition>
             <ul class="classList one" v-show="show1">
-              <li :class="{active:currentClass == item.id}" v-for="(item,index) in courseList.course1" :key="index" @click="getStudent(item)"> 
+              <li :class="{active:currentClass == item.id}" v-for="(item,index) in courseList.course1" :key="index" @click="getStudent(item,index)"> 
                 <div class="top" style="height:50%">
                   <span class="one">{{item.name}}</span>
                   <span class="two orange">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
@@ -32,7 +32,7 @@
           </div>
           <el-collapse-transition>
             <ul class="classList two" v-show="show2">
-              <li v-for="(item,index) in courseList.course2" :key="index">
+              <li :class="{active:currentClass == item.id}" v-for="(item,index) in courseList.course2" :key="index" @click="getStudent(item,index)">
                 <div class="top" style="height:50%">
                   <span class="one green">{{item.name}}</span>
                   <span class="two green">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
@@ -52,7 +52,7 @@
           </div>
           <el-collapse-transition>
             <ul class="classList three" v-show="show3">
-              <li v-for="(item,index) in courseList.course3" :key="index">
+              <li :class="{active:currentClass == item.id}" v-for="(item,index) in courseList.course3" :key="index" @click="getStudent(item,index)">
                 <div class="top" style="height:50%">
                   <span class="one">{{item.name}}</span>
                   <span class="two red">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
@@ -72,7 +72,7 @@
           </div>
           <el-collapse-transition>
             <ul class="classList four" v-show="show4">
-              <li v-for="(item,index) in courseList.course4" :key="index">
+              <li :class="{active:currentClass == item.id}" v-for="(item,index) in courseList.course4" :key="index" @click="getStudent(item,index)">
                 <div class="top" style="height:50%">
                   <span class="one">{{item.name}}</span>
                   <span class="two purpe">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
@@ -98,7 +98,7 @@
           <span class="active">学员管理</span>
         </div>
       </div>
-      <el-input placeholder="请输入内容" class="search_btn" v-model="input4">
+      <el-input placeholder="请输入内容" class="search_btn" v-model="searchData">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
@@ -134,8 +134,8 @@
     <el-dialog center style="height:100vh;overflow:hidden;" title="学生管理" width="80%" :visible.sync="showManage2">
        <studentManage></studentManage>
     </el-dialog>
-    <el-dialog center append-to-body lock-scroll="true" style="height:100vh;overflow:hidden;" title="班级管理" width="80%" :visible.sync="showManage1">
-       <classManage :data="currentList"></classManage>
+    <el-dialog center append-to-body style="height:100vh;overflow:hidden;" title="班级管理" width="80%" :visible.sync="showManage1">
+       <classManage v-on:refresh="refresh" ref="child" :currentIndex="currentIndex" :datalist="currentList"></classManage>
     </el-dialog>
   </div>
 </template>
@@ -163,7 +163,7 @@ export default {
       nodata3:false,
       nodata4:false,
       classTitle:'',
-      startDatae:'',
+      startDate:'',
       startTime:'',
       endTime:'',
       level:'',
@@ -172,14 +172,15 @@ export default {
       currentClass:'',
       showManage1:false,
       showManage2:false,
+      currentIndex:'',
+      currentList:[],
       currentType:'',
-      currentList:[]
+      searchData:''
   
     };
   },
   created() {
     this.getData(1);
-    this.getStudent();
   },
   mounted(){
     let that = this;
@@ -199,6 +200,13 @@ export default {
     },
     handleManage1(){
       this.showManage1 = true;
+      if(this.$refs.child){
+         this.$refs.child.setRight(this.currentList[this.currentIndex]);
+      }
+    },
+    refresh(data){
+      this.courseList['course' + this.currentType] = Object.assign({},data);
+      this.getStudent(data[0],0);
     },
     getData(typeId) {
       let params = {
@@ -211,6 +219,7 @@ export default {
           this['show' + i] = false;
         }
       }
+      this.currentType = typeId;
       this["show" + typeId] = !this["show" + typeId];
       if (!this.courseList['course'+ typeId.length]) {
         classApi.getData(params).then(res => {
@@ -218,7 +227,7 @@ export default {
             this.courseList["course" + typeId] = Object.assign({}, res.data);
             this.currentList = res.data;
             if(this.isFirst){
-              this.getStudent(res.data[0]);
+              this.getStudent(res.data[0],0);
               this.currentClass = res.data[0].id;
               this['nodata' + typeId] = false;
             }
@@ -232,7 +241,7 @@ export default {
         this.currentList = this.courseList['course'+ typeId.length];
       }
     },
-    getStudent(item) {
+    getStudent(item,index) {
       this.classTitle = item.name;
       this.startDate = item.startDate;
       this.beginTime = item.beginTime;
@@ -240,7 +249,7 @@ export default {
       this.level = item.level;
       this.stuCnt = item.stuCnt;
       this.currentClass = item.id;
-      this.currentType = typeId;
+      this.currentIndex = index;
       let params = {
         clsId: item.id
       };

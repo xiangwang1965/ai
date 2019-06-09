@@ -15,7 +15,6 @@ const api = axios.create({
 
 // request拦截器
 api.interceptors.request.use(config => {
-  debugger;
     if (config.url.method === 'post') {
         config.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
       if(config.url.indexOf("/ws/api/user/login2") === -1){
