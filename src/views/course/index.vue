@@ -92,7 +92,7 @@ export default {
   }
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .classContainer {
   .left {
     width: 513px;

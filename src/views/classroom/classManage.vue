@@ -4,7 +4,7 @@
         <div class="left-item">
             <div class="h3">现有班级</div>
             <ul class="students">
-                <li v-for="item in data" :class="{active:currentClass=== item.id}" @click="getStudent(item)" :key="item.id">
+                <li v-for="item in datalist" :class="{active:currentClass=== item.id}" @click="setRight(item)" :key="item.id">
                     <div>
                         <p>{{item.courseName}}</p>
                         <p style="margin-top:4px;">时间：{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</p>
@@ -12,7 +12,7 @@
                     <i class="el-icon-delete" @click="showDeleteConfirm(item)"></i>
                 </li>
             </ul>
-            <div class="info" @click="showCreate = true">
+            <div class="info" @click="handleCreate">
                 <el-button type="default" class="cac-button-one">创建新班级</el-button>
             </div>
         </div>
@@ -32,8 +32,8 @@
                 <el-button type="default" class="cac-button-one">保存</el-button>
             </div>
         </div>
-        <el-dialog append-to-body width="40%" title="创建班级" :visible.sync="showCreate">
-            <createClass></createClass>
+        <el-dialog append-to-body width="80%" title="创建班级" :visible.sync="showCreate">
+            <createClass ref="child"></createClass>
         </el-dialog>
     </div>
 </template>
@@ -41,7 +41,7 @@
 import createClass from "./createClass";
 import classApi from '../../services/classroom';
 export default {
-    props:['data'],
+    props:['datalist','currentIndex'],
     data(){
         return {
             defaultImg:'../../static/img/student.png',
@@ -53,13 +53,11 @@ export default {
             teacher:''
         }
     },
-    watch:{
-        data(){
-            this.setRight(this.data[0]);
-        }
-    },
     components:{
         createClass
+    },
+    mounted(){
+        this.setRight(this.datalist[this.currentIndex]);
     },
     methods:{
         setRight(data){
@@ -73,8 +71,16 @@ export default {
             this.currentClass = data.id;
             this.className = data.name;
             this.course = data.courseName;
-            this.school = '机构名字';
-            this.teacher = data.teachName;
+            this.school = data.schoolName;
+            this.teacher = data.teacherName;
+        },
+        handleCreate(){
+            this.showCreate = true;
+            if(this.$refs.child){
+                this.$refs.child.reset();
+            }
+            this.className = '';
+            this.teacherName = '';
         },
         showDeleteConfirm(item){
             this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -86,14 +92,14 @@ export default {
                 let params = {
                     clsId:item.id
                 }
-                debugger
                 classApi.deleteClass(params).then(res => {
-                    debugger;
-                    this.data.forEach((cla,index) => {
+                    this.datalist.forEach((cla,index) => {
                         if(cla.id === item.id){
-                            this.data.splice(index,1);
+                            this.datalist.splice(index,1);
                         }
-                    })
+                    });
+                    this.setRight(this.datalist[0]);
+                    this.$emit('refresh',this.datalist);
                     this.$message({
                         type: 'success',
                         message: '删除成功!'
@@ -178,8 +184,12 @@ export default {
                 margin-left:10px;
                 margin-top:10px;
                 min-height:60px;
+                overflow: auto;
+                overflow-x:hidden;
+                line-height:100%;
                 p{
                     float:left;
+                    width:100%;
                     margin-left:18px;
                     margin-top:10px;
                     span{
