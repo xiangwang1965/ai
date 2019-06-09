@@ -7,6 +7,9 @@
       size="mini"
       @keyup.enter.native="handleLogin"
     >
+     <h1 class="title">登录</h1>
+     <span class="minTit">LOGIN RIGEST</span>
+      <span class="tit2">欢迎您回来</span>
       <div class="login">
         <div class="inputstyle input_username">
             <img :src="urls.username">
@@ -128,7 +131,24 @@ export default {
   text-align: center;
   line-height: 48px;
 }
-
+.minTit {
+    display:block;
+    opacity: 0.7;
+font-family: ArialRoundedMTBold;
+font-size: 12px;
+color: #FFFFFF;
+letter-spacing: 1.6px;
+text-align: center;
+}
+.tit2 {
+    margin-top:30px;
+    display:block;
+    font-family: HYQiHei-EES;
+font-size: 13px;
+color: #FFFFFF;
+letter-spacing: 1.73px;
+text-align: center;
+}
 .center {
   width: 1234px;
   height: 726px;
