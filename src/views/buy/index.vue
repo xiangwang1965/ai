@@ -183,7 +183,7 @@ function fn(ar) {
   return arr;
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .classContainer {
   background-color: #f9fafc;
   width: 100vw;

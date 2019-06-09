@@ -333,7 +333,7 @@ export default {
   }
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 #teacherView {
   width: 100vw;
   height: 100vh;

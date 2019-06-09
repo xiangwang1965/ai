@@ -1,7 +1,7 @@
 <template>
-  <div class="classContainer">
+  <div id="classContainer" class="classContainer">
     <div class="left">
-      <h1 class="title">班级管理</h1>
+      <h1 class="tit">班级管理</h1>
       <div class="round"></div>
       <p class="p">当前班级</p>
       <p class="btn">历史班级</p>
@@ -260,7 +260,7 @@ export default {
   }
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 @orange:#ffc151;
 @green:#6edbef;
 @red:#ff696c;
@@ -277,7 +277,7 @@ export default {
       left: 16vw;
       top: 85vh;
     }
-    .title {
+    .tit {
       position: absolute;
       left: 18px;
     }
