@@ -98,9 +98,9 @@
           <span class="active">学员管理</span>
         </div>
       </div>
-      <el-input placeholder="请输入内容" class="search_btn" v-model="searchData">
+      <el-input placeholder="请输入学生编号或姓名" class="search_btn" v-model="searchData">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
-        <el-button slot="append" icon="el-icon-search"></el-button>
+        <el-button slot="append" @click="search" icon="el-icon-search"></el-button>
       </el-input>
       <div class="rightInfo">
         <ul>
@@ -129,13 +129,13 @@
           </li>
         </ul>
       </div>
-      <el-button @click="showManage1 = true" type="default" class="manage2 cac-button-one">管理</el-button>
+      <el-button @click="handleManage2" type="default" class="manage2 cac-button-one">管理</el-button>
     </div>
-    <el-dialog center style="height:100vh;overflow:hidden;" title="学生管理" width="80%" :visible.sync="showManage2">
-       <studentManage></studentManage>
+    <el-dialog center append-to-body style="height:100vh;overflow:hidden;" title="学生管理" width="80%" :visible.sync="showManage2">
+       <studentManage :currentType="currentType" ref="studentsManage" :currentClass="current" :studentlist="studentsList"></studentManage>
     </el-dialog>
     <el-dialog center append-to-body style="height:100vh;overflow:hidden;" title="班级管理" width="80%" :visible.sync="showManage1">
-       <classManage v-on:refresh="refresh" ref="child" :currentIndex="currentIndex" :datalist="currentList"></classManage>
+       <classManage v-on:refresh="refresh" ref="classManage" :currentIndex="currentIndex" :datalist="currentList"></classManage>
     </el-dialog>
   </div>
 </template>
@@ -179,13 +179,18 @@ export default {
   
     };
   },
+  computed:{
+    current(){
+      return this.courseList['course' + this.currentType][this.currentIndex];
+    }
+  },
   created() {
     this.getData(1);
   },
   mounted(){
     let that = this;
     window.addEventListener('scroll',function(e){
-      if(this.showManage1){
+      if(this.showManage1 || this.showManage2){
         e.preventDefault();
       }
     },false)
@@ -196,13 +201,29 @@ export default {
   },
   methods: {
     handleChange(val) {
-      console.log(val);
+      
     },
     handleManage1(){
       this.showManage1 = true;
-      if(this.$refs.child){
-         this.$refs.child.setRight(this.currentList[this.currentIndex]);
+      if(this.$refs.classManage){
+         this.$refs.classManage.setRight(this.currentList[this.currentIndex]);
       }
+    },
+    handleManage2(){
+      this.showManage2 = true;
+      if(this.$refs.studentsManage){
+         this.$refs.studentsManage.setClass();
+         this.$refs.studentsManage.getCodeList(this.currentClass);
+      }
+    },
+    search(){
+      let params = {
+        clsId:this.currentClass,
+        searchTxt:this.searchData
+      }
+      classApi.search(params).then(res => {
+        this.studentsList = res.data;
+      })
     },
     refresh(data){
       this.courseList['course' + this.currentType] = Object.assign({},data);
@@ -251,7 +272,8 @@ export default {
       this.currentClass = item.id;
       this.currentIndex = index;
       let params = {
-        clsId: item.id
+        clsId: item.id,
+        searchTxt:''
       };
       classApi.getStudent(params).then(res => {
         this.studentsList = res.data;
@@ -460,11 +482,11 @@ export default {
     background: #b6b6b6;
     position: absolute;
     top: 20vh;
-    left: 45vw;
+    left: 500px;
   }
   .right {
     position: relative;
-    left: 45vw;
+    left: 520px;
     width:40vw;
     height:100vh;
     top: 0;
@@ -533,8 +555,7 @@ export default {
         line-height: 64px;
         border-right:1px solid #b9b9b9;
         p{
-          width:107px;
-          height:18px;
+          display: inline;
           color:#9B9B9B;
           font-family: HYQiHei-GZS;
           font-size: 12px;
