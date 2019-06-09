@@ -17,6 +17,8 @@ const teacherWrap = () => import('@/views/teacher/teacherWrap')
 // 购买激活码
 const buy = () => import('@/views/buy')
 const buyWrap = () => import('@/views/buy/buyWrap')
+const payOrder = () => import('@/views/buy/payOrder')
+const success = () => import('@/views/buy/success')
 // 课程订单
 const course = () => import('@/views/course')
 const courseWrap = () => import('@/views/course/courseWrap')
@@ -90,7 +92,9 @@ const router = new Router({
                     component: buyWrap,
                     beforeEnter: requireAuth,
                     children: [
-                        { path: '/', name: 'buy', component: buy}
+                        {path: '/', name: 'buy', component: buy},
+                        {path: '/payOrder',name:'payorder',component: payOrder},
+                        {path: '/success' ,name:'success', component:success}
                     ]
                 },
                 {

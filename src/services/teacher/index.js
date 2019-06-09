@@ -4,22 +4,19 @@ class Teacher extends CRUD {
   constructor () {
     super()
     this.queryUrl = '/ws/api/user/getTeachers'
-    this.createUrl = '/students/add'
-    this.updateUrl = '/students/modify'
-    this.queryDetailUrl = '/students'
-    this.classUrl = 'class/studentCLassList'
-    this.studentInsertUrl = '/class/studentInsert'
+
+    this.queryTeacherUrl = '/ws/api/class/teacherInfo'
   }
   queryStudenEdit () {
-    return this.sendGet(this.queryStudenEditUrl)
+    return this.sendGet( this.queryStudenEditUrl)
   }
-  // 获取某学生的详细信息
+  // 获取教师里lie'biao
   querylist (params) {
     return this.sendGet(this.queryUrl, params)
   }
-  // 获取某学生的班级信息
-  queryClass (params) {
-    return this.sendGet(this.classUrl, params)
+  // 获取教师详细信息
+  queryTeacherInfo (params) {
+    return this.sendGet(this.queryTeacherUrl, params)
   }
   // 学生插班
   studentInsert (params) {
