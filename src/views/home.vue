@@ -1,16 +1,16 @@
 <!-- 应用首页 -->
 <template>
-  <div class="homeView">
-    <el-container class="mainContainer">
+  <div class="wrap">
+    <appHeader></appHeader>
+    <!-- <el-container class="mainContainer">
       <appSidebar class="appSidebarWrap"></appSidebar>
       <el-main class="appMain" v-scrollBar>
         <appHeader class="appHeader"></appHeader>
         <div class="addBody">
-          <router-view></router-view>
+            <router-view></router-view>
         </div>
-        <appFooter></appFooter>
       </el-main>
-    </el-container>
+    </el-container> -->
   </div>
 </template>
 
@@ -31,9 +31,14 @@ export default {
 }
 </script>
 
-<style scoped>
-.homeView {
-  height:100%;
+<style lang="less" scoped>
+.wrap {
+  width: 100%;
+    height: 100%;
+    min-height: 10.8rem;
+    background: url('../../static/image/wrapBackground.png') no-repeat;
+    background-size:cover;
+    position:absolute;
 }
 .homeView .mainContainer {
   min-width: 1280px;

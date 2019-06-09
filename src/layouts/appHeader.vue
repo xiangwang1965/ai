@@ -1,24 +1,23 @@
 <template>
   <el-header class="header">
-    <!-- <div class="header__left">
-      <a href="/">
-        <img :src="logoImg" alt="" class="logo">
-      </a>
-    </div> -->
-    <div class="header__right" style="cursor: pointer">
-      <el-dropdown trigger="click" @command="handleCommand">
-        <span class="el-dropdown-link">
-          <img :src="user.avatar" class="header__right__avatar">
-          <span class="user_name" :title="user.name">{{ user.name }}</span>
-          <i class="el-icon-arrow-down"></i>
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="gotoSetProfile">个人资料</el-dropdown-item>
-          <el-dropdown-item command="gotoResetPassword">修改密码</el-dropdown-item>
-          <el-dropdown-item command="logout">退出</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div>
+      <div class="header_left">
+            <img :src="logoImg">
+        </div>
+        <div class="header_right" style="cursor: pointer">
+            <img :src="menuIcon" alt="">
+        <!-- <el-dropdown trigger="click" @command="handleCommand">
+            <span class="el-dropdown-link">
+            <img :src="user.avatar" class="header__right__avatar">
+            <span class="user_name" :title="user.name">{{ user.name }}</span>
+            <i class="el-icon-arrow-down"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="gotoSetProfile">个人资料</el-dropdown-item>
+            <el-dropdown-item command="gotoResetPassword">修改密码</el-dropdown-item>
+            <el-dropdown-item command="logout">退出</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown> -->
+        </div>
   </el-header>
 </template>
 
@@ -33,7 +32,8 @@
     data () {
       return {
         showList: false,
-        logoImg: '../../static/img/logo-white.png',
+        logoImg: '../../static/image/logo.png',
+        menuIcon: '../../static/image/menuIcon.png',
         user: {
           name: '',
           avatar: '',
@@ -113,37 +113,42 @@
   }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
   .header {
-    text-align: right;
-    width: 200px;
-    height: 60px !important;
-    line-height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 2;
-    /* background: url(../../static/img/bg-header.jpg) no-repeat; */
-    background-size: 100%;
-    padding: 0 20px;
+    // text-align: right;
+    // width: 200px;
+    // height: 60px !important;
+    // line-height: 60px;
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: center;
+    // position: absolute;
+    // top: 0;
+    // right: 0;
+    // z-index: 2;
+    // /* background: url(../../static/img/bg-header.jpg) no-repeat; */
+    // background-size: 100%;
+    // padding: 0 20px;
+    .header_left {
+        float: left;
+        img {
+            width: 3.30rem;
+            height: 0.65rem;
+            display: block;
+            margin: 0.42rem 0 0 0.30rem;
+        }
+    }
+    .header_right{
+        float: right;
+        img{
+            width: 0.72rem;
+            height: 0.43rem;
+            display: block;
+            margin: 0.49rem 0.48rem 0 0;
+        }
+    }
   }
-  .header__left {
-    height: 100%;
-    display: flex;
-    align-items: center;
-  }
-  .header__left a {
-    height: 60px;
-    padding-top: 10px;
-  }
-  .header__title {
-    color: #fff;
-    font-weight: 700;
-    font-size: 22px;
-  }
+
   .header__right {
     color: #fff;
     font-size: 16px;
