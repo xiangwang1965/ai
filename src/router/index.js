@@ -101,8 +101,8 @@ const router = new Router({
                     beforeEnter: requireAuth,
                     children: [
                         {path: '/', name: 'buy', component: buy},
-                        {path: '/payOrder',name:'payorder',component: payOrder},
-                        {path: '/success' ,name:'success', component:success}
+                        {path: 'payOrder',name:'payorder',component: payOrder},
+                        {path: 'success' ,name:'success', component:success}
                     ]
                 },
                 {

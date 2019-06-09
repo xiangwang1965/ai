@@ -249,3 +249,13 @@ export function requireAgainPage (obj) {
   }
   return page
 }
+
+export function readFileAsBase64 (file) {
+    var reader = new FileReader()
+    reader.readAsDataURL(file)
+    return new Promise((resolve, reject) => {
+      reader.onload = () => {
+        resolve(reader.result.replace(/^data:.+;base64,/, ''))
+      }
+    })
+  }

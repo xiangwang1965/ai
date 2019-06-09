@@ -2,7 +2,7 @@
   <div class="classContainer">
     <div class="left">
       <h1 class="title">购买激活码</h1>
-      <div class="sideContainer">
+     <div class="sideContainer">
         <div class="item" :key="i" v-for="(item,i) in tabs">
           <div class="classTitle" :class="item.colorCls" @click="switchTab(item.id)">
             <span class="txt green">{{item.name}}</span>
@@ -21,24 +21,29 @@
     </div>
     <div class="center"></div>
     <div class="right">
-      <h1 class="title">购买激活码清单</h1>
+     <h1 class="title">购买激活码清单</h1>
       <div class="tabs">
         <ul>
-             <el-checkbox-group v-model="switchNames" @change="handleCheckedCitiesChange">
+             <el-checkbox-group v-model="switchNames" @change="changSelectChange">
           <li :key="d" v-for="(c,d) in switchData">
-            <el-checkbox :label="c.name" ></el-checkbox>
-            <el-input-number size="mini" v-model="c.num" label="描述文字"></el-input-number>
+            <div class="orderItem">
+                <el-checkbox :label="c.name" ></el-checkbox>
+               <el-input-number size="mini" v-model="c.num"></el-input-number>
+            </div>
           </li>
            </el-checkbox-group>
         </ul>
-         <div>
-            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-           合计<span>{{totalPrice}}</span>
-           <button @click="payHandle">结算</button>
+         <div class="bottomBtn">
+            <div class="orderItem">
+            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll"    @change="handleCheckAllChange">全选</el-checkbox>
+            <span id="money">支付金额：<i>￥{{totalPrice}}</i></span>
+           <el-button type="primary" round @click="payHandle">结算</el-button>
+           </div>
           </div>
       </div>
     </div>
   </div>
+
 </template>
 <script>
 import buyApi from "@/services/buy";
@@ -46,6 +51,7 @@ import buyApi from "@/services/buy";
 export default {
   data() {
     return {
+        num4:1,
         switchNames:[],
         checkAll: false,
         isIndeterminate: true,
@@ -85,9 +91,11 @@ export default {
   },
   created() {
     this.getData(1);
-    this.$router.push('/success');
   },
   methods: {
+       handleChange(value) {
+        console.log(value);
+      },
     switchTab(index) {
       if (index === this.activeIndex) {
         this.tabs[this.activeIndex - 1].IconCls = "el-icon-arrow-right";
@@ -102,7 +110,7 @@ export default {
       }
     },
     dataHandle(val) {
-      let tmp = val;
+      let tmp = Object.assign({},val);
       tmp.checked = false;
       tmp.num = 1;
       if (this.switchData.length > 0) {
@@ -140,33 +148,48 @@ export default {
         this.isIndeterminate = false;
         if (val) {
             this.switchData.forEach(item=>{
-                this.totalPrice += +item.price;
-
+                this.totalPrice += (+item.price)*item.num;
             })
+            console.log(this.totalPrice);
+            this.totalPrice = this.totalPrice.toFixed(2);
         } else {
              this.totalPrice = 0;
         }
       },
-      handleCheckedCitiesChange(value) {
+      changSelectChange(value) {
         console.log(value);
+        this.totalPrice = 0;
         this.switchData.forEach(item=>{
-            if (value.indexOf(item.name)) {
-                this.totalPrice += +item.price;
+            if (value.indexOf(item.name) > -1) {
+                this.totalPrice += (+item.price)*item.num;
             }
         })
+        this.totalPrice = this.totalPrice.toFixed(2);
         let checkedCount = value.length;
         this.checkAll = checkedCount === this.switchData.length;
         this.isIndeterminate = checkedCount > 0 && checkedCount < this.switchData.length;
       },
       payHandle(){
-          if (this.totalPrice > 0) {
-              buyApi.queryPayImg({price:this.totalPrice}).then(res => {
-                if (res.code === "001") {
-
-                // this.dataList = res.data;
-                }
-      });
-          }
+          let result = [];
+        this.switchData.forEach(item=>{
+        if (this.switchNames.indexOf(item.name) > -1) {
+            result.push({
+                courseId:item.id,
+                num:item.num
+            });
+        }
+    })
+        buyApi.queryAddOrder({data:JSON.stringify(result)}).then(res => {
+            if (res.code === '001') {
+                this.$router.push({
+                    name:'payorder',
+                    query:{
+                        out_trade_no:res.data.out_trade_no,
+                        totalPric:res.data.totalPric
+                    }
+                });
+            }
+        });
       }
   }
 };
@@ -185,13 +208,16 @@ function fn(ar) {
 </script>
 <style lang="less" scoped>
 .classContainer {
-  background-color: #f9fafc;
-  width: 100vw;
-  height: 100vh;
+     background-color: #f9fafc;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 0;
   .left {
     width: 613px;
     position: absolute;
     height: 100%;
+    z-index:1;
     .title {
       position: absolute;
       left: 18px;
@@ -275,16 +301,17 @@ function fn(ar) {
     width: 1px;
     height: 500px;
     background: #b6b6b6;
-    position: relative;
+    position: absolute;
     top: 20%;
-    left: 700px;
+    left: 614px;
+    z-index: 1;
   }
   .right {
     position: absolute;
-    left: 735px;
-    top: 25px;
-    width: 500px;
+    left: 625px;
+    width: 460px;
     height: 100%;
+    z-index:1;
     .title {
       position: absolute;
       left: 18px;
@@ -292,25 +319,70 @@ function fn(ar) {
       z-index: 1;
     }
     .tabs {
-      width: 500px;
-      background: red;
+      width: 460px;
       position: absolute;
       left: 0px;
       top: 0px;
       height: 100%;
       ul {
-        background: #ccc;
         width: 100%;
         min-height: 403px;
-        margin-top: 100px;
+        margin-top: 60px;
         li {
-          width: 90%;
-          margin-top: 15px;
-          height: 85px;
-          background: #ffffff;
-          border-radius: 7px;
-          margin: 0 auto;
+            width: 90%;
+            height: 85px;
+            border-radius: 7px;
+            position: relative;
+            margin: 15px auto;
+            background: #FFFFFF;
+            border-radius: 7px;
+            .orderItem {
+                height: 100%;
+                margin: auto;
+                padding-top: 20px;
+                .el-checkbox {
+                    float:left;
+                    margin-left:30px;
+                }
+                .el-input-number {
+                    float:right;
+                    margin-right:30px;
+                }
+            }
+
         }
+      }
+      .bottomBtn {
+        width: 90%;
+        height: 85px;
+        border-radius: 7px;
+        position: relative;
+        margin: 15px auto;
+        background: #FFFFFF;
+        border-radius: 7px;
+         .orderItem {
+                height: 100%;
+                margin: auto;
+                padding-top: 20px;
+                .el-checkbox {
+                    float:left;
+                    margin-left:30px;
+                }
+                span {
+                    float: left;
+                    font-family: HiraginoSansGB-W6;
+                    font-size: 16px;
+                    letter-spacing: 0;
+                    i {
+                        color: #4994FD;
+                    }
+                }
+                .el-button {
+                    float:right;
+                    width: 108px;
+                    height: 42px;
+                }
+            }
       }
     }
   }
