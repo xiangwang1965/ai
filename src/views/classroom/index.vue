@@ -314,10 +314,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@orange: #ffc151;
-@green: #6edbef;
-@red: #ff696c;
-@purpe: #8b90ff;
 .classContainer {
   width: 100%;
   height: 100%;
@@ -706,64 +702,6 @@ export default {
             }
           }
         }
-      }
-    }
-  }
-  .content33 {
-    .search_btn {
-      float: right;
-      margin-right: 130px;
-      margin-top: 20px;
-    }
-    .el-input {
-      width: 18vw;
-    }
-    .manage2 {
-      position: absolute;
-      top: 85vh;
-      left: 150px;
-    }
-    .rightInfo {
-      float: left;
-      width: 428px;
-      height: 104px;
-      background: #ffffff;
-      padding: 10px 0;
-      border-radius: 20px;
-      margin-top: 20px;
-      li {
-        float: left;
-        width: 107px;
-        height: 84px;
-        line-height: 64px;
-        border-right: 1px solid #b9b9b9;
-        p {
-          width: 107px;
-          height: 18px;
-          color: #9b9b9b;
-          font-family: HYQiHei-GZS;
-          font-size: 12px;
-          letter-spacing: 0;
-          text-align: center;
-          &.big {
-            font-size: 24px;
-          }
-        }
-        &:last-child {
-          border-right: none;
-        }
-      }
-    }
-    .students {
-      width: 428px;
-      float: left;
-      li {
-        margin-top: 20px;
-        height: 66px;
-        border: none;
-        border-radius: 42px;
-        background: #ffffff;
-        width: 100%;
       }
     }
   }
