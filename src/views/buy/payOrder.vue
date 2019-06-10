@@ -40,9 +40,5 @@ img {
     position:absolute;
     width:4rem;
     height:4rem;
-    // left:50%;
-    // top:50%;
-    // margin-left:-2rem;
-    // margin-top:-2rem;
 }
 </style>
