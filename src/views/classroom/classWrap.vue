@@ -16,10 +16,8 @@ export default {
   }
 }
 </script>
-<style scoped>
-#classWrapPage{
-  background:#f9fafc;
-  width:100vw;
-  height:100vh;
-}
+<style lang="less" scoped>
+ #classWrapPage {
+     width:100%;
+ }
 </style>
