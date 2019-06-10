@@ -1,15 +1,8 @@
 <template>
-<div id="payView">
-    abc
+<div id="payOrder" class="orderView">
+        <img :src="qrImg" />
 </div>
 </template>
-<style lang="less" scoped>
-    #pageView {
-        background:#eff2f6;
-        height:100vh;
-        width:100vw;
-    }
-</style>
 <script>
     import buyApi from "@/services/buy";
     import utils from '../../utils';
@@ -20,7 +13,7 @@
                 qRImg:'',
                 out_trade_no: this.$route.query.out_trade_no,
                 totalPric: this.$route.query.totalPric,
-                qrImg: config.API_URL+'/pay/'+ this.$route.query.out_trade_no+ '.jpg'
+                qrImg: config.API_URL+'upload/pay/'+ this.$route.query.out_trade_no+ '.jpg'
             }
         },
         mounted() {
@@ -35,3 +28,17 @@
         }
     }
 </script>
+
+<style lang="less" scoped>
+.orderView {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex: 1;
+}
+img {
+    position:absolute;
+    width:4rem;
+    height:4rem;
+}
+</style>
