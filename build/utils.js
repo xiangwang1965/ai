@@ -12,6 +12,13 @@ exports.assetsPath = function (_path) {
   return path.posix.join(assetsSubDirectory, _path)
 }
 
+var px2remLoader = {
+    loader: 'px2rem-loader',
+    options: {
+      remUnit: 75     // (这里是指设计稿的宽度为 750 / 10)
+    }
+  }
+
 exports.cssLoaders = function (options) {
   options = options || {}
 
@@ -31,7 +38,7 @@ exports.cssLoaders = function (options) {
 
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
-    const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
+    const loaders = options.usePostCSS ? [cssLoader, postcssLoader,px2remLoader] : [cssLoader]
 
     if (loader) {
       loaders.push({
