@@ -6,6 +6,7 @@ class Buy extends CRUD {
     this.getCoursesByTypeId = '/ws/api/course/getCoursesByTypeId'
     this.getPayImgUrl = '/ws/api/course/getPayImg'
     this.addOrdersUrl = '/ws/api/class/addOrder'
+    this.payStatusUrl = '/ws/api/class/getOrderStatus'
   }
   queryCourses (params) {
     return this.sendGet(this.getCoursesByTypeId,params)
@@ -18,6 +19,11 @@ class Buy extends CRUD {
   }
   queryAddOrder(params) {
     return this.sendPost(this.addOrdersUrl, params).then(res => {
+        return res;
+    });
+  }
+  queryOrderStatus(params) {
+    return this.sendPost(this.payStatusUrl, params).then(res => {
         return res;
     });
   }

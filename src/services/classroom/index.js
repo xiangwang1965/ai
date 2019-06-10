@@ -8,6 +8,7 @@ class Classroom extends CRUD {
     this.courseOptionsUrl = '/ws/api/class/getCourseByShoolId';
     this.tearcherOptionsUrl = '/ws/api/user/getTeachers';
     this.addClassUrl = '/ws/api/class/addCls';
+    this.searchStudentUrl = '/ws/api/user/getStudents';
   }
 
   getData(params){
@@ -39,6 +40,11 @@ class Classroom extends CRUD {
     return this.sendPost(this.addClassUrl,params).then(res => {
       return res;
     })
+  }
+  searchStuInfo(params) {
+    return this.sendGet(this.searchStudentUrl,params).then(res => {
+        return res;
+      })
   }
 }
 

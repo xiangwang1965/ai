@@ -19,7 +19,7 @@
                 class="class_item class_item_yellow"
                 v-for="(item,index) in courseList.course1"
                 :key="index"
-                @click="getStudent(item,index)"
+                @click="getStudents(item,index)"
               >
                 <div class="class_fixed"></div>
                 <div class="class_text">
@@ -44,7 +44,7 @@
                 class="class_item class_item_blue"
                 v-for="(item,index) in courseList.course2"
                 :key="index"
-                @click="getStudent(item,index)"
+                @click="getStudents(item,index)"
               >
                 <div class="class_fixed"></div>
                 <div class="class_text">
@@ -69,7 +69,7 @@
                 class="class_item class_item_red"
                 v-for="(item,index) in courseList.course3"
                 :key="index"
-                @click="getStudent(item,index)"
+                @click="getStudents(item,index)"
               >
                 <div class="class_fixed"></div>
                 <div class="class_text">
@@ -94,7 +94,7 @@
                 class="class_item class_item_purple"
                 v-for="(item,index) in courseList.course4"
                 :key="index"
-                @click="getStudent(item,index)"
+                @click="getStudents(item,index)"
               >
                 <div class="class_fixed"></div>
                 <div class="class_text">
@@ -129,7 +129,7 @@
           <div class="search_position">
             <div class="search_box" style="float:right">
                 <el-input placeholder="搜索姓名/ID" size="mini" prefix-icon="el-icon-search" class="search_btn" v-model="searchData">
-                <el-button slot="append" class="search_btn1"> 搜索</el-button>
+                <el-button slot="append" class="search_btn1" @click="searchStudent"> 搜索</el-button>
             </el-input>
             </div>
           </div>
@@ -150,7 +150,7 @@
             </div>
           </div>
           <div class="person_List">
-            <div class="person_box" v-for="item in studentsList" :key="item.id">
+            <div class="person_box" v-for="(item,i) in studentsList" :key="i">
               <div class="person_name">{{item.name}}</div>
               <div class="person_handle">
                 <div class="icon1"></div>
@@ -225,6 +225,7 @@ export default {
       currentIndex: "",
       currentList: [],
       currentType: "",
+      /**搜索字段 */
       searchData: ""
     };
   },
@@ -259,7 +260,7 @@ export default {
     },
     refresh(data) {
       this.courseList["course" + this.currentType] = Object.assign({}, data);
-      this.getStudent(data[0], 0);
+      this.getStudents(data[0], 0);
     },
     getData(typeId) {
       let params = {
@@ -280,7 +281,7 @@ export default {
             this.courseList["course" + typeId] = Object.assign({}, res.data);
             this.currentList = res.data;
             if (this.isFirst) {
-              this.getStudent(res.data[0], 0);
+              this.getStudents(res.data[0], 0);
               this.currentClass = res.data[0].id;
               this["nodata" + typeId] = false;
             }
@@ -294,7 +295,7 @@ export default {
         this.currentList = this.courseList["course" + typeId.length];
       }
     },
-    getStudent(item, index) {
+    getStudents(item, index) {
       this.classTitle = item.name;
       this.startDate = item.startDate;
       this.beginTime = item.beginTime;
@@ -308,6 +309,18 @@ export default {
       };
       classApi.getStudent(params).then(res => {
         this.studentsList = res.data;
+      });
+    },
+    /** 根据条件搜索学生信息 */
+    searchStudent() {
+      let params = {
+        clsId: this.currentClass,
+        searchTxt:this.searchData
+      };
+      classApi.searchStuInfo(params).then(res => {
+          if (res.code === '001') {
+              this.studentsList = res.data;
+          }
       });
     }
   }

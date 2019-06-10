@@ -48,6 +48,7 @@ class Auth extends Base {
       if (res.code == '001') {
         authUtils.setToken(res.data.token)
         let { id, name, user_type, username } = res.data
+        code: null
         authUtils.setUser({
           id,
           name,

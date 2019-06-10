@@ -17,13 +17,28 @@
             }
         },
         mounted() {
-            console.log(config.API_URL+'upload/pay/'+ this.$route.query.out_trade_no+ '.jpg')
+            this.payOrderStatus();
         },
         methods:{
-            getPayImg() {
+            payOrderStatus() {
                 let params = {
-                    code_url:33234
+                    out_trade_no:this.out_trade_no
                 };
+                let t = setInterval(() => {
+                    buyApi.queryOrderStatus(params).then(res=>{
+                        if (res.code == '001') {
+                            if (res.data === 1) {
+                                clearInterval(t);
+                            }
+                        } else {
+                            this.$message({
+                               message:res.msg,
+                               type:'error'
+                            })
+                        }
+                    });
+                }, 5000);
+
             }
         }
     }
