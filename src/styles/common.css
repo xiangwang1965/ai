@@ -57,6 +57,19 @@ html body {
     left: 50%;
     margin-left: -0.62rem;
   }
+  .bg_y {
+    background: #FFC151;
+  }
+  .bg_b {
+    background: #6EDBEF;
+  }
+  .bg_r {
+    background: #FF696C;
+  }
+  .bg_p {
+    background: #8B90FF;
+  }
+
 
   .btn_124 {
     width: 1.24rem;
@@ -67,6 +80,38 @@ html body {
     text-align: center;
     line-height: 0.42rem;
     font-size: 0.14rem;
+  }
+  .btn_172 {
+    width: 1.72rem;
+    height: 0.48rem;
+    background: #4994FD;
+    border-radius: 0.06rem;
+    color: #fff;
+    text-align: center;
+    line-height: 0.48rem;
+    font-size: 0.17rem;
+    cursor: pointer;
+  }
+  .btn_148 {
+    width: 1.48rem;
+    height: 0.32rem;
+    border-radius: 0.07rem;
+    color: #fff;
+    text-align: center;
+    line-height: 0.32rem;
+    font-size: 0.15rem;
+    cursor: pointer;
+  }
+  .btn_108 {
+    width: 1.08rem;
+    height: 0.42rem;
+    background: #4994FD;
+    border-radius: 0.29rem;
+    color: #fff;
+    text-align: center;
+    line-height: 0.42rem;
+    font-size: 0.14rem;
+    cursor: pointer;
   }
 
   .content_title {
