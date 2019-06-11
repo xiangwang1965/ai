@@ -4,7 +4,7 @@
     <appHeader></appHeader>
     <el-container class="content">
         <appSidebar class="appSidebarWrap"></appSidebar>
-        <el-main class="appMain">
+        <el-main class="content_right">
             <router-view></router-view>
         </el-main>
     </el-container>
@@ -43,7 +43,7 @@ export default {
         background: #F3F6FC;
         border-radius: 0.20rem;
     }
-    .appMain{
+    .content_right{
         flex: 1;
         display: flex;
     }

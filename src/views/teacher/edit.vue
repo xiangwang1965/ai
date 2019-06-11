@@ -208,7 +208,7 @@ export default {
             if (this.status === 'create') {
               let loadingInstance = this.$loading({
                 text: '创建中...',
-                target: '.appMain'
+                target: '.content_right'
               })
               studentApi.create(params).then(res => {
                 setTimeout(() => {
@@ -224,7 +224,7 @@ export default {
               params.student_id = this.student_id
               let loadingInstance = this.$loading({
                 text: '修改中...',
-                target: '.appMain'
+                target: '.content_right'
               })
               studentApi.update(params).then(res => {
                 setTimeout(() => {

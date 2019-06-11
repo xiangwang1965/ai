@@ -635,11 +635,6 @@ export default {
       }
     }
     .student_management {
-      .search_position {
-        width: 100%;
-        height: 0.36rem;
-        margin: 0.15rem 0 0.3rem 0;
-      }
       .class_infomation {
         height: 1.04rem;
         border-radius: 0.2rem;

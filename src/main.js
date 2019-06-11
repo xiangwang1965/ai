@@ -76,6 +76,7 @@ Vue.use(ElementUI)
 window.onresize = setHtmlFontSize;
 function setHtmlFontSize(){
     const designSize = 1920;
+    // const designSize = 2500;
     const htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;
     const htmlDom = document.getElementsByTagName('html')[0];
     htmlDom.style.fontSize = htmlWidth*100 / designSize + 'px';
