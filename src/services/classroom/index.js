@@ -9,6 +9,7 @@ class Classroom extends CRUD {
     this.tearcherOptionsUrl = '/ws/api/user/getTeachers';
     this.addClassUrl = '/ws/api/class/addCls';
     this.searchStudentUrl = '/ws/api/user/getStudents';
+    this.coursePlanStatus = '/ws/api/course/getCoursePlanStatus';
   }
 
   getData(params){
@@ -44,8 +45,13 @@ class Classroom extends CRUD {
   searchStuInfo(params) {
     return this.sendGet(this.searchStudentUrl,params).then(res => {
         return res;
-      })
+    })
   }
+  querycoursePlanStatus(params) {
+      return this.sendGet(this.coursePlanStatus,params).then(res => {
+          return res;
+      })
+    }
 }
 
 export default new Classroom()

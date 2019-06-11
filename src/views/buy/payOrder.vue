@@ -29,6 +29,12 @@
                         if (res.code == '001') {
                             if (res.data === 1) {
                                 clearInterval(t);
+                                this.$router.push({
+                                    name:'success',
+                                    query:{
+                                        out_trade_no:res.data.out_trade_no,
+                                    }
+                                });
                             }
                         } else {
                             this.$message({
