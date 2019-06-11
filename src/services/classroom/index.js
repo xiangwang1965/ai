@@ -13,6 +13,8 @@ class Classroom extends CRUD {
     this.createStudentUrl = '/ws/api/class/addStudent';
     this.virificodeUrl = '/ws/api/verificode';
     this.deleteStudentUrl = '/ws/api/class/delClsStudent';
+    this.searchStudentUrl = '/ws/api/user/getStudents';
+    this.coursePlanStatus = '/ws/api/course/getCoursePlanStatus';
   }
 
   getData(params){
@@ -70,6 +72,16 @@ class Classroom extends CRUD {
       return res;
     })
   }
+  searchStuInfo(params) {
+    return this.sendGet(this.searchStudentUrl,params).then(res => {
+        return res;
+    })
+  }
+  querycoursePlanStatus(params) {
+      return this.sendGet(this.coursePlanStatus,params).then(res => {
+          return res;
+      })
+    }
 }
 
 export default new Classroom()
