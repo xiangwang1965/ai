@@ -15,6 +15,12 @@ class Classroom extends CRUD {
     this.deleteStudentUrl = '/ws/api/class/delClsStudent';
     this.searchStudentUrl = '/ws/api/user/getStudents';
     this.coursePlanStatus = '/ws/api/course/getCoursePlanStatus';
+    this.getCoursePlanUrl = '/ws/api/course/getCoursePlan';
+  }
+  getCoursePlan(params){
+    return this.sendGet(this.getCoursePlanUrl,params).then(res => {
+      return res;
+    })
   }
 
   getData(params){

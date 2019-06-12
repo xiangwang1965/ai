@@ -168,24 +168,24 @@ html body {
     line-height: 0.65rem;
   }
   .class_title {
-    height: 0.4rem;
+    height: 0.35rem;
     margin-bottom: 0.2rem;
   }
   .class_S {
     background: url('../../static/image/s_l.png');
-    background-size: 100%;
+    background-size: cover;
   }
   .class_N {
     background: url('../../static/image/n_l.png');
-    background-size: 100%;
+    background-size: cover;
   }
   .class_A {
     background: url('../../static/image/a_l.png');
-    background-size: 100%;
+    background-size: cover;
   }
   .class_P {
     background: url('../../static/image/p_l.png');
-    background-size: 100%;
+    background-size: cover;
   }
   .class_list .class_item {
     width: 4.47rem;
@@ -413,7 +413,7 @@ html body {
     height: 0.26rem;
     width: 0.12rem;
     background: url('../../static/image/arrow_left.png');
-    background-size: 100%;
+    background-size: cover;
     cursor: pointer;
   }
   .dialog_wrap .dialog_center {
@@ -847,7 +847,7 @@ html body {
     width: 4.5rem;
     height: 100%;
     background: url('../../static/image/personalcenter_bg.png');
-    background-size: 100%;
+    background-size: cover;
     position: relative;
   }
   .wrap .content .content_left .out_login {
@@ -889,112 +889,6 @@ html body {
   .wrap .content .content_right .content2 .right_content .classInfo .classInfoItem {
     display: flex;
     flex-direction: column;
-  }
-  .wrap .content .content_right .content2 .step_wrap {
-    background: #fff;
-    border-radius: 0.2rem;
-    height: 1.04rem;
-    margin: 0.16rem 0 0.19rem 0;
-  }
-  .wrap .content .content_right .content2 .step_wrap p {
-    font-size: 0.16rem;
-    padding: 0.17rem 0 0 0.25rem;
-    color: #FFC151;
-  }
-  .wrap .content .content_right .content2 .step_wrap .step_line {
-    margin: 0.3rem 0.25rem 0 1.24rem;
-    height: 0.06rem;
-    position: relative;
-  }
-  .wrap .content .content_right .content2 .step_wrap .step_line .step_line_bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0.28;
-    background: #979797;
-    height: 0.06rem;
-    z-index: 1;
-    width: 100%;
-  }
-  .wrap .content .content_right .content2 .step_wrap .step_line .step_line_width {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: #FFC151;
-    width: 50%;
-    height: 0.06rem;
-    z-index: 10;
-  }
-  .wrap .content .content_right .content2 .step_wrap .step_line .step_line_label {
-    width: 0.67rem;
-    height: 0.42rem;
-    background: url('../../static/image/step_label.png');
-    background-size: 100%;
-    text-align: center;
-    line-height: 0.38rem;
-    position: absolute;
-    top: -0.52rem;
-    left: 50%;
-    margin-left: -0.33rem;
-    color: #fff;
-    font-size: 0.16rem;
-  }
-  .wrap .content .content_right .content2 .lesson_step_list {
-    height: 4.43rem;
-    overflow: auto;
-  }
-  .wrap .content .content_right .content2 .lesson_step_list .lesson_item {
-    display: flex;
-    width: 100%;
-    margin-bottom: 0.25rem;
-  }
-  .wrap .content .content_right .content2 .lesson_step_list .lesson_item .lesson_item_icon {
-    width: 0.9rem;
-  }
-  .wrap .content .content_right .content2 .lesson_step_list .lesson_item .lesson_item_icon .dian_icon {
-    width: 0.25rem;
-    height: 0.25rem;
-    background: url('../../static/image/step_done.png');
-    background-size: 100%;
-    margin: 0.3rem auto;
-    position: relative;
-  }
-  .wrap .content .content_right .content2 .lesson_step_list .lesson_item .lesson_item_icon .dian_icon_up {
-    width: 0.25rem;
-    height: 0.25rem;
-    background: url('../../static/image/step_up.png');
-    background-size: 100%;
-    margin: 0.3rem auto;
-    position: relative;
-  }
-  .wrap .content .content_right .content2 .lesson_step_list .lesson_item .lesson_item_icon .dian_icon_up:after,
-  .wrap .content .content_right .content2 .lesson_step_list .lesson_item .lesson_item_icon .dian_icon:after {
-    content: '';
-    height: 0.78rem;
-    width: 0.02rem;
-    background: #FFC55E;
-    position: absolute;
-    bottom: -0.83rem;
-    right: 0.11rem;
-  }
-  .wrap .content .content_right .content2 .lesson_step_list .lesson_item .lesson_item_icon .dian_icon_last:after {
-    content: '';
-    height: 0;
-    width: 0;
-  }
-  .wrap .content .content_right .content2 .lesson_step_list .lesson_item .lesson_box {
-    flex: 1;
-    height: 0.8rem;
-    border-radius: 0.42rem;
-    background: #fff;
-    display: flex;
-  }
-  .wrap .content .content_right .content2 .lesson_step_list .lesson_item .lesson_box .lesson_name {
-    width: 1.48rem;
-    color: #5C5C5C;
-    font-size: 0.16rem;
-    text-align: center;
-    padding-top: 0.25rem;
   }
   .wrap .content .content_right .content2 .lesson_step_list .lesson_item .lesson_box .lesson_info {
     flex: 1;
@@ -1119,5 +1013,5 @@ html body {
     height: 0.22rem;
     display: inline-block;
     background: url('../../static/image/personHandle2.png');
-    background-size: 100%;
+    background-size: cover;
   }

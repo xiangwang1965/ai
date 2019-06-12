@@ -19,7 +19,7 @@
                 class="class_item class_item_yellow"
                 v-for="(item,index) in courseList.course1"
                 :key="index"
-                @click="getStudents(item,index)"
+                @click="getList(item,index)"
               >
                 <div class="class_fixed"></div>
                 <div class="class_text">
@@ -44,7 +44,7 @@
                 class="class_item class_item_blue"
                 v-for="(item,index) in courseList.course2"
                 :key="index"
-                @click="getStudents(item,index)"
+                @click="getList(item,index)"
               >
                 <div class="class_fixed"></div>
                 <div class="class_text">
@@ -69,7 +69,7 @@
                 class="class_item class_item_red"
                 v-for="(item,index) in courseList.course3"
                 :key="index"
-                @click="getStudents(item,index)"
+                @click="getList(item,index)"
               >
                 <div class="class_fixed"></div>
                 <div class="class_text">
@@ -94,7 +94,7 @@
                 class="class_item class_item_purple"
                 v-for="(item,index) in courseList.course4"
                 :key="index"
-                @click="getStudents(item,index)"
+                @click="getList(item,index)"
               >
                 <div class="class_fixed"></div>
                 <div class="class_text">
@@ -120,16 +120,46 @@
       <div class="right_content">
         <div class="tab">
           <ul>
-            <li class="tab_item">班级</li>
-            <li class="tab_item tab_active">学员管理</li>
+            <li class="tab_item" :class="{tab_active:studentTabShow == false}" @click="rightTabHandle(false)">课程</li>
+            <li class="tab_item"  :class="{tab_active:studentTabShow == true}" @click="rightTabHandle(true)">学员管理</li>
           </ul>
         </div>
          <div class="classInfo" id="classInfo">
-        <div class="classInfoItem student_management">
+             <div class="classInfoItem class_management" v-show="!studentTabShow">
+                <div class="step_wrap">
+                    <p>课程总进度</p>
+                    <div class="step_line">
+                        <div class="step_line_label">{{curCourProcess}}%</div>
+                        <div class="step_line_bg"></div>
+                        <div class="step_line_width" :style="{width:curCourProcess+'%'}"></div>
+                    </div>
+                </div>
+                <div class="lesson_step_list">
+                    <div class="lesson_item" :key="c" v-for="(item,c) in coursePlanData.list">
+                        <div class="lesson_item_icon">
+                            <div :class="item.pointclass">
+                            </div>
+                        </div>
+                        <div class="lesson_box">
+                            <div class="lesson_name">{{item.name}}</div>
+                            <div class="lesson_info">
+                                <div class="lesson_step_lable" v-if="item.status == 0">未开始</div>
+                                <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1" >进行中</div>
+                                <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
+                                <div class="lesson_step">
+                                    <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
+                                    <div class="lesson_step_bg"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="classInfoItem student_management" v-show="studentTabShow">
           <div class="search_position">
             <div class="search_box" style="float:right">
-                <el-input placeholder="搜索姓名/ID" size="mini" prefix-icon="el-icon-search" class="search_btn" v-model="searchData">
-                <el-button slot="append" class="search_btn1" @click="search"> 搜索</el-button>
+               <el-input placeholder="搜索姓名/ID" size="mini" prefix-icon="el-icon-search"  v-model="searchData">
+                <el-button slot="append" class="search_btn" @click="search"> 搜索</el-button>
             </el-input>
             </div>
           </div>
@@ -175,6 +205,7 @@
 import classApi from "@/services/classroom";
 import studentManage from './studentManage';
 import classManage from './classManage';
+import authUtils from "@/services/auth/utils";
 export default {
   data() {
     return {
@@ -207,16 +238,21 @@ export default {
       currentIndex:'',
       currentList:[],
       currentType:'',
-      searchData:''
-
+      searchData:'',
+      userInfo:{},
+      /**右侧tab显示模块 */
+      studentTabShow:true,
+      coursePlanData:{},
+      curCourProcess:'0%'
     };
   },
   computed:{
     current(){
       return this.courseList['course' + this.currentType][this.currentIndex];
-    }
+    },
   },
   created() {
+    this.userInfo = authUtils.getUser();
     this.getData(1);
   },
   mounted(){
@@ -232,8 +268,54 @@ export default {
     classManage
   },
   methods: {
-    handleChange(val) {
+    getList(item,index) {
+         if (item) {
+            this.classTitle = item.name;
+            this.startDate = item.startDate;
+            this.beginTime = item.beginTime;
+            this.endTime = item.endTime;
+            this.level = item.level;
+            this.stuCnt = item.stuCnt;
+            this.currentClass = item.id;
+            }
+        if (index) {
+            this.currentIndex = index;
+        }
+        if (this.studentTabShow) {
+            this.getStudent();
+        } else {
+            this.getCoursePlan();
+        }
+    },
+    getCoursePlan() {
+      let params = {
+        clsId: this.currentClass,
+        // clsId: 1,
+      };
+        classApi.getCoursePlan(params).then(res => {
+            if (res.code === '001') {
+                this.coursePlanData = res.data;
+                this.curCourProcess = Math.ceil(this.coursePlanData.point);
+                if (this.coursePlanData.list.length){
+                    this.coursePlanData.list.forEach((item,index)=>{
+                        this.coursePlanData.list[index].pointclass= item.status == 0 ? 'dian_icon_up':'dian_icon';
+                        if (index == (this.coursePlanData.list.length -1)) {
+                            this.coursePlanData.list[index].pointclass += ' dian_icon_last';
+                        }
+                    })
+                }
 
+            }
+
+      })
+    },
+    rightTabHandle() {
+        this.studentTabShow = !this.studentTabShow;
+        if (!this.studentTabShow) {
+            this.getCoursePlan();
+        } else {
+            this.getStudent();
+        }
     },
     handleManage1(){
       this.showManage1 = true;
@@ -259,12 +341,13 @@ export default {
     },
     refresh(data){
       this.courseList['course' + this.currentType] = Object.assign({},data);
-      this.getStudent(data[0],0);
+      this.getList(data[0],0);
     },
     getData(typeId) {
       let params = {
         schoolId: 1,
-        typeId: typeId
+        typeId: typeId,
+        teacherId:this.userInfo.id
       };
       let that = this;
       for(let i = 1; i <= 4;i++){
@@ -280,7 +363,7 @@ export default {
             this.courseList["course" + typeId] = Object.assign({}, res.data);
             this.currentList = res.data;
             if(this.isFirst){
-              this.getStudent(res.data[0],0);
+              this.getList(res.data[0],0);
               this.currentClass = res.data[0].id;
               this['nodata' + typeId] = false;
             }
@@ -294,17 +377,9 @@ export default {
         this.currentList = this.courseList['course'+ typeId.length];
       }
     },
-    getStudent(item,index) {
-      this.classTitle = item.name;
-      this.startDate = item.startDate;
-      this.beginTime = item.beginTime;
-      this.endTime = item.endTime;
-      this.level = item.level;
-      this.stuCnt = item.stuCnt;
-      this.currentClass = item.id;
-      this.currentIndex = index;
+    getStudent() {
       let params = {
-        clsId: item.id,
+        clsId: this.currentClass,
         searchTxt:''
       };
       classApi.getStudent(params).then(res => {
@@ -323,22 +398,6 @@ export default {
   .content1 {
     .left_content {
       .class_title_list {
-        .class_S {
-          background: url("../../../static/image/s_l.png");
-          background-size: 100%;
-        }
-        .class_N {
-          background: url("../../../static/image/n_l.png");
-          background-size: 100%;
-        }
-        .class_A {
-          background: url("../../../static/image/a_l.png");
-          background-size: 100%;
-        }
-        .class_P {
-          background: url("../../../static/image/p_l.png");
-          background-size: 100%;
-        }
         .class_list {
           .class_item {
             width: 4.47rem;
@@ -495,7 +554,7 @@ export default {
           top: 0;
           left: 0;
           background: #ffc151;
-          width: 50%;
+        //   width: curCourProcess;
           height: 0.06rem;
           z-index: 10;
         }
