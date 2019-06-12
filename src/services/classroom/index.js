@@ -8,6 +8,11 @@ class Classroom extends CRUD {
     this.courseOptionsUrl = '/ws/api/class/getCourseByShoolId';
     this.tearcherOptionsUrl = '/ws/api/user/getTeachers';
     this.addClassUrl = '/ws/api/class/addCls';
+    this.searchUrl = '/ws/api/user/getStudents';
+    this.codeListUrl = '/ws/api/class/getCdksByClassId';
+    this.createStudentUrl = '/ws/api/class/addStudent';
+    this.virificodeUrl = '/ws/api/verificode';
+    this.deleteStudentUrl = '/ws/api/class/delClsStudent';
     this.searchStudentUrl = '/ws/api/user/getStudents';
     this.coursePlanStatus = '/ws/api/course/getCoursePlanStatus';
   }
@@ -18,7 +23,7 @@ class Classroom extends CRUD {
     });
   }
   getStudent(params){
-    return this.sendGet(this.studentUtl,params).then(res => {
+    return this.sendGet(this.searchUrl,params).then(res => {
       return res;
     })
   }
@@ -39,6 +44,31 @@ class Classroom extends CRUD {
   }
   createClass(params){
     return this.sendPost(this.addClassUrl,params).then(res => {
+      return res;
+    })
+  }
+  search(params){
+    return this.sendGet(this.searchUrl,params).then(res => {
+      return res;
+    })
+  }
+  getCodeList(params){
+    return this.sendGet(this.codeListUrl,params).then(res => {
+      return res;
+    })
+  }
+  createStudent(params){
+    return this.sendPost(this.createStudentUrl,params).then(res => {
+      return res;
+    })
+  }
+  getVerificode(params){
+    return this.sendPost(this.virificodeUrl,params).then(res => {
+      return res;
+    });
+  }
+  deleteStudent(params){
+    return this.sendPost(this.deleteStudentUrl,params).then(res => {
       return res;
     })
   }

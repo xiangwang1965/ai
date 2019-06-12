@@ -129,7 +129,7 @@
           <div class="search_position">
             <div class="search_box" style="float:right">
                 <el-input placeholder="搜索姓名/ID" size="mini" prefix-icon="el-icon-search" class="search_btn" v-model="searchData">
-                <el-button slot="append" class="search_btn1" @click="searchStudent"> 搜索</el-button>
+                <el-button slot="append" class="search_btn1" @click="search"> 搜索</el-button>
             </el-input>
             </div>
           </div>
@@ -161,38 +161,20 @@
         </div>
         </div>
       </div>
-      <div class="btn_124 personManagement_btn" id='showPersonDialog' @click="showManage1 = true">管理</div>
+      <div class="btn_124 personManagement_btn" id='showPersonDialog' @click="handleManage2">管理</div>
     </div>
-    <el-dialog
-      center
-      style="height:100vh;overflow:hidden;"
-      title="学生管理"
-      width="80%"
-      :visible.sync="showManage2"
-    >
-      <studentManage></studentManage>
+ <el-dialog center append-to-body title="学生管理" width="80%" :visible.sync="showManage2">
+       <studentManage :currentType="currentType" ref="studentsManage" :currentClass="current" :studentlist="studentsList"></studentManage>
     </el-dialog>
-    <el-dialog
-      center
-      append-to-body
-      style="height:100vh;overflow:hidden;"
-      title="班级管理"
-      width="80%"
-      :visible.sync="showManage1"
-    >
-      <classManage
-        v-on:refresh="refresh"
-        ref="child"
-        :currentIndex="currentIndex"
-        :datalist="currentList"
-      ></classManage>
+    <el-dialog center append-to-body title="班级管理" :visible.sync="showManage1">
+       <classManage v-on:refresh="refresh" ref="classManage" :currentIndex="currentIndex" :datalist="currentList"></classManage>
     </el-dialog>
   </div>
 </template>
 <script>
 import classApi from "@/services/classroom";
-import studentManage from "./studentManage";
-import classManage from "./classManage";
+import studentManage from './studentManage';
+import classManage from './classManage';
 export default {
   data() {
     return {
@@ -203,64 +185,81 @@ export default {
         course3: [],
         course4: []
       },
-      studentsList: [],
+      studentsList:[],
       show1: false,
       show2: false,
       show3: false,
       show4: false,
-      nodata1: false,
-      nodata2: false,
-      nodata3: false,
-      nodata4: false,
-      classTitle: "",
-      startDate: "",
-      startTime: "",
-      endTime: "",
-      level: "",
-      stuCnt: "",
-      isFirst: true,
-      currentClass: "",
-      showManage1: false,
-      showManage2: false,
-      currentIndex: "",
-      currentList: [],
-      currentType: "",
-      /**搜索字段 */
-      searchData: ""
+      nodata1:false,
+      nodata2:false,
+      nodata3:false,
+      nodata4:false,
+      classTitle:'',
+      startDate:'',
+      startTime:'',
+      endTime:'',
+      level:'',
+      stuCnt:'',
+      isFirst:true,
+      currentClass:'',
+      showManage1:false,
+      showManage2:false,
+      currentIndex:'',
+      currentList:[],
+      currentType:'',
+      searchData:''
+
     };
+  },
+  computed:{
+    current(){
+      return this.courseList['course' + this.currentType][this.currentIndex];
+    }
   },
   created() {
     this.getData(1);
   },
-  mounted() {
+  mounted(){
     let that = this;
-    window.addEventListener(
-      "scroll",
-      function(e) {
-        if (this.showManage1) {
-          e.preventDefault();
-        }
-      },
-      false
-    );
+    window.addEventListener('scroll',function(e){
+      if(this.showManage1 || this.showManage2){
+        e.preventDefault();
+      }
+    },false)
   },
-  components: {
+  components:{
     studentManage,
     classManage
   },
   methods: {
     handleChange(val) {
-      console.log(val);
+
     },
-    handleManage1() {
+    handleManage1(){
       this.showManage1 = true;
-      if (this.$refs.child) {
-        this.$refs.child.setRight(this.currentList[this.currentIndex]);
+      if(this.$refs.classManage){
+         this.$refs.classManage.setRight(this.currentList[this.currentIndex]);
       }
     },
-    refresh(data) {
-      this.courseList["course" + this.currentType] = Object.assign({}, data);
-      this.getStudents(data[0], 0);
+    handleManage2(){
+      this.showManage2 = true;
+      if(this.$refs.studentsManage){
+         this.$refs.studentsManage.setClass();
+         this.$refs.studentsManage.getCodeList(this.currentClass);
+      }
+    },
+    search(){
+      let params = {
+        clsId:this.currentClass,
+        searchTxt:this.searchData
+      }
+      classApi.search(params).then(res => {
+        this.studentsList = res.data;
+      })
+    },
+    refresh(data){
+      this.courseList['course' + this.currentType] = Object.assign({},data);
+      this.getStudent(data[0],0);
     },
     getData(typeId) {
       let params = {
@@ -268,34 +267,34 @@ export default {
         typeId: typeId
       };
       let that = this;
-      for (let i = 1; i <= 4; i++) {
-        if (typeId !== i) {
-          this["show" + i] = false;
+      for(let i = 1; i <= 4;i++){
+        if(typeId !== i){
+          this['show' + i] = false;
         }
       }
       this.currentType = typeId;
       this["show" + typeId] = !this["show" + typeId];
-      if (!this.courseList["course" + typeId.length]) {
+      if (!this.courseList['course'+ typeId.length]) {
         classApi.getData(params).then(res => {
           if (res.data && res.data.length) {
             this.courseList["course" + typeId] = Object.assign({}, res.data);
             this.currentList = res.data;
-            if (this.isFirst) {
-              this.getStudents(res.data[0], 0);
+            if(this.isFirst){
+              this.getStudent(res.data[0],0);
               this.currentClass = res.data[0].id;
-              this["nodata" + typeId] = false;
+              this['nodata' + typeId] = false;
             }
           } else {
             this.courseList["course" + typeId] = [];
             this.currentList = [];
-            this["nodata" + typeId] = true;
+            this['nodata' + typeId] = true;
           }
         });
       } else {
-        this.currentList = this.courseList["course" + typeId.length];
+        this.currentList = this.courseList['course'+ typeId.length];
       }
     },
-    getStudents(item, index) {
+    getStudent(item,index) {
       this.classTitle = item.name;
       this.startDate = item.startDate;
       this.beginTime = item.beginTime;
@@ -305,22 +304,11 @@ export default {
       this.currentClass = item.id;
       this.currentIndex = index;
       let params = {
-        clsId: item.id
+        clsId: item.id,
+        searchTxt:''
       };
       classApi.getStudent(params).then(res => {
         this.studentsList = res.data;
-      });
-    },
-    /** 根据条件搜索学生信息 */
-    searchStudent() {
-      let params = {
-        clsId: this.currentClass,
-        searchTxt:this.searchData
-      };
-      classApi.searchStuInfo(params).then(res => {
-          if (res.code === '001') {
-              this.studentsList = res.data;
-          }
       });
     }
   }
