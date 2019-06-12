@@ -41,15 +41,7 @@
                             <div class="dialog_l_top">
                                 <div class="top_list">
                                     <div class="item">
-                                        <!-- <img src="./img/person_photo.png" alt="" class="item_photo"> -->
-                                        <div class="item_center">
-                                            <p class="name">刘洋</p>
-                                            <p class="name_label">激活码：000</p>
-                                        </div>
-                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
-                                    </div>
-                                    <div class="item">
-                                        <!-- <img src="./img/person_photo.png" alt="" class="item_photo"> -->
+                                        <img :src="defaultImg" alt="" class="item_photo">
                                         <div class="item_center">
                                             <p class="name">刘洋</p>
                                             <p class="name_label">激活码：000</p>
@@ -116,7 +108,7 @@ export default {
     props:['datalist','currentIndex'],
     data(){
         return {
-            defaultImg:'../../static/img/student.png',
+            defaultImg:'../../static/img/person_photo.png',
             showCreate:false,
             currentClass:'',
             className:'',
