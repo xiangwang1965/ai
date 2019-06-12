@@ -1,6 +1,7 @@
 <template>
     <div class="studentManage">
-        <!--<div class="left-item">
+        <div class="top"></div>
+        <div class="left-item">
             <div class="h3">现有班级</div>
             <ul class="students">
                 <li v-for="item in datalist" :class="{active:currentClass=== item.id}" @click="setRight(item)" :key="item.id">
@@ -12,7 +13,7 @@
                 </li>
             </ul>
             <div class="info" @click="handleCreate">
-                <el-button type="default" class="cac-button-one">创建新班级</el-button>
+                <div class="btn_172">创建新班级</div>
             </div>
         </div>
         <div class="right-item">
@@ -28,65 +29,13 @@
                 </ul>
             </div>
             <div class="save">
-                <el-button type="default" class="cac-button-one">保存</el-button>
+                <div type="default" class="btn_172">保存</div>
             </div>
-        </div> -->
+        </div>
         <el-dialog append-to-body width="80%" title="创建班级" :visible.sync="showCreate">
             <createClass ref="child"></createClass>
         </el-dialog>
-                <div class="dialog_center">
-                    <div class="dialog_l_r">
-                        <div class="dialog_left">
-                            <div class="dialog_title">现有班级</div>
-                            <div class="dialog_l_top">
-                                <div class="top_list">
-                                    <div class="item" v-for="item in datalist" :class="{active:currentClass=== item.id}" @click="setRight(item)" :key="item.id">
-                                        <img :src="defaultImg" alt="" class="item_photo">
-                                        <div class="item_center">
-                                            <p class="name">{{item.courseName}}</p>
-                                            <p class="name_label">时间：{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</p>
-                                        </div>
-                                        <i class="el-icon-delete" @click="showDeleteConfirm(item)"></i>
-                                    </div>
-                                </div>
-                                <div class="dialog_l_btn"  @click="handleCreate">
-                                    <el-button type="default" lass="btn_172">创建新班级</el-button>
-                                </div>
-                            </div>
-                            <div class="dialog_l_bottom">
-                                <div class="dialog_title">未激活</div>
-                                <div class="bottom_list">
-                                    <div class="item">
-                                        <span>2222222</span>
-                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
-                                    </div>
-                                    <div class="item">
-                                        <span>2222222</span>
-                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dialog_rig">
-                            <div class="dialog_title">班级信息</div>
-                            <div class="dialog_r_top">
-                                <div class="intr_box">
-                                    <div class="intr_row">
-                                         <p><span>班级</span>：{{className}}</p>
-                                        <p><span>课程</span>：{{course}}</p>
-                                        <p><span>机构</span>：{{school}}</p>
-                                        <p><span>教师</span>：{{teacher}}</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="dialog_r_bottom">
-                                <div class="btn_172" id="submit_s">保存</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </div>
+    </div>
 </template>
 <script>
 import createClass from "./createClass";
@@ -95,7 +44,7 @@ export default {
     props:['datalist','currentIndex'],
     data(){
         return {
-            defaultImg:'../../static/img/person_photo.png',
+            defaultImg:'../../static/img/student.png',
             showCreate:false,
             currentClass:'',
             className:'',
@@ -172,9 +121,91 @@ export default {
         cursor: pointer;
         color:cornflowerblue;
     }
+    .top{width:100%;height:5px;border-bottom:@bottom}
+    .h3{
+        width:100%;
+        height:0.5rem;
+        line-height:0.5rem;
+        border-bottom:@bottom;
+        color:#000;
+        text-align: center;
+    }
     .studentManage{
-        display:flex;
-        flex:1;
+        margin:0;
+        padding:0;
+        height:100%;
+        width:100%;
+        .left-item{
+            position:relative;
+            float:left;
+            width:40%;
+            height:100%;
+            border-right:@bottom;
+            ul{
+                margin:0 auto;
+                padding:0 5px;
+                height:240px;
+                overflow: auto;
+                li{
+                    height:0.6rem;
+                    border-bottom: 1px solid #979797;
+                    padding-top:0.1rem;
+                    padding-bottom:0.1rem;
+                    font-size:0.12rem;
+                    div{
+                        float:left;
+                        margin-left:0px;
+                        p{font-size:0.12rem;}
+                    }
+                    i{
+                        margin-top:0.2rem;
+                        margin-right:0.2rem;
+                        float:right;
+                    }
+                    &.active{
+                        background:rgba(#F3F6FC);
+                    }
+
+                }
+            }
+            .info {
+                display:flex;
+                flex:1;
+            }
+        }
+        .right-item{
+            float:left;
+            width:59.5%;
+            height:100%;
+            ul li{
+                padding: 10px 5px;
+                background: #F3F6FC;
+                border-radius: 12px;
+                min-height: 60px;
+                overflow: auto;
+                overflow-x: hidden;
+                line-height: 100%;
+                margin: 0.1rem;
+                line-height:100%;
+                p{
+                    float:left;
+                    width:100%;
+                    margin-left:18px;
+                    margin-top:10px;
+                    span{
+                        color:#9b9b9b;
+                    }
+                }
+            }
+            .save {
+                margin-top: 2.5rem;
+                height: 1.11rem;
+                display: flex;
+                align-items: center;
+                border-top: 0.01rem solid #979797;
+                justify-content: center;
+            }
+        }
     }
 </style>
 
