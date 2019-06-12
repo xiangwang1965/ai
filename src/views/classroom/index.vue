@@ -163,10 +163,10 @@
       </div>
       <div class="btn_124 personManagement_btn" id='showPersonDialog' @click="handleManage2">管理</div>
     </div>
- <el-dialog center append-to-body style="height:100vh;overflow:hidden;" title="学生管理" width="80%" :visible.sync="showManage2">
+ <el-dialog center append-to-body title="学生管理" width="80%" :visible.sync="showManage2">
        <studentManage :currentType="currentType" ref="studentsManage" :currentClass="current" :studentlist="studentsList"></studentManage>
     </el-dialog>
-    <el-dialog center append-to-body style="height:100vh;overflow:hidden;" title="班级管理" width="80%" :visible.sync="showManage1">
+    <el-dialog center append-to-body title="班级管理" :visible.sync="showManage1">
        <classManage v-on:refresh="refresh" ref="classManage" :currentIndex="currentIndex" :datalist="currentList"></classManage>
     </el-dialog>
   </div>

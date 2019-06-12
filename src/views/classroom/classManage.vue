@@ -1,7 +1,6 @@
 <template>
     <div class="studentManage">
-        <div class="top"></div>
-        <div class="left-item">
+        <!--<div class="left-item">
             <div class="h3">现有班级</div>
             <ul class="students">
                 <li v-for="item in datalist" :class="{active:currentClass=== item.id}" @click="setRight(item)" :key="item.id">
@@ -31,11 +30,84 @@
             <div class="save">
                 <el-button type="default" class="cac-button-one">保存</el-button>
             </div>
-        </div>
+        </div> -->
         <el-dialog append-to-body width="80%" title="创建班级" :visible.sync="showCreate">
             <createClass ref="child"></createClass>
         </el-dialog>
-    </div>
+                <div class="dialog_center">
+                    <div class="dialog_l_r">
+                        <div class="dialog_left">
+                            <div class="dialog_title">SCRATCH初级编程1班</div>
+                            <div class="dialog_l_top">
+                                <div class="top_list">
+                                    <div class="item">
+                                        <!-- <img src="./img/person_photo.png" alt="" class="item_photo"> -->
+                                        <div class="item_center">
+                                            <p class="name">刘洋</p>
+                                            <p class="name_label">激活码：000</p>
+                                        </div>
+                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
+                                    </div>
+                                    <div class="item">
+                                        <!-- <img src="./img/person_photo.png" alt="" class="item_photo"> -->
+                                        <div class="item_center">
+                                            <p class="name">刘洋</p>
+                                            <p class="name_label">激活码：000</p>
+                                        </div>
+                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
+                                    </div>
+                                </div>
+                                <div class="dialog_l_btn">
+                                    <div class="btn_172" id="add_info">添加学生信息</div>
+                                    <div class="btn_172">创建学生信息</div>
+                                </div>
+                            </div>
+                            <div class="dialog_l_bottom">
+                                <div class="dialog_title">未激活</div>
+                                <div class="bottom_list">
+                                    <div class="item">
+                                        <span>2222222</span>
+                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
+                                    </div>
+                                    <div class="item">
+                                        <span>2222222</span>
+                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dialog_rig">
+                            <div class="dialog_title">学生信息</div>
+                            <div class="dialog_r_top">
+                                <div class="intr_box">
+                                    <div class="intr_row">
+                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        姓名：
+                                        <span>拉拉</span>
+                                    </div>
+                                    <div class="intr_row">
+                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        年龄：
+                                        <span>拉拉</span>
+                                    </div>
+
+                                </div>
+                                <div class="intr_box">
+                                    <div class="intr_row">
+                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        机构：
+                                        <span>拉拉</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="dialog_r_bottom">
+                                <div class="btn_172" id="submit_s">保存</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
 </template>
 <script>
 import createClass from "./createClass";
@@ -121,89 +193,9 @@ export default {
         cursor: pointer;
         color:cornflowerblue;
     }
-    .top{width:100%;height:5px;border-bottom:@bottom}
-    .h3{
-        width:100%;
-        height:44px;
-        line-height:44px;
-        border-bottom:@bottom;
-        color:#000;
-        text-align: center;
-    }
     .studentManage{
-        height:50vh;
-        margin:0;
-        padding:0;
-        .left-item{
-            position:relative;
-            float:left;
-            width:30vw;
-            height:100%;
-            border-right:@bottom;
-            ul{
-                margin:0 auto;
-                padding:0 5px;
-                height:240px;
-                overflow: auto;
-                li{
-                    height:44px;
-                    border-bottom: 1px solid #979797;
-                    padding-top:10px;
-                    div{
-                        float:left;
-                        margin-left:0px;
-                        width:280px;
-                        p{font-size:12px;}
-                    }
-                    i{
-                        margin-top:15px;
-                        margin-right:0px;
-                    }
-                    &.active{
-                        background:rgba(#F3F6FC);
-                    }
-
-                }
-            }
-            .info {
-                position:fixed;
-                top:70vh;
-                left:20vw;
-                height:60px;
-            }
-        }
-        .right-item{
-            float:left;
-            width:45vw;
-            height:100%;
-            ul li{
-                width:450px;
-                padding:10px 5px;
-                background: #F3F6FC;
-                border-radius: 12px;
-                margin-left:10px;
-                margin-top:10px;
-                min-height:60px;
-                overflow: auto;
-                overflow-x:hidden;
-                line-height:100%;
-                p{
-                    float:left;
-                    width:100%;
-                    margin-left:18px;
-                    margin-top:10px;
-                    span{
-                        color:#9b9b9b;
-                    }
-                }
-            }
-            .save {
-                position:fixed;
-                top:70vh;
-                left:60vw;
-                height:60px;
-            }
-        }
+        display:flex;
+        flex:1;
     }
 </style>
 
