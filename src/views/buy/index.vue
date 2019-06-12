@@ -1,46 +1,61 @@
 <template>
   <div class="classContainer">
-    <div class="left">
-      <h1 class="title">购买激活码</h1>
-     <div class="sideContainer">
-        <div class="item" :key="i" v-for="(item,i) in tabs">
-          <div class="classTitle" :class="item.colorCls" @click="switchTab(item.id)">
-            <span class="txt green">{{item.name}}</span>
-            <i :class="item.IconCls"></i>
-          </div>
-          <el-collapse-transition>
-            <dl class="classList" v-show="activeIndex === item.id">
-              <dd :key="k" v-for="(course,k) in dataList">
-                <el-image style="width: 100px; height: 100px" :src="url"></el-image>
-                <button class="demonstratio" @click="dataHandle(course)">添加</button>
-              </dd>
-            </dl>
-          </el-collapse-transition>
-        </div>
-      </div>
-    </div>
-    <div class="center"></div>
-    <div class="right">
-     <h1 class="title">购买激活码清单</h1>
-      <div class="tabs">
-        <ul>
-             <el-checkbox-group v-model="switchNames" @change="changSelectChange">
-          <li :key="d" v-for="(c,d) in switchData">
-            <div class="orderItem">
-                <el-checkbox :label="c.name" ></el-checkbox>
-               <el-input-number size="mini" v-model="c.num"></el-input-number>
+     <div class="content1" style="width: 7.44rem">
+        <p class="content_title">购买激活码</p>
+        <div class="left_content " style="overflow: auto">
+            <div class="toggle_wrap" :key="i" v-for="(item,i) in tabs">
+                <div class="toggle_title" :class="item.colorCls" @click="switchTab(item.id)">
+                    <span>{{item.name}}</span>
+                    <i :class="item.IconCls"></i>
+                </div>
+                <div class="toggle_box" v-show="activeIndex === item.id">
+                    <div class="item" :key="k" v-for="(course,k) in dataList">
+                        <div class="img">
+                             <el-image :src="url"></el-image>
+                        </div>
+                        <div class="btn_148 bg_y" @click="dataHandle(course)">添加</div>
+                    </div>
+                    <div class="item">
+                        <div class="img"></div>
+                        <ul class="count" style="margin:0 auto">
+                            <span id="num-jian" class="num-jian">-</span>
+                            <input type="text" class="input-num" id="input-num" value="0" />
+                            <span id="num-jia" class="num-jia">+</span>
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </li>
-           </el-checkbox-group>
-        </ul>
-         <div class="bottomBtn">
-            <div class="orderItem">
-            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll"    @change="handleCheckAllChange">全选</el-checkbox>
-            <span id="money">支付金额：<i>￥{{totalPrice}}</i></span>
-           <el-button type="primary" round @click="payHandle">结算</el-button>
-           </div>
-          </div>
-      </div>
+        </div>
+    </div>
+    <div class="content2">
+        <div class="content_title">
+            购买激活码清单
+        </div>
+        <div class="right_content " style="height: 6.67rem">
+            <div class="right_content_T">
+                 <el-checkbox-group v-model="switchNames" @change="changSelectChange">
+                    <div class="buy_line"  :key="d" v-for="(c,d) in switchData">
+                        <div class="buy_line_l">
+                            <el-checkbox :label="c.name" ></el-checkbox>
+                        </div>
+                        <div class="buy_line_r">
+                            <el-input-number size="mini" v-model="c.num"></el-input-number>
+                        </div>
+                    </div>
+                </el-checkbox-group>
+            </div>
+            <div class="right_content_B">
+                    <div class="buy_line">
+                    <div class="buy_line_l">
+                        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll"    @change="handleCheckAllChange">全选</el-checkbox>
+                    </div>
+                    <div class="buy_line_r">
+                        <span>合计：<b>￥{{totalPrice}}</b></span>
+                        <div class="btn_108" @click="payHandle">结算</div>
+                    </div>
+                    </div>
+            </div>
+        </div>
     </div>
   </div>
 
@@ -60,25 +75,25 @@ export default {
         {
           id: 1,
           name: "SCRATCH编程",
-          colorCls: "orange",
+          colorCls: "bg_y",
           IconCls: "el-icon-arrow-down"
         },
         {
           id: 2,
           name: "PYTHON编程",
-          colorCls: "green",
+          colorCls: "bg_b",
           IconCls: "el-icon-arrow-right"
         },
         {
           id: 3,
           name: "NOIP",
-          colorCls: "red",
+          colorCls: "bg_r",
           IconCls: "el-icon-arrow-right"
         },
         {
           id: 4,
           name: "NOIP",
-          colorCls: "purple",
+          colorCls: "bg_p",
           IconCls: "el-icon-arrow-right"
         }
       ],
@@ -208,183 +223,119 @@ function fn(ar) {
 </script>
 <style lang="less" scoped>
 .classContainer {
-     background-color: #f9fafc;
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    z-index: 0;
-  .left {
-    width: 613px;
-    position: absolute;
-    height: 100%;
-    z-index:1;
-    .title {
-      position: absolute;
-      left: 18px;
-      top: 20px;
-    }
-    .sideContainer {
-      position: absolute;
-      width: 613px;
-      height: 300px;
-      left: 50%;
-      margin-left: -275px;
-      top: 60px;
-      font-size: 14px;
-      .item {
-        .classTitle {
-          width: 550px;
-          height: 36px;
-          color: #fff;
-          border-radius: 6px 6px 0px 0px;
-          .txt {
-            float: left;
-            width: 115px;
-            height: 35px;
-            line-height: 35px;
-            text-align: center;
-            font-family: HYQiHei-GZS;
-            letter-spacing: 0;
-          }
-          .el-icon-arrow-right,
-          .el-icon-arrow-down {
-            float: right;
-            width: 35px;
-            height: 35px;
-            line-height: 35px;
-            font-size: 17px;
-            font-weight: bold;
-          }
-          &.orange {
-            background: #ffc151;
-          }
-          &.green {
-            background: #6edbef;
-          }
-          &.red {
-            background: #ff696c;
-          }
-          &.purple {
-            background: #8b90ff;
-          }
-        }
-        .classList {
-          dd {
-            padding: 30px 0;
-            text-align: center;
-            display: inline-block;
-            width: 30%;
-            box-sizing: border-box;
-            vertical-align: top;
-            .el-image {
-              background: #d8d8d8;
-              border-radius: 7px;
-            }
-          }
-          .demonstration {
-            font-size: 15px;
-            background: #ffc151;
-            border: 1px solid #ffc151;
-            border-radius: 7px;
-            font-family: HYQiHei-FZS;
-            color: #ffffff;
-            letter-spacing: 0;
-            text-align: center;
-            width: 100px;
-            height: 20px;
-          }
-        }
-      }
-    }
-  }
-  .center {
-    width: 1px;
-    height: 500px;
-    background: #b6b6b6;
-    position: absolute;
-    top: 20%;
-    left: 614px;
-    z-index: 1;
-  }
-  .right {
-    position: absolute;
-    left: 625px;
-    width: 460px;
-    height: 100%;
-    z-index:1;
-    .title {
-      position: absolute;
-      left: 18px;
-      top: 20px;
-      z-index: 1;
-    }
-    .tabs {
-      width: 460px;
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      height: 100%;
-      ul {
-        width: 100%;
-        min-height: 403px;
-        margin-top: 60px;
-        li {
-            width: 90%;
-            height: 85px;
-            border-radius: 7px;
-            position: relative;
-            margin: 15px auto;
-            background: #FFFFFF;
-            border-radius: 7px;
-            .orderItem {
-                height: 100%;
-                margin: auto;
-                padding-top: 20px;
-                .el-checkbox {
-                    float:left;
-                    margin-left:30px;
-                }
-                .el-input-number {
-                    float:right;
-                    margin-right:30px;
-                }
-            }
+    display:flex;
+    flex:1;
+    .count {
+    display: flex;
+    justify-content: center;
+    border: 0.01rem solid #979797;
+    border-radius: 0.04rem;
+    height: 0.22rem;
+    width: 0.96rem;
+}
 
-        }
-      }
-      .bottomBtn {
-        width: 90%;
-        height: 85px;
-        border-radius: 7px;
-        position: relative;
-        margin: 15px auto;
-        background: #FFFFFF;
-        border-radius: 7px;
-         .orderItem {
-                height: 100%;
-                margin: auto;
-                padding-top: 20px;
-                .el-checkbox {
-                    float:left;
-                    margin-left:30px;
-                }
-                span {
-                    float: left;
-                    font-family: HiraginoSansGB-W6;
-                    font-size: 16px;
-                    letter-spacing: 0;
-                    i {
-                        color: #4994FD;
-                    }
-                }
-                .el-button {
-                    float:right;
-                    width: 108px;
-                    height: 42px;
-                }
-            }
-      }
+.count .num-jian,
+.num-jia {
+    display: inline-block;
+    width: 0.24rem;
+    height: 0.22rem;
+    line-height: 0.22rem;
+    text-align: center;
+    font-size: 0.14rem;
+    color: #979797 ;
+    cursor: pointer;
+
+}
+.count .num-jian{
+    border-right: 0.01rem solid #979797;
+}
+.count .num-jia{
+    border-left: 0.01rem solid #979797;
+}
+.count .input-num {
+    width: 0.45rem;
+    height: 0.21rem;
+    color: #979797;
+    border:none;
+    text-align: center;
+}
+.toggle_title{
+    width: 6.82rem;
+    height: 0.61rem;
+    border-radius: 0.06rem 0.06rem 0px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom:0.3rem;
+    span{
+        padding-left:0.2rem;
+        font-size: 0.17rem;
+        color: #ffffff;
     }
-  }
+    i{
+        padding-right: 0.2rem;
+        display: block;
+        width: 0.26rem;
+        height: 0.12rem;
+        color:#fff;
+    }
+}
+.toggle_title_show{
+    img{
+        transform: rotateZ(-90deg);
+        padding-right: 0rem;
+        padding-bottom: 0.2rem;
+    }
+
+}
+
+.toggle_box{
+    display: flex;
+    justify-content: space-between;
+    .item{
+        width: 1.48rem;
+        margin-bottom: 0.3rem;
+        .img{
+            width: 1.48rem;
+            height: 1.48rem;
+            background: #D8D8D8;
+            margin-bottom: 0.07rem;
+        }
+    }
+}
+.right_content_T{
+    height: 5.70rem;
+    overflow: auto;
+}
+.buy_line{
+    width:4.2rem;
+    background: #fff;
+    height: 0.85rem;
+    border-radius: 0.07rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom:0.15rem;
+    .buy_line_l{
+        font-size: 0.16rem;
+        color: #4A4A4A;
+        .el-checkbox{
+            margin:0 0.11rem 0 0.22rem;
+        }
+    }
+    .buy_line_r{
+        margin-right: 0.19rem;
+    }
+}
+.right_content_B{
+    .buy_line{
+        .buy_line_r{
+            .btn_108{
+                margin:0 0 0 0.32rem;
+                display: inline-block;
+            }
+        }
+    }
+}
 }
 </style>
