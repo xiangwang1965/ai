@@ -19,7 +19,7 @@
                 class="class_item class_item_yellow"
                 v-for="(item,index) in courseList.course1"
                 :key="index"
-                @click="getStudents(item,index)"
+                @click="getStudent(item,index)"
               >
                 <div class="class_fixed"></div>
                 <div class="class_text">
@@ -44,7 +44,7 @@
                 class="class_item class_item_blue"
                 v-for="(item,index) in courseList.course2"
                 :key="index"
-                @click="getStudents(item,index)"
+                @click="getStudent(item,index)"
               >
                 <div class="class_fixed"></div>
                 <div class="class_text">
@@ -69,7 +69,7 @@
                 class="class_item class_item_red"
                 v-for="(item,index) in courseList.course3"
                 :key="index"
-                @click="getStudents(item,index)"
+                @click="getStudent(item,index)"
               >
                 <div class="class_fixed"></div>
                 <div class="class_text">
@@ -94,7 +94,7 @@
                 class="class_item class_item_purple"
                 v-for="(item,index) in courseList.course4"
                 :key="index"
-                @click="getStudents(item,index)"
+                @click="getStudent(item,index)"
               >
                 <div class="class_fixed"></div>
                 <div class="class_text">
