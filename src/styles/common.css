@@ -223,6 +223,9 @@ html body {
     flex: 1;
     border-top: 0.01rem solid #979797;
   }
+  .el-dialog .el-dialog__body {
+      padding:0px;
+  }
   .el-dialog .dialog_center .dialog_l_r {
     width: 100%;
     height: 100%;

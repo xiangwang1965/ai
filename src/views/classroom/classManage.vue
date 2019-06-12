@@ -37,21 +37,20 @@
                 <div class="dialog_center">
                     <div class="dialog_l_r">
                         <div class="dialog_left">
-                            <div class="dialog_title">SCRATCH初级编程1班</div>
+                            <div class="dialog_title">现有班级</div>
                             <div class="dialog_l_top">
                                 <div class="top_list">
-                                    <div class="item">
+                                    <div class="item" v-for="item in datalist" :class="{active:currentClass=== item.id}" @click="setRight(item)" :key="item.id">
                                         <img :src="defaultImg" alt="" class="item_photo">
                                         <div class="item_center">
-                                            <p class="name">刘洋</p>
-                                            <p class="name_label">激活码：000</p>
+                                            <p class="name">{{item.courseName}}</p>
+                                            <p class="name_label">时间：{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</p>
                                         </div>
-                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
+                                        <i class="el-icon-delete" @click="showDeleteConfirm(item)"></i>
                                     </div>
                                 </div>
-                                <div class="dialog_l_btn">
-                                    <div class="btn_172" id="add_info">添加学生信息</div>
-                                    <div class="btn_172">创建学生信息</div>
+                                <div class="dialog_l_btn"  @click="handleCreate">
+                                    <el-button type="default" lass="btn_172">创建新班级</el-button>
                                 </div>
                             </div>
                             <div class="dialog_l_bottom">
@@ -69,29 +68,17 @@
                             </div>
                         </div>
                         <div class="dialog_rig">
-                            <div class="dialog_title">学生信息</div>
+                            <div class="dialog_title">班级信息</div>
                             <div class="dialog_r_top">
                                 <div class="intr_box">
                                     <div class="intr_row">
-                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
-                                        姓名：
-                                        <span>拉拉</span>
+                                         <p><span>班级</span>：{{className}}</p>
+                                        <p><span>课程</span>：{{course}}</p>
+                                        <p><span>机构</span>：{{school}}</p>
+                                        <p><span>教师</span>：{{teacher}}</p>
                                     </div>
-                                    <div class="intr_row">
-                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
-                                        年龄：
-                                        <span>拉拉</span>
-                                    </div>
-
                                 </div>
-                                <div class="intr_box">
-                                    <div class="intr_row">
-                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
-                                        机构：
-                                        <span>拉拉</span>
-                                    </div>
 
-                                </div>
                             </div>
                             <div class="dialog_r_bottom">
                                 <div class="btn_172" id="submit_s">保存</div>
