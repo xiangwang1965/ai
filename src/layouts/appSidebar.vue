@@ -1,39 +1,111 @@
 <template>
   <div class="appSideWrap">
-    <div class="userInfo">
-      <div class="photo"></div>
-      <p class="userName">某某某机构</p>
-      <p class="userID">ID：00001</p>
+    <div class="content_left">
+      <div class="teacher_box">
+        <img :src="logoImg" alt class="photo">
+        <p class="name">李雷</p>
+        <p class="id">ID:00001</p>
+        <span class="grade">副教授级</span>
+        <p class="phone">联系电话：13333333333</p>
+        <div class="statistics">
+          <div class="item">
+            <p class="num">0</p>
+            <p class="txt">培训学生总数</p>
+          </div>
+          <div class="item">
+            <p class="num">0</p>
+            <p class="txt">培训课程总数</p>
+          </div>
+          <div class="item">
+            <p class="num">0</p>
+            <p class="txt">上课总天数</p>
+          </div>
+        </div>
+        <!-- <div class="lesson_lock">
+          <div class="lock_row lock_row_y">
+            <div class="name">SKETCH</div>
+            <div class="lock_level">
+              <div class="lock_item unlock_y">
+                <img src="../img/lock_yellow.png" alt=""  class="lock">
+                <p>Leverl 1</p>
+                <p>初级编程</p>
+              </div>
+              <div class="lock_item">
+                <img src="./img/lock_yellow.png" alt class="lock">
+                <p>Leverl 1</p>
+                <p>初级编程</p>
+              </div>
+            </div>
+          </div>
+          <div class="lock_row lock_row_b">
+            <div class="name">SKETCH</div>
+            <div class="lock_level">
+              <div class="lock_item unlock_blue">
+               <img src="../img/lock_blue.png" alt=""  class="lock">
+                <p>Leverl 1</p>
+                <p>初级编程</p>
+              </div>
+              <div class="lock_item">
+                <img src="./img/lock_blue.png" alt class="lock">
+                <p>Leverl 1</p>
+                <p>初级编程</p>
+              </div>
+              <div class="lock_item">
+                <img src="./img/lock_blue.png" alt class="lock">
+                <p>Leverl 1</p>
+                <p>初级编程</p>
+              </div>
+            </div>
+          </div>
+          <div class="lock_row lock_row_r">
+            <div class="name">SKETCH</div>
+            <div class="lock_level">
+              <div class="lock_item unlock_red">
+                <img src="../img/lock_red.png" alt=""  class="lock">
+                <p>Leverl 1</p>
+                <p>初级编程</p>
+              </div>
+              <div class="lock_item">
+                <img src="./img/lock_red.png" alt class="lock">
+                <p>Leverl 1</p>
+                <p>初级编程</p>
+              </div>
+              <div class="lock_item">
+                <img src="./img/lock_red.png" alt class="lock">
+                <p>Leverl 1</p>
+                <p>初级编程</p>
+              </div>
+            </div>
+          </div>
+          <div class="lock_row lock_row_p">
+            <div class="name">SKETCH</div>
+            <div class="lock_level">
+              <div class="lock_item unlock_purple">
+                <img src="../img/lock_purple.png" alt=""  class="lock">
+                <p>Leverl 1</p>
+                <p>初级编程</p>
+              </div>
+              <div class="lock_item">
+                <img src="./img/lock_purple.png" alt class="lock">
+                <p>Leverl 1</p>
+                <p>初级编程</p>
+              </div>
+              <div class="lock_item">
+                <img src="./img/lock_purple.png" alt class="lock">
+                <p>Leverl 1</p>
+                <p>初级编程</p>
+              </div>
+              <div class="lock_item">
+                <img src="./img/lock_purple.png" alt class="lock">
+                <p>Leverl 1</p>
+                <p>初级编程</p>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div class="btn_124 out_login">退出登录</div>
     </div>
-    <el-aside class="menu">
-      <el-menu
-        ref="sideBar"
-        mode="vertical"
-        :default-active="defaultActive"
-        text-color="#FFFFFF"
-        text-align="left"
-        :router="true"
-        unique-opened
-      >
-        <el-menu-item
-          v-for="item in liveList"
-          style="background-color:transparent;"
-          @click.stop.native="go(item)"
-          :key="item.path"
-          :index="item.path"
-        >
-          <template slot="title">
-            <i :class="item.icon"></i>
-            <span>{{item.title}}{{item.hidden}}</span>
-          </template>
-        </el-menu-item>
-      </el-menu>
-      <!-- 侧栏下部纹理 -->
-    </el-aside>
-    <div class="contact">
-      <p>联系客服</p>
-    </div>
-    <div class="btn_124 out_login">退出登录</div>
   </div>
 </template>
 <script>
@@ -44,7 +116,7 @@ export default {
   data() {
     return {
       menuList: [],
-      logoImg: "../../static/img/logo-white.png",
+      logoImg: "../../static/image/person_background.png",
       liveList: [
         {
           path: "/class",
@@ -121,83 +193,17 @@ export default {
 
 <style lang="less" scoped>
 .appSideWrap {
-  width: 3.62rem;
-  height: 100%;
-  background-image: url("../../static/image/contentLeftBg.png");
-  background-size: 100%;
-  position: relative;
-  .userInfo {
-    margin: 0.83rem 0 0 0.64rem;
-    text-align: left;
-    padding-left: 0.5rem;
-    .photo {
-      width: 0.68rem;
-      height: 0.68rem;
-      border-radius: 100%;
-      border: 2px solid #fff;
-    }
-    .userName {
-      padding-top: 0.11rem;
-      font-size: 0.2rem;
-      color: #ffffff;
-    }
-    .userID {
-      font-size: 0.16rem;
-      color: #ffffff;
-      opacity: 0.8;
-    }
-  }
-  .menu {
-    margin: 0.4rem 0 0 0.53rem;
-    padding-bottom: 0.16rem;
-    background-color: transparent;
-    .el-menu {
-      width: 100%;
-      border-right: none;
-      height: 100%;
-      background-color: transparent !important;
-      box-shadow: none;
-      .el-menu-item {
-        font-size: 0.18rem;
-        color: #ffffff;
-        cursor: pointer;
-        background-color: transparent !important;
-        border-left: 1px solid transparent;
-        padding-left: 0px;
-        border-radius: 25px 0 0 25px;
-        text-align: left;
-      }
-      .el-menu-item.is-active {
-        border-left: 1px solid #fff;
-        color: #fff !important;
-        opacity: 1;
-        border-radius: 25px 0 0 25px;
-      }
-      li {
-        border-bottom: none;
-      }
-    }
-  }
-  .contact {
-    margin: 0 0 0 0.53rem;
-    border-top: 0.005rem solid #fff;
-    width: 2.5rem;
-    text-align: center;
-    p {
-    //   padding-left: 0.1rem;
-      color: #fff;
-      font-size: 0.18rem;
-      padding-top: 0.14rem;
-      cursor: pointer;
-      margin-left:0.4rem;
-    }
-  }
-    .out_login {
+    width:4.5rem;
+    height: 100%;
+    background: url("../../static/image/contentLeftBg.png");
+    background-size: 100%;
+    position: relative;
+    .out_login{
         position: absolute;
-        border: 1px solid #fff;
+        border:1px solid #fff;
         bottom: 0.42rem;
-        left: 1.19rem;
-
+        left:1.19rem;
     }
+
 }
 </style>
