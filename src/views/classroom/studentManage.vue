@@ -181,7 +181,7 @@ export default {
                 margin:0 auto;
                 padding:0 5px;
                 max-height: 150px;
-                overflow-y:auto; 
+                overflow-y:auto;
                 li{
                     height:44px;
                     border-bottom: 1px solid #979797;

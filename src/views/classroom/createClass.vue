@@ -132,7 +132,7 @@ export default {
                 ]
             }
         }
-        
+
     },
     created(){
         this.getCourseOptions();
@@ -214,7 +214,7 @@ export default {
                 });
             })
         }
-        
+
     }
 }
 </script>

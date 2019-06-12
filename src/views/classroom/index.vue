@@ -12,7 +12,7 @@
           </div>
           <el-collapse-transition>
             <ul class="classList one" v-show="show1">
-              <li :class="{active:currentClass == item.id}" v-for="(item,index) in courseList.course1" :key="index" @click="getStudent(item,index)"> 
+              <li :class="{active:currentClass == item.id}" v-for="(item,index) in courseList.course1" :key="index" @click="getStudent(item,index)">
                 <div class="top" style="height:50%">
                   <span class="one">{{item.name}}</span>
                   <span class="two orange">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
@@ -89,52 +89,58 @@
       </div>
       <el-button type="default" @click="handleManage1" style="z-index:999" class="cac-button-one">管理</el-button>
     </div>
-    <div class="center"></div>
-    <div class="right">
-      <h3>标题</h3>
-      <div class="tabs">
-        <div>
-          <span>班级</span>
-          <span class="active">学员管理</span>
+    <div class="content2">
+      <div class="content_title">SCRATCH初级编程1班</div>
+      <div class="right_content">
+        <div class="tab">
+          <ul>
+            <li class="tab_item">班级</li>
+            <li class="tab_item tab_active">学员管理</li>
+          </ul>
+        </div>
+         <div class="classInfo" id="classInfo">
+        <div class="classInfoItem student_management">
+          <div class="search_position">
+            <div class="search_box" style="float:right">
+                <el-input placeholder="搜索姓名/ID" size="mini" prefix-icon="el-icon-search" class="search_btn" v-model="searchData">
+                <el-button slot="append" class="search_btn1" @click="search"> 搜索</el-button>
+            </el-input>
+            </div>
+          </div>
+          <div class="class_infomation">
+            <div class="item1">班级信息</div>
+            <div class="item2">
+              <span>{{startDate}}</span>
+              <span>{{startTime}}-{{endTime}}</span>
+              <span>时间</span>
+            </div>
+            <div class="item3">
+              <span class="item_num">{{level}}</span>
+              <span class="item_txt">等级</span>
+            </div>
+            <div class="item3">
+              <span class="item_num">{{stuCnt}}</span>
+              <span class="item_txt">班级人数</span>
+            </div>
+          </div>
+          <div class="person_List">
+            <div class="person_box" v-for="(item,i) in studentsList" :key="i">
+              <div class="person_name">{{item.name}}</div>
+              <div class="person_handle">
+                <div class="icon1"></div>
+                <div class="icon2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
       </div>
-      <el-input placeholder="请输入学生编号或姓名" class="search_btn" v-model="searchData">
-        <i slot="prefix" class="el-input__icon el-icon-search"></i>
-        <el-button slot="append" @click="search" icon="el-icon-search"></el-button>
-      </el-input>
-      <div class="rightInfo">
-        <ul>
-          <li>
-            <p style="color:#FFC151;line-height:84px;">班级信息</p>
-          </li>
-          <li>
-            <p>{{startDate}}</p>
-            <p>{{startTime}}-{{endTime}}</p>
-            <p>时间</p>
-          </li>
-          <li>
-            <p class="big">{{level}}</p>
-            <p style="margin-top:3px">等级</p>
-          </li>
-          <li>
-            <p class="big">{{stuCnt}}</p>
-            <p style="margin-top:3px">班级人数</p>
-          </li>
-        </ul>
-        <ul class="students">
-          <li v-for="item in studentsList" :key="item.id">
-            <span class="name">{{item.name}}</span>
-            <i class="search"></i>
-            <span class="edit"></span>
-          </li>
-        </ul>
-      </div>
-      <el-button @click="handleManage2" type="default" class="manage2 cac-button-one">管理</el-button>
+      <div class="btn_124 personManagement_btn" id='showPersonDialog' @click="handleManage2">管理</div>
     </div>
-    <el-dialog center append-to-body style="height:100vh;overflow:hidden;" title="学生管理" width="80%" :visible.sync="showManage2">
+ <el-dialog center append-to-body title="学生管理" width="80%" :visible.sync="showManage2">
        <studentManage :currentType="currentType" ref="studentsManage" :currentClass="current" :studentlist="studentsList"></studentManage>
     </el-dialog>
-    <el-dialog center append-to-body style="height:100vh;overflow:hidden;" title="班级管理" width="80%" :visible.sync="showManage1">
+    <el-dialog center append-to-body title="班级管理" :visible.sync="showManage1">
        <classManage v-on:refresh="refresh" ref="classManage" :currentIndex="currentIndex" :datalist="currentList"></classManage>
     </el-dialog>
   </div>
@@ -176,7 +182,6 @@ export default {
       currentList:[],
       currentType:'',
       searchData:''
-  
     };
   },
   computed:{
@@ -201,7 +206,6 @@ export default {
   },
   methods: {
     handleChange(val) {
-      
     },
     handleManage1(){
       this.showManage1 = true;
@@ -382,7 +386,7 @@ export default {
           &.purple {
             border-bottom: 3px solid @purpe;
           }
-          
+
         }
         .nodata{
           width:100%;
@@ -471,7 +475,7 @@ export default {
               div > .three{color:#fff}
               div > .four{color:#fff}
             }
-          }  
+          }
         }
       }
     }
@@ -578,7 +582,7 @@ export default {
         width:100%;
       }
     }
-    
+
   }
 }
 </style>

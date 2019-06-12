@@ -13,7 +13,7 @@
                 </li>
             </ul>
             <div class="info" @click="handleCreate">
-                <el-button type="default" class="cac-button-one">创建新班级</el-button>
+                <div class="btn_172">创建新班级</div>
             </div>
         </div>
         <div class="right-item">
@@ -29,7 +29,7 @@
                 </ul>
             </div>
             <div class="save">
-                <el-button type="default" class="cac-button-one">保存</el-button>
+                <div type="default" class="btn_172">保存</div>
             </div>
         </div>
         <el-dialog append-to-body width="80%" title="创建班级" :visible.sync="showCreate">
@@ -109,7 +109,7 @@ export default {
                 this.$message({
                     type: 'info',
                     message: '已取消删除'
-                });          
+                });
             });
         }
     }
@@ -124,20 +124,21 @@ export default {
     .top{width:100%;height:5px;border-bottom:@bottom}
     .h3{
         width:100%;
-        height:44px;
-        line-height:44px;
+        height:0.5rem;
+        line-height:0.5rem;
         border-bottom:@bottom;
         color:#000;
         text-align: center;
     }
     .studentManage{
-        height:50vh;
         margin:0;
         padding:0;
+        height:100%;
+        width:100%;
         .left-item{
             position:relative;
             float:left;
-            width:30vw;
+            width:40%;
             height:100%;
             border-right:@bottom;
             ul{
@@ -146,18 +147,20 @@ export default {
                 height:240px;
                 overflow: auto;
                 li{
-                    height:44px;
+                    height:0.6rem;
                     border-bottom: 1px solid #979797;
-                    padding-top:10px;
+                    padding-top:0.1rem;
+                    padding-bottom:0.1rem;
+                    font-size:0.12rem;
                     div{
                         float:left;
                         margin-left:0px;
-                        width:280px;
-                        p{font-size:12px;}
+                        p{font-size:0.12rem;}
                     }
                     i{
-                        margin-top:15px;
-                        margin-right:0px;
+                        margin-top:0.2rem;
+                        margin-right:0.2rem;
+                        float:right;
                     }
                     &.active{
                         background:rgba(#F3F6FC);
@@ -166,26 +169,23 @@ export default {
                 }
             }
             .info {
-                position:fixed;
-                top:70vh;
-                left:20vw;
-                height:60px;
+                display:flex;
+                flex:1;
             }
         }
         .right-item{
             float:left;
-            width:45vw;
+            width:59.5%;
             height:100%;
             ul li{
-                width:450px;
-                padding:10px 5px;
+                padding: 10px 5px;
                 background: #F3F6FC;
                 border-radius: 12px;
-                margin-left:10px;
-                margin-top:10px;
-                min-height:60px;
+                min-height: 60px;
                 overflow: auto;
-                overflow-x:hidden;
+                overflow-x: hidden;
+                line-height: 100%;
+                margin: 0.1rem;
                 line-height:100%;
                 p{
                     float:left;
@@ -198,10 +198,12 @@ export default {
                 }
             }
             .save {
-                position:fixed;
-                top:70vh;
-                left:60vw;
-                height:60px;
+                margin-top: 2.5rem;
+                height: 1.11rem;
+                display: flex;
+                align-items: center;
+                border-top: 0.01rem solid #979797;
+                justify-content: center;
             }
         }
     }
