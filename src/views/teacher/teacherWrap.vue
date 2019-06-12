@@ -1,6 +1,6 @@
-<!-- 学生容器 -->
+<!-- 教师 -->
 <template>
-  <div id='studentPage'>
+  <div id='teacherPage'>
     <keep-alive >
       <router-view v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
@@ -23,10 +23,8 @@ export default {
 }
 </script>
 <style scoped>
- #studentPage {
-     min-height:100%;
-     min-width:100%;
-     width:100vw;
-     height:100vh;
+ #teacherPage {
+     display:flex;
+     flex:1;
  }
 </style>

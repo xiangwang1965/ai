@@ -61,7 +61,7 @@ class Base {
     if (data.code === '001') {
       !options.errorOnly && Message.success(options.success || '操作成功')
     } else {
-      Message.error(data.message || options.error || '操作失败')
+      Message.error(data.message || options.error ||data.msg || '操作失败')
     }
   }
 

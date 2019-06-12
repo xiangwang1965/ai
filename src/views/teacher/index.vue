@@ -1,170 +1,64 @@
 <template>
   <div id="teacherView">
-    <div class="row-bg">
-      <h3>教师档案</h3>
-      <div>
-        <div style="margin-top: 15px;">
-          <el-input
-            size="mini"
-            placeholder="搜索姓名/ID"
-            v-model="params.searchTxt"
-            prefix-icon="el-icon-search"
-          >
-            <el-button slot="append" @click="getData" type="warning">搜索</el-button>
-          </el-input>
-          <dl>
-            <dd :key="i" v-for="(item,i) in list" @click="queryTeacherInfo(item.id)">
-              <el-image style="width: 100px; height: 100px" :src="url"></el-image>
-              <span class="demonstration">{{item.name}}</span>
-            </dd>
-          </dl>
+    <div class="content1">
+      <p class="content_title">教师档案</p>
+      <div class="left_content">
+        <div class="search_position">
+          <div class="search_box" style="float:right">
+            <el-input
+              size="mini"
+              placeholder="搜索姓名/ID"
+              v-model="params.searchTxt"
+              prefix-icon="el-icon-search"
+            >
+              <el-button slot="append" @click="getData" type="warning">搜索</el-button>
+            </el-input>
+          </div>
+        </div>
+        <div class="photo_list">
+          <div class="item" :key="i" v-for="(item,i) in list" @click="queryTeacherInfo(item.id)">
+            <img :src="url" alt class="item_img">
+            <p>{{item.name}}</p>
+          </div>
+          <!-- <div class="item" id="updata">
+                    <img src="../img/photo_updata.png" alt="" class="item_img">
+          </div>-->
+          <!-- <div class="item">
+          </div>-->
         </div>
       </div>
     </div>
-    <div class="row-bg">
-      <h3>教师信息</h3>
-      <div class="t_info">
-        <div class="info">
-          <div class="info_box">
-            <div class="infoImg">
-              <div class="myPic">
-                <img :src="url" alt>
-              </div>
+    <div class="content2">
+      <div class="content_title">教师信息</div>
+      <div class="right_content teacher_info" style="height: 6.67rem">
+        <div class="teacher_box">
+          <img :src="url" alt class="photo">
+
+          <p class="name">{{tInfo.name}}</p>
+          <p class="id">ID:{{tInfo.id}}</p>
+          <span class="grade">Level{{tInfo.level}}</span>
+          <div class="statistics">
+            <div class="item">
+              <p class="num">{{tInfo.totalStu}}</p>
+              <p class="txt">培训学生总数</p>
             </div>
-            <p>{{tInfo.name}}</p>
-            <p>ID:{{tInfo.id}}</p>
-            <p>{{tInfo.level}}</p>
-          </div>
-        </div>
-        <div class="count">
-          <div class="countNum">
-            <h5 id="studentNum">{{tInfo.totalStu}}</h5>
-            <p>培训学生总数</p>
-          </div>
-          <i></i>
-          <div class="countNum">
-            <h5 id="courseNum">{{tInfo.totalCourse}}</h5>
-            <p>培训课程总数</p>
-          </div>
-          <i></i>
-          <div class="countNum">
-            <h5 id="totalNum">{{tInfo.totalDay}}</h5>
-            <p>上课总天数</p>
-          </div>
-        </div>
-        <div class="course">
-          <div class="classify scratch">
-            <div class="flex_title">
-              <div class="flex">
-                <p class="title">scratch</p>
-              </div>
+            <div class="item">
+              <p class="num">{{tInfo.totalCourse}}</p>
+              <p class="txt">培训课程总数</p>
             </div>
-            <div class="flex_content">
-              <div class="flex">
-                <div class="lock Unlock">
-                  <p>level1</p>
-                  <p>初级课程</p>
-                </div>
-              </div>
-              <i></i>
-              <div class="flex">
-                <div class="lock lockup">
-                  <p>level2</p>
-                  <p>中级课程</p>
-                </div>
-              </div>
-              <i></i>
-              <div class="flex">
-                <div class="lock lockup">
-                  <p>level2</p>
-                  <p>中级课程</p>
-                </div>
-              </div>
+            <div class="item">
+              <p class="num">{{tInfo.totalDay}}</p>
+              <p class="txt">上课总天数</p>
             </div>
           </div>
-          <div class="classify python">
-            <div class="flex_title">
-              <div class="flex">
-                <p class="title">PYTHON</p>
-              </div>
-            </div>
-            <div class="flex_content">
-              <div class="flex">
-                <div class="lock Unlock">
-                  <p>level1</p>
-                  <p>初级课程</p>
-                </div>
-              </div>
-               <i></i>
-              <div class="flex">
-                <div class="lock lockup">
-                  <p>level2</p>
-                  <p>中级课程</p>
-                </div>
-              </div>
-               <i></i>
-              <div class="flex">
-                <div class="lock lockup">
-                  <p>level2</p>
-                  <p>中级课程</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="classify NOIP">
-            <div class="flex_title">
-              <div class="flex">
-                <p class="title">NOIP</p>
-              </div>
-            </div>
-            <div class="flex_content">
-              <div class="flex">
-                <div class="lock Unlock">
-                  <p>level1</p>
-                  <p>初级课程</p>
-                </div>
-              </div>
-               <i></i>
-              <div class="flex">
-                <div class="lock lockup">
-                  <p>level2</p>
-                  <p>中级课程</p>
-                </div>
-              </div>
-               <i></i>
-              <div class="flex">
-                <div class="lock lockup">
-                  <p>level2</p>
-                  <p>中级课程</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="classify AI">
-            <div class="flex_title">
-              <div class="flex">
-                <p class="title">AI</p>
-              </div>
-            </div>
-            <div class="flex_content">
-              <div class="flex">
-                <div class="lock Unlock">
-                  <p>level1</p>
-                  <p>初级课程</p>
-                </div>
-              </div>
-               <i></i>
-              <div class="flex">
-                <div class="lock lockup">
-                  <p>level2</p>
-                  <p>中级课程</p>
-                </div>
-              </div>
-               <i></i>
-              <div class="flex">
-                <div class="lock lockup">
-                  <p>level2</p>
-                  <p>中级课程</p>
+          <div class="lesson_lock">
+            <div :class="item.class" class="lock_row" :key="i" v-for="(item,i) in levelsData">
+              <div class="name">{{item.tit}}</div>
+              <div class="lock_level">
+                <div class="lock_item" :key="t" v-for="(l,t) in item.list">
+                  <img :src="item.icon" v-if="tInfo.level != t.level" class="lock">
+                  <p>Leverl {{l.level}}</p>
+                  <p>{{l.name}}</p>
                 </div>
               </div>
             </div>
@@ -179,9 +73,100 @@ import teacher from "@/services/teacher";
 export default {
   data() {
     return {
+      levelsData: [
+        {
+          tit: "Scartch",
+          icon: "../../static/image/lock_yellow.png",
+          class:'lock_row_y',
+          aciveClass:'unlock_y',
+          list: [
+            {
+              level: 1,
+              name: "初级编程"
+            },
+            {
+              level: 2,
+              name: "初级编程"
+            }
+          ]
+        },
+        {
+          tit: "PYTHON",
+           icon: "../../static/image/lock_blue.png",
+           class:'lock_row_b',
+            aciveClass:'unlock_b',
+          list: [
+            {
+              level: 3,
+              name: "初级编程"
+            },
+            {
+              level: 4,
+              name: "初级编程"
+            },
+            {
+              level: 5,
+              name: "初级编程"
+            }
+          ]
+        },
+        {
+          tit: "NOIP",
+          icon: "../../static/image/lock_red.png",
+          class:'lock_row_r',
+          aciveClass:'unlock_r',
+          list: [
+            {
+              level: 6,
+              name: "初级编程"
+            },
+            {
+              level: 7,
+              name: "初级编程"
+            },
+            {
+              level: 8,
+              name: "初级编程"
+            }
+          ]
+        },
+        {
+          tit: "AI",
+          icon: "../../static/image/lock_purple.png",
+          class:'lock_row_p',
+          aciveClass:'unlock_p',
+          list: [
+            {
+              level: 9,
+              name: "初级编程"
+            },
+            {
+              level: 10,
+              name: "初级编程"
+            },
+            {
+              level: 11,
+              name: "初级编程"
+            },
+            {
+              level: 12,
+              name: "初级编程"
+            }
+          ]
+        }
+      ],
+      corlorImgUrl: {
+        yellow: "../../static/image/lock_yellow.png",
+        blue: "../../static/image/lock_blue.png",
+        red: "../../static/image/lock_red.png",
+        purple: "../../static/image/lock_purple.png"
+      },
       list: [],
       url: "../../static/img/default_avatar.png",
-      tInfo: {},
+      tInfo: {
+          level:0,
+          name:'xxx'
+      },
       teachId: "",
       dateOption: {
         disabledDate: time => {
@@ -196,6 +181,7 @@ export default {
   created() {
     this.getData();
     this.queryTeacherInfo();
+    console.log(this.tInfo.level);
   },
   beforeRouteLeave(to, from, next) {
     if (to.path === "/student") {
@@ -216,16 +202,13 @@ export default {
       });
     },
     queryTeacherInfo(id) {
-        var p = {
-
-        };
-        p.teacherId = id || '1';
-      teacher.queryTeacherInfo(p)
-        .then(res => {
-          if (res.code === "001") {
-            this.tInfo = res.data;
-          }
-        });
+      var p = {};
+      p.teacherId = id || "1";
+      teacher.queryTeacherInfo(p).then(res => {
+        if (res.code === "001") {
+          this.tInfo = res.data;
+        }
+      });
     },
     getGradeList() {
       let params = {
@@ -290,7 +273,7 @@ export default {
             if (this.status === "create") {
               let loadingInstance = this.$loading({
                 text: "创建中...",
-                target: ".appMain"
+                target: ".content_right"
               });
               studentApi.create(params).then(res => {
                 setTimeout(() => {
@@ -306,7 +289,7 @@ export default {
               params.student_id = this.student_id;
               let loadingInstance = this.$loading({
                 text: "修改中...",
-                target: ".appMain"
+                target: ".content_right"
               });
               studentApi.update(params).then(res => {
                 setTimeout(() => {
@@ -335,260 +318,217 @@ export default {
 </script>
 <style lang="less" scoped>
 #teacherView {
-  width: 100vw;
-  height: 100vh;
-  dd {
-    padding: 30px 0;
+  display: flex;
+  flex: 1;
+  .photo_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex: 1;
+    overflow: auto;
+    margin-top: 0.27rem;
+    .item {
+      width: 1.24rem;
+      text-align: center;
+      margin-bottom: 0.4rem;
+      .item_img {
+        width: 1.24rem;
+        height: 1.24rem;
+        padding-bottom: 0.1rem;
+      }
+      p {
+        color: #5c5c5c;
+        font-size: 0.15rem;
+      }
+    }
+  }
+  .teacher_info {
+    background: #fff;
+    border-radius: 0.2rem;
+  }
+  .teacher_box {
     text-align: center;
-    display: inline-block;
-    width: 30%;
-    box-sizing: border-box;
-    vertical-align: top;
+    width: 3.6rem;
+    margin: 0 auto;
+    padding-top: 0.3rem;
+    .photo {
+      width: 1rem;
+      height: 1rem;
+      border-radius: 100%;
+      padding-bottom: 0.12rem;
+    }
+    .name {
+      color: #4a4a4a;
+      font-size: 0.2rem;
+    }
+    .id {
+      font-size: 0.16rem;
+      color: #9b9b9b;
+    }
+    .grade {
+      background: #ffc151;
+      border-radius: 6px;
+      text-align: center;
+      padding: 0.05rem 0.15rem;
+      margin: 0.05rem 0 0.08rem 0;
+      display: inline-block;
+    }
+    .phone {
+      font-size: 0.12rem;
+      color: #9b9b9b;
+    }
+    .statistics {
+      height: 1rem;
+      background: #ffffff;
+      border: 0.01rem solid #979797;
+      border-radius: 0.2rem;
+      display: flex;
+      padding: 0.21rem 0;
+      margin: 0.18rem 0 0.09rem 0;
+      box-sizing: border-box;
+      .item {
+        border-left: 0.01rem solid #c6c6c6;
+        flex: 1;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .num {
+          font-size: 0.3rem;
+          color: #9b9b9b;
+        }
+        .txt {
+          font-size: 0.13rem;
+          color: #787878;
+          opacity: 0.4;
+        }
+      }
+      .item:first-child {
+        border-left: none;
+      }
+    }
+    .lesson_lock {
+      .lock_row {
+        display: flex;
+        margin-bottom: 0.12rem;
+        .name {
+          width: 0.54rem;
+          height: 0.54rem;
+          border-radius: 100%;
+          text-align: center;
+          font-size: 0.1rem;
+          color: #fff;
+          line-height: 0.54rem;
+          margin-right: 0.2rem;
+        }
+        .lock_level {
+          width: 2.76rem;
+          height: 0.54rem;
+          border-radius: 0.27rem;
+          display: flex;
+          box-sizing: border-box;
+          overflow: hidden;
+          .lock_item {
+            padding: 0.09rem 0;
+            flex: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            .lock {
+              width: 0.21rem;
+              height: 0.2rem;
+              position: absolute;
+              z-index: 10;
+              top: 50%;
+              margin-top: -0.1rem;
+              left: 50%;
+              margin-left: -0.1rem;
+            }
+            p {
+              color: #d8d8d8;
+              font-size: 0.1rem;
+              opacity: 0.6;
+            }
+          }
+          .lock_item:before {
+            content: "";
+            height: 0.36rem;
+            width: 0.01rem;
+            position: absolute;
+            background: #c6c6c6;
+            top: 0.09rem;
+            left: 0.01rem;
+          }
+          .lock_item:first-child:before {
+            content: "";
+            height: 0.36rem;
+            width: 0rem;
+          }
+          .unlock_y {
+            background: #ffc151;
+            p {
+              color: #fff;
+              opacity: 1;
+            }
+          }
+          .unlock_blue {
+            background: #6edbef;
+            p {
+              color: #fff;
+              opacity: 1;
+            }
+          }
+          .unlock_red {
+            background: #ff696c;
+            p {
+              color: #fff;
+              opacity: 1;
+            }
+          }
+          .unlock_purple {
+            background: #777dff;
+            p {
+              color: #fff;
+              opacity: 1;
+            }
+          }
+        }
+      }
+      .lock_row_y {
+        .name {
+          background: #ffc151;
+        }
+        .lock_level {
+          border: 0.01rem solid #ffc151;
+        }
+      }
+      .lock_row_b {
+        .name {
+          background: #6edbef;
+        }
+        .lock_level {
+          border: 0.01rem solid #6edbef;
+        }
+      }
+      .lock_row_r {
+        .name {
+          background: #ff696c;
+        }
+        .lock_level {
+          border: 0.01rem solid #ff696c;
+        }
+      }
+      .lock_row_p {
+        .name {
+          background: #777dff;
+        }
+        .lock_level {
+          border: 0.01rem solid #777dff;
+        }
+      }
+    }
   }
-  .demonstration {
-    display: block;
-    color: #8492a6;
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-  .el-input {
-    background: #e6e8ef;
-    border-radius: 30px;
-    width: 80%;
-  }
 }
-#teacherView .row-bg {
-  float: left;
-  height: 100vh;
-}
-#teacherView .row-bg:first-child {
-  width: 35%;
-  border-right: 1px solid #eff2f6;
-}
-#teacherView .row-bg:last-child {
-  width: 59%;
-  padding: 0 20px;
-}
-.el-row {
-  float: left;
-  height: 100%;
-  background-color: red;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
-.info {
-  width: 100%;
-  height: 230px;
-}
-.info_box {
-  width: 190px;
-  margin: auto;
-  padding-top: 40px;
-}
-.info_box p {
-  font-size: 18px;
-  color: #072a5b;
-  text-align: center;
-  margin-top: 10px;
-}
-.infoImg {
-  width: 100%;
-  height: 114px;
-}
-.infoImg {
-  width: 100%;
-  height: 114px;
-  position: relative;
-}
-.myPic {
-  width: 100px;
-  height: 100px;
-  background: #fff;
-  padding: 2px;
-  border: 4px solid rgba(168, 215, 254, 0.6);
-  border-radius: 50%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -50px;
-  margin-top: -50px;
-}
-.myPic img {
-  display: block;
-  width: 100%;
-}
-.myPic img {
-  border-radius: 50%;
-}
-.count {
-  width: 90%;
-  height: 120px;
-  margin: auto;
-  margin-top: 34px;
-  background: #ffffff;
-  border: 1px solid #979797;
-  border-radius: 20px;
-  width: 359px;
-  height: 100px;
-}
-.count i {
-  display: block;
-  float: left;
-  width: 1px;
-  height: 50px;
-  background: #e5e5e5;
-  margin-top: 35px;
-}
-.countNum {
-  width: 33%;
-  height: 120px;
-  float: left;
-}
-.countNum h5 {
-  font-size: 24px;
-  color: #072a5b;
-  text-align: center;
-  margin-top: 30px;
-  margin-bottom: 6px;
-}
-.countNum p {
-  font-size: 14px;
-  color: #8799bd;
-  text-align: center;
-}
-
-.t_info {
-  background: #ffffff;
-  border-radius: 30px;
-  height: 90%;
-  width: 76%;
-  margin-top: 20px;
-}
-
-.course {
-  width: 359px;
-  margin: auto;
-  margin-top: 20px;
-  position: relative;
-}
-.classify {
-  width: 100%;
-  height: 65px;
-}
-.flex_title {
-  width: 25%;
-  height: 54px;
-  float: left;
-  margin-top: 20px;
-}
-.flex_content {
-  width: 75%;
-  height: 54px;
-  float: left;
-  margin-top: 20px;
-  background: #ffffff;
-  border-radius: 27px;
-  border: 1px solid #ffc151;
-}
-.flex {
-  float: left;
-  width: 33%;
-  height: 54px;
-}
-.title {
-  width: 54px;
-  height: 54px;
-  color: #fff;
-  line-height: 54px;
-  border-radius: 50%;
-  background: #ffc151;
-  margin-left: 10%;
-  font-family: HYQiHei-GZS;
-  font-size: 10px;
-  letter-spacing: 0;
-  text-align: center;
-}
-.lock {
-  width: 90%;
-  height: 54px;
-  position: relative;
-  cursor: pointer;
-}
-.lock:last-child {
-  margin-right: 0;
-}
-.lock p {
-  font-family: HYQiHei-GZS;
-  font-size: 10px;
-  color: #8799bd;
-  letter-spacing: 0;
-  text-align: center;
-}
-.lock p:first-child {
-  padding-top: 18px;
-}
-.lock_mask {
-  background: #fff;
-  //box-shadow: 0px 0px 0px 0px #fff;
-}
-.lock_mask p {
-  font-size: 16px;
-  line-height: 20px;
-  text-align: center;
-  color: #cbe1ff;
-  /*color: #f63b3e;*/
-}
-.lock_mask p:first-child {
-  padding-top: 18px;
-}
-
-.flex_content i {
-  display: block;
-  float: left;
-  width: 1px;
-  height: 50px;
-  background: #e5e5e5;
-}
-.scratch .lock {
-}
-.python .lock {
-}
-.NOIP .lock {
-}
-.AI .lock {
-}
-.lock_mask {
-  width: 100%;
-  height: 80px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: 5px;
-  display: none;
-}
-// .lock_mask i{
-// 	display: block;
-// 	width: 18px;
-// 	height: 22px;
-// 	position: absolute;
-// 	left: 50%;
-// 	top: 50%;
-// 	margin-left: -9px;
-// 	margin-top: -11px;
-// 	background: url(../images/personal/yellow.png);
-// }
-// .scratch .lock_mask i{
-// 	background: url(../images/personal/yellow.png);
-// }
-// .python .lock_mask i{
-// 	background: url(../images/personal/ss.png);
-// }
-// .NOIP .lock_mask i{
-// 	background: url(../images/personal/hs.png);
-// }
-// .AI .lock_mask i{
-// 	background: url(../images/personal/ls.png);
-// }
 </style>

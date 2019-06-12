@@ -6,9 +6,9 @@ class Auth extends Base {
     super()
     this.authUrl = '/ws/api/user/login2'
     this.loginUrl = '/ws/api/user/login2'
-    this.codeLoginUrl = '/auth/code_login'
+    this.getCodeUrl = '/ws/api/verificode'
     this.logoutUrl = '/auth/logout'
-    this.queryUserInfoUrl = '/auth/current'
+    this.resetPwdUrl = '/ws/api/user/modifyPwd'
     this.queryUserListUrl = '/auth/users'
   }
 
@@ -48,6 +48,7 @@ class Auth extends Base {
       if (res.code == '001') {
         authUtils.setToken(res.data.token)
         let { id, name, user_type, username } = res.data
+        code: null
         authUtils.setUser({
           id,
           name,
@@ -59,6 +60,25 @@ class Auth extends Base {
         success: '登录成功'
       })
       return res
+    })
+  }
+  /**
+   * 修改密码
+   * @param { Object } params {id, token, type: 1 教师APP、2教师PC、3学生端}
+   */
+  upadtePwd (params) {
+    return this.sendPost(this.resetPwdUrl, params).then(res => {
+      if (res.code == '001') {
+        this.handleError(res, {
+            success: '修改成功'
+          })
+        return res
+      } else {
+        this.handleError(res, {
+            success: res.msg
+          })
+        return res
+      }
     })
   }
 
@@ -80,6 +100,17 @@ class Auth extends Base {
         })
       }
     })
+  }
+    /**
+   * 获取验证码
+   */
+  getCode (params) {
+    return this.sendPost(this.getCodeUrl, params).then((res)=>{
+        this.handleError(res, {
+            success: '发送成功'
+          })
+          return res
+    });
   }
 
   /**
