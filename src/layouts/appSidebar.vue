@@ -3,113 +3,44 @@
     <div class="content_left">
       <div class="teacher_box">
         <img :src="logoImg" alt class="photo">
-        <p class="name">李雷</p>
-        <p class="id">ID:00001</p>
-        <span class="grade">副教授级</span>
-        <p class="phone">联系电话：13333333333</p>
+        <p class="name">{{tInfo.name}}</p>
+        <p class="id">ID:{{tInfo.id}}</p>
+        <span class="grade">Level{{tInfo.level}}</span>
         <div class="statistics">
-          <div class="item">
-            <p class="num">0</p>
-            <p class="txt">培训学生总数</p>
+            <div class="item">
+              <p class="num">{{tInfo.totalStu}}</p>
+              <p class="txt">培训学生总数</p>
+            </div>
+            <div class="item">
+              <p class="num">{{tInfo.totalCourse}}</p>
+              <p class="txt">培训课程总数</p>
+            </div>
+            <div class="item">
+              <p class="num">{{tInfo.totalDay}}</p>
+              <p class="txt">上课总天数</p>
+            </div>
           </div>
-          <div class="item">
-            <p class="num">0</p>
-            <p class="txt">培训课程总数</p>
-          </div>
-          <div class="item">
-            <p class="num">0</p>
-            <p class="txt">上课总天数</p>
-          </div>
-        </div>
-        <!-- <div class="lesson_lock">
-          <div class="lock_row lock_row_y">
-            <div class="name">SKETCH</div>
-            <div class="lock_level">
-              <div class="lock_item unlock_y">
-                <img src="../img/lock_yellow.png" alt=""  class="lock">
-                <p>Leverl 1</p>
-                <p>初级编程</p>
-              </div>
-              <div class="lock_item">
-                <img src="./img/lock_yellow.png" alt class="lock">
-                <p>Leverl 1</p>
-                <p>初级编程</p>
+       <div class="lesson_lock">
+            <div :class="item.class" class="lock_row" :key="i" v-for="(item,i) in levelsData">
+              <div class="name">{{item.tit}}</div>
+              <div class="lock_level">
+                <div class="lock_item" :key="t" v-for="(l,t) in item.list">
+                  <img :src="item.icon" v-if="tInfo.level != t.level" class="lock">
+                  <p>Leverl {{l.level}}</p>
+                  <p>{{l.name}}</p>
+                </div>
               </div>
             </div>
           </div>
-          <div class="lock_row lock_row_b">
-            <div class="name">SKETCH</div>
-            <div class="lock_level">
-              <div class="lock_item unlock_blue">
-               <img src="../img/lock_blue.png" alt=""  class="lock">
-                <p>Leverl 1</p>
-                <p>初级编程</p>
-              </div>
-              <div class="lock_item">
-                <img src="./img/lock_blue.png" alt class="lock">
-                <p>Leverl 1</p>
-                <p>初级编程</p>
-              </div>
-              <div class="lock_item">
-                <img src="./img/lock_blue.png" alt class="lock">
-                <p>Leverl 1</p>
-                <p>初级编程</p>
-              </div>
-            </div>
-          </div>
-          <div class="lock_row lock_row_r">
-            <div class="name">SKETCH</div>
-            <div class="lock_level">
-              <div class="lock_item unlock_red">
-                <img src="../img/lock_red.png" alt=""  class="lock">
-                <p>Leverl 1</p>
-                <p>初级编程</p>
-              </div>
-              <div class="lock_item">
-                <img src="./img/lock_red.png" alt class="lock">
-                <p>Leverl 1</p>
-                <p>初级编程</p>
-              </div>
-              <div class="lock_item">
-                <img src="./img/lock_red.png" alt class="lock">
-                <p>Leverl 1</p>
-                <p>初级编程</p>
-              </div>
-            </div>
-          </div>
-          <div class="lock_row lock_row_p">
-            <div class="name">SKETCH</div>
-            <div class="lock_level">
-              <div class="lock_item unlock_purple">
-                <img src="../img/lock_purple.png" alt=""  class="lock">
-                <p>Leverl 1</p>
-                <p>初级编程</p>
-              </div>
-              <div class="lock_item">
-                <img src="./img/lock_purple.png" alt class="lock">
-                <p>Leverl 1</p>
-                <p>初级编程</p>
-              </div>
-              <div class="lock_item">
-                <img src="./img/lock_purple.png" alt class="lock">
-                <p>Leverl 1</p>
-                <p>初级编程</p>
-              </div>
-              <div class="lock_item">
-                <img src="./img/lock_purple.png" alt class="lock">
-                <p>Leverl 1</p>
-                <p>初级编程</p>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
-      <div class="btn_124 out_login">退出登录</div>
+      <div class="btn_124 out_login" @click="logout">退出登录</div>
     </div>
   </div>
 </template>
 <script>
 import authUtils from "@/services/auth/utils";
+import authApi from "@/services/auth";
+import teacherApi from '@/services/teacher'
 import eventHub from "@/utils/eventHub";
 import { IMS_URL } from "@/config";
 export default {
@@ -117,32 +48,93 @@ export default {
     return {
       menuList: [],
       logoImg: "../../static/image/person_background.png",
-      liveList: [
+      levelsData: [
         {
-          path: "/class",
-          title: "班级管理",
-          icon: "icon-cac-reception",
-          child: [{ path: "/", title: "classroom" }]
+          tit: "Scartch",
+          icon: "../../static/image/lock_yellow.png",
+          class:'lock_row_y',
+          aciveClass:'unlock_y',
+          list: [
+            {
+              level: 1,
+              name: "初级编程"
+            },
+            {
+              level: 2,
+              name: "初级编程"
+            }
+          ]
         },
         {
-          path: "/teacher",
-          title: "教师档案",
-          icon: "icon-cac-platform"
+          tit: "PYTHON",
+           icon: "../../static/image/lock_blue.png",
+           class:'lock_row_b',
+            aciveClass:'unlock_b',
+          list: [
+            {
+              level: 3,
+              name: "初级编程"
+            },
+            {
+              level: 4,
+              name: "初级编程"
+            },
+            {
+              level: 5,
+              name: "初级编程"
+            }
+          ]
         },
         {
-          path: "/buy",
-          title: "购买激活码",
-          icon: "icon-cac-magic"
+          tit: "NOIP",
+          icon: "../../static/image/lock_red.png",
+          class:'lock_row_r',
+          aciveClass:'unlock_r',
+          list: [
+            {
+              level: 6,
+              name: "初级编程"
+            },
+            {
+              level: 7,
+              name: "初级编程"
+            },
+            {
+              level: 8,
+              name: "初级编程"
+            }
+          ]
         },
         {
-          path: "/course",
-          title: "课程订单",
-          icon: "icon-cac-wisroom"
+          tit: "AI",
+          icon: "../../static/image/lock_purple.png",
+          class:'lock_row_p',
+          aciveClass:'unlock_p',
+          list: [
+            {
+              level: 9,
+              name: "初级编程"
+            },
+            {
+              level: 10,
+              name: "初级编程"
+            },
+            {
+              level: 11,
+              name: "初级编程"
+            },
+            {
+              level: 12,
+              name: "初级编程"
+            }
+          ]
         }
       ],
       routes: ["/class", "/teacher", "/buy", "/course", "/classroom"],
       is_live: 1,
-      temp: []
+      temp: [],
+      userInfo:{},
+      tInfo:{}
     };
   },
   computed: {
@@ -168,8 +160,8 @@ export default {
   },
   created() {
     this.temp = this.menuList;
-    // this.getUser()
-    //this.handleSelect(this.$route.path)
+    this.getUser()
+    // this.handleSelect(this.$route.path)
     eventHub.$on("updateUser", this.getUser);
   },
   methods: {
@@ -177,16 +169,38 @@ export default {
       // this.is_live = authUtils.getUser() && authUtils.getUser().is_live
       // this.menuList = this.is_live ? this.liveList : this.tofaceList
       // 判断是否是平台双师1或魔法双师0
-      this.is_self_live =
-        authUtils.getUser() && authUtils.getUser().is_self_live;
-      this.menuList = [];
-      this.menuList = this.is_self_live ? this.platformList : this.liveList;
-      // 如果third_part存在，使用对应的第三方侧栏
-      if (authUtils.getUser().third_part) {
-        this.menuList = this[authUtils.getUser().third_part + "List"];
+      console.log(authUtils.getUser());
+      this.userInfo = authUtils.getUser();
+      if (this.userInfo.id) {
+          this.queryTeacherInfo(this.userInfo.id);
+      } else {
+          this.$message({
+              message:'教师id不存在，请确认用户身份',
+              type:'error'
+          })
       }
+    //   this.is_self_live =
+    //     authUtils.getUser() && authUtils.getUser().is_self_live;
+    //   this.menuList = [];
+    //   this.menuList = this.is_self_live ? this.platformList : this.liveList;
+    //   // 如果third_part存在，使用对应的第三方侧栏
+    //   if (authUtils.getUser().third_part) {
+    //     this.menuList = this[authUtils.getUser().third_part + "List"];
+    //   }
     },
-    go(item) {}
+    go(item) {},
+    logout() {
+        authApi.logout();
+    },
+     queryTeacherInfo(id) {
+      var p = {};
+      p.teacherId = id || "1";
+      teacherApi.queryTeacherInfo(p).then(res => {
+        if (res.code === "001") {
+          this.tInfo = res.data;
+        }
+      });
+    }
   }
 };
 </script>

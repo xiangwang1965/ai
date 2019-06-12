@@ -33,6 +33,7 @@ Vue.use(Router)
 
 function requireAuth(to, from, next) {
     var firstPage = '/'
+    debugger;
     if (!authUtils.loggedIn()) {
         firstPage = '/auth'
     } else {

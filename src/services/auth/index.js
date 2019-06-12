@@ -89,8 +89,8 @@ class Auth extends Base {
     let params = {
       type: 2
     }
-    return this.sendPost(this.logoutUrl, params).then(res => {
-      if (res.ok) {
+    // return this.sendPost(this.logoutUrl, params).then(res => {
+    //   if (res.ok) {
         return new Promise((resolve, reject) => {
           authUtils.removeToken()
           authUtils.removeUser()
@@ -98,8 +98,8 @@ class Auth extends Base {
             ok: true
           })
         })
-      }
-    })
+    //   }
+    // })
   }
     /**
    * 获取验证码
