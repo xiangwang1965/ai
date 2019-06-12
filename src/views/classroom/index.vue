@@ -11,35 +11,49 @@
             <p class="txt orange">Scratch</p>
           </div>
           <el-collapse-transition>
-            <ul class="classList one" v-show="show1">
-              <li :class="{active:currentClass == item.id}" v-for="(item,index) in courseList.course1" :key="index" @click="getStudent(item,index)">
-                <div class="top" style="height:50%">
-                  <span class="one">{{item.name}}</span>
-                  <span class="two orange">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
-                </div>
-                <div class="bottom" style="height:50%;">
-                  <span class="three orange">{{item.courseName}}</span>
-                  <span class="four orange">{{item.teacherName}}</span>
+            <ul class="class_list" v-show="show1">
+              <li
+                :class="{active:currentClass == item.id}"
+                class="class_item class_item_yellow"
+                v-for="(item,index) in courseList.course1"
+                :key="index"
+                @click="getStudent(item,index)"
+              >
+                <div class="class_fixed"></div>
+                <div class="class_text">
+                  <p class="class_text_row">
+                    <span class="class_name">{{item.name}}</span>
+                    <span class="class_time">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
+                  </p>
+                  <p class="class_text_row">
+                    <span class="class_level">{{item.courseName}}</span>
+                    <span class="class_teacher">{{item.teacherName}}</span>
+                  </p>
                 </div>
               </li>
               <div class="nodata" v-show="nodata1">暂无数据</div>
             </ul>
           </el-collapse-transition>
-        </div>
-        <div class="item">
-          <div class="classTitle green" @click="getData(2)">
-            <p class="txt green">Python</p>
-          </div>
-          <el-collapse-transition>
-            <ul class="classList two" v-show="show2">
-              <li :class="{active:currentClass == item.id}" v-for="(item,index) in courseList.course2" :key="index" @click="getStudent(item,index)">
-                <div class="top" style="height:50%">
-                  <span class="one green">{{item.name}}</span>
-                  <span class="two green">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
-                </div>
-                <div class="bottom" style="height:50%;">
-                  <span class="three green">{{item.courseName}}</span>
-                  <span class="four green">{{item.teacherName}}</span>
+          <div class="class_title class_P" @click="getData(2)"></div>
+          <el-collapse-transition class="class_list">
+            <ul class="class_list" v-show="show2">
+              <li
+                :class="{active:currentClass == item.id}"
+                class="class_item class_item_blue"
+                v-for="(item,index) in courseList.course2"
+                :key="index"
+                @click="getStudent(item,index)"
+              >
+                <div class="class_fixed"></div>
+                <div class="class_text">
+                  <p class="class_text_row">
+                    <span class="class_name">{{item.name}}</span>
+                    <span class="class_time">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
+                  </p>
+                  <p class="class_text_row">
+                    <span class="class_level">{{item.courseName}}</span>
+                    <span class="class_teacher">{{item.teacherName}}</span>
+                  </p>
                 </div>
               </li>
               <div class="nodata" v-show="nodata2">暂无数据</div>
@@ -51,15 +65,24 @@
             <p class="txt red">NOIP</p>
           </div>
           <el-collapse-transition>
-            <ul class="classList three" v-show="show3">
-              <li :class="{active:currentClass == item.id}" v-for="(item,index) in courseList.course3" :key="index" @click="getStudent(item,index)">
-                <div class="top" style="height:50%">
-                  <span class="one">{{item.name}}</span>
-                  <span class="two red">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
-                </div>
-                <div class="bottom" style="height:50%;">
-                  <span class="three red">{{item.courseName}}</span>
-                  <span class="four red">{{item.teacherName}}</span>
+            <ul class="class_list" v-show="show3">
+              <li
+                :class="{active:currentClass == item.id}"
+                class="class_item class_item_red"
+                v-for="(item,index) in courseList.course3"
+                :key="index"
+                @click="getStudent(item,index)"
+              >
+                <div class="class_fixed"></div>
+                <div class="class_text">
+                  <p class="class_text_row">
+                    <span class="class_name">{{item.name}}</span>
+                    <span class="class_time">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
+                  </p>
+                  <p class="class_text_row">
+                    <span class="class_level">{{item.courseName}}</span>
+                    <span class="class_teacher">{{item.teacherName}}</span>
+                  </p>
                 </div>
               </li>
               <div class="nodata" v-show="nodata3">暂无数据</div>
@@ -71,15 +94,24 @@
             <p class="txt purple">AI</p>
           </div>
           <el-collapse-transition>
-            <ul class="classList four" v-show="show4">
-              <li :class="{active:currentClass == item.id}" v-for="(item,index) in courseList.course4" :key="index" @click="getStudent(item,index)">
-                <div class="top" style="height:50%">
-                  <span class="one">{{item.name}}</span>
-                  <span class="two purpe">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
-                </div>
-                <div class="bottom" style="height:50%;">
-                  <span class="three purpe">{{item.courseName}}</span>
-                  <span class="four purpe">{{item.teacherName}}</span>
+            <ul class="class_list" v-show="show4">
+              <li
+                :class="{active:currentClass == item.id}"
+                class="class_item class_item_purple"
+                v-for="(item,index) in courseList.course4"
+                :key="index"
+                @click="getStudent(item,index)"
+              >
+                <div class="class_fixed"></div>
+                <div class="class_text">
+                  <p class="class_text_row">
+                    <span class="class_name">{{item.name}}</span>
+                    <span class="class_time">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
+                  </p>
+                  <p class="class_text_row">
+                    <span class="class_level">{{item.courseName}}</span>
+                    <span class="class_teacher">{{item.teacherName}}</span>
+                  </p>
                 </div>
               </li>
               <div class="nodata" v-show="nodata4">暂无数据</div>
