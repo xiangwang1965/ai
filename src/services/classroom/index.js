@@ -16,6 +16,8 @@ class Classroom extends CRUD {
     this.searchStudentUrl = '/ws/api/user/getStudents';
     this.coursePlanStatus = '/ws/api/course/getCoursePlanStatus';
     this.getCoursePlanUrl = '/ws/api/course/getCoursePlan';
+    this.courseReportAddUrl = '/ws/api/report/add';
+    this.courseReportUrl = '/ws/api/report/info';
   }
   getCoursePlan(params){
     return this.sendGet(this.getCoursePlanUrl,params).then(res => {
@@ -87,6 +89,17 @@ class Classroom extends CRUD {
       return this.sendGet(this.coursePlanStatus,params).then(res => {
           return res;
       })
+    }
+
+    courseReportAdd(params){
+        return this.sendPost(this.courseReportAddUrl,params).then(res => {
+          return res;
+        })
+      }
+    courseReportInfo(params){
+    return this.sendGet(this.courseReportUrl,params).then(res => {
+        return res;
+    })
     }
 }
 

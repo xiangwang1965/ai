@@ -32,8 +32,7 @@ const courseWrap = () => import('@/views/course/courseWrap')
 Vue.use(Router)
 
 function requireAuth(to, from, next) {
-    var firstPage = '/'
-    debugger;
+    var firstPage = '/';
     if (!authUtils.loggedIn()) {
         firstPage = '/auth'
     } else {

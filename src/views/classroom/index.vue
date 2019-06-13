@@ -113,7 +113,6 @@
           </el-collapse-transition>
         </div>
       </div>
-      <div type="default" @click="handleManage1" class="btn_124 classManagement_btn">管理</div>
     </div>
     <div class="content2">
       <div class="content_title">SCRATCH初级编程1班</div>
@@ -183,28 +182,27 @@
             <div class="person_box" v-for="(item,i) in studentsList" :key="i">
               <div class="person_name">{{item.name}}</div>
               <div class="person_handle">
-                <div class="icon1"></div>
-                <div class="icon2"></div>
+                <div class="icon1" @click="courseReport(item)"></div>
+                <div class="icon2" @click="handleReportCreate(item)"></div>
               </div>
             </div>
           </div>
         </div>
         </div>
       </div>
-      <div class="btn_124 personManagement_btn" id='showPersonDialog' @click="handleManage2">管理</div>
     </div>
- <el-dialog center append-to-body title="学生管理" width="80%" :visible.sync="showManage2">
-       <studentManage :currentType="currentType" ref="studentsManage" :currentClass="current" :studentlist="studentsList"></studentManage>
+    <el-dialog center append-to-body title="学习报告" width="60%" :visible.sync="showCourseReportAdd">
+       <courseReportAdd :courseList="coursePlanData.list" ref="courseReportAdd" :curClsId="currentClass" :curStudent="curStudent" :studentlist="studentsList"></courseReportAdd>
     </el-dialog>
-    <el-dialog center append-to-body title="班级管理" :visible.sync="showManage1">
-       <classManage v-on:refresh="refresh" ref="classManage" :currentIndex="currentIndex" :datalist="currentList"></classManage>
+    <el-dialog center append-to-body title="学习报告" :visible.sync="showCourseReport">
+       <courseReport v-on:refresh="refresh" ref="courseReport" :curClsId="currentClass" :curStudent="curStudent" :courseList="coursePlanData.list"></courseReport>
     </el-dialog>
   </div>
 </template>
 <script>
 import classApi from "@/services/classroom";
-import studentManage from './studentManage';
-import classManage from './classManage';
+import courseReportAdd from './courseReportAdd';
+import courseReport from './courseReport';
 import authUtils from "@/services/auth/utils";
 export default {
   data() {
@@ -234,6 +232,8 @@ export default {
       isFirst:true,
       currentClass:'',
       showManage1:false,
+      showCourseReportAdd:false,
+      showCourseReport:false,
       showManage2:false,
       currentIndex:'',
       currentList:[],
@@ -243,7 +243,8 @@ export default {
       /**右侧tab显示模块 */
       studentTabShow:true,
       coursePlanData:{},
-      curCourProcess:'0%'
+      curCourProcess:'0%',
+      curStudent:{}
     };
   },
   computed:{
@@ -264,8 +265,8 @@ export default {
     },false)
   },
   components:{
-    studentManage,
-    classManage
+    courseReportAdd,
+    courseReport
   },
   methods: {
     getList(item,index) {
@@ -281,10 +282,15 @@ export default {
         if (index) {
             this.currentIndex = index;
         }
-        if (this.studentTabShow) {
-            this.getStudent();
+        if (this.isFirst) {
+             this.getStudent();
+             this.getCoursePlan();
         } else {
-            this.getCoursePlan();
+            if (this.studentTabShow) {
+                this.getStudent();
+            } else {
+                this.getCoursePlan();
+            }
         }
     },
     getCoursePlan() {
@@ -317,17 +323,18 @@ export default {
             this.getStudent();
         }
     },
-    handleManage1(){
-      this.showManage1 = true;
-      if(this.$refs.classManage){
-         this.$refs.classManage.setRight(this.currentList[this.currentIndex]);
+    courseReport(item){
+      this.showCourseReport = true;
+       this.curStudent = item;
+      if(this.$refs.courseReport){
+         this.$refs.courseReport.getReportInfo();
       }
     },
-    handleManage2(){
-      this.showManage2 = true;
-      if(this.$refs.studentsManage){
-         this.$refs.studentsManage.setClass();
-         this.$refs.studentsManage.getCodeList(this.currentClass);
+    handleReportCreate(item){
+      this.showCourseReportAdd = true;
+      this.curStudent = item;
+       if(this.$refs.courseReportAdd){
+        //  this.$refs.courseReport.setRight(this.currentList[this.currentIndex]);
       }
     },
     search(){

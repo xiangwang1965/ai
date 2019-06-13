@@ -150,6 +150,10 @@ html body {
     font-size: 0.15rem;
     cursor: pointer;
   }
+.el-dialog__body{
+    height:100%;
+    overflow:hidden;
+}
   .btn_108 {
     width: 1.08rem;
     height: 0.42rem;
@@ -352,22 +356,16 @@ html body {
     background: #FFC151;
     border-radius: 0 0.1rem 0.1rem 0;
   }
-  .dialog_wrap {
+  .el-dialog {
     width: 100%;
-    height: 100%;
-    position: absolute;
     top: 0;
-    z-index: 200;
+    z-index: 2001;
+    border-radius: 0.23rem;
+    display: flex;
+    flex-direction: column;
+    overflow:hidden;
   }
-  .dialog_wrap .dialog_mark {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background: #4A4A4A;
-    opacity: 0.5;
-    top: 0;
-  }
-  .dialog_wrap .dialog_content {
+  .el-dialog .dialog_content {
     width: 8.22rem;
     height: 6.82rem;
     background: #fff;
@@ -380,25 +378,23 @@ html body {
     display: flex;
     flex-direction: column;
   }
-  .dialog_wrap .dialog_content_big {
-    width: 50%;
+  .el-dialog .dialog_content_big {
     height: 98%;
-    position: absolute;
     left: 25%;
     top: 1%;
     background: #fff;
     border-radius: 0.23rem;
     display: flex;
   }
-  .dialog_wrap .dialog_content_big .dialog_center {
+  .el-dialog .dialog_content_big .dialog_center {
     border-top: none;
     padding-top: 0.23rem;
     box-sizing: border-box;
   }
-  .dialog_wrap .dialog_content_big .dialog_bottom .btn_124 {
+  .el-dialog .dialog_content_big .dialog_bottom .btn_124 {
     margin: 0rem auto 0.4rem;
   }
-  .dialog_wrap .dialog_header {
+  .el-dialog .dialog_header {
     height: 0.81rem;
     text-align: center;
     line-height: 0.81rem;
@@ -406,7 +402,7 @@ html body {
     font-size: 0.22rem;
     position: relative;
   }
-  .dialog_wrap .dialog_header .dialog_back {
+  .el-dialog .dialog_header .dialog_back {
     top: 0.24rem;
     left: 0.24rem;
     position: absolute;
@@ -416,18 +412,18 @@ html body {
     background-size: cover;
     cursor: pointer;
   }
-  .dialog_wrap .dialog_center {
+  .el-dialog .dialog_center {
     flex: 1;
     border-top: 0.01rem solid #979797;
     overflow: auto;
     text-align: center;
   }
-  .dialog_wrap .dialog_center .dialog_l_r {
+  .el-dialog .dialog_center .dialog_l_r {
     width: 100%;
     height: 100%;
     display: flex;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_title {
+  .el-dialog .dialog_center .dialog_l_r .dialog_title {
     height: 0.5rem;
     line-height: 0.51rem;
     border-bottom: 0.01rem solid #979797;
@@ -435,61 +431,61 @@ html body {
     text-align: center;
     color: #4A4A4A;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left {
     width: 2.55rem;
     border-right: 0.01rem solid #979797;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left .item_delete {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left .item_delete {
     width: 0.11rem;
     height: 0.13rem;
     padding: 0 0.23rem;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left .dialog_l_top {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left .dialog_l_top {
     display: flex;
     height: 2.86rem;
     flex-direction: column;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left .dialog_l_top .top_list {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left .dialog_l_top .top_list {
     flex: 1;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left .dialog_l_top .top_list .item {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left .dialog_l_top .top_list .item {
     width: 100%;
     height: 0.51rem;
     border-bottom: 0.01rem solid #979797;
     display: flex;
     align-items: center;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left .dialog_l_top .top_list .item .item_photo {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left .dialog_l_top .top_list .item .item_photo {
     width: 0.4rem;
     height: 0.4rem;
     display: block;
     padding: 0 0.1rem 0 0.17rem;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left .dialog_l_top .top_list .item .item_center {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left .dialog_l_top .top_list .item .item_center {
     color: #4A4A4A ;
     flex: 1;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left .dialog_l_top .top_list .item .item_center .name {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left .dialog_l_top .top_list .item .item_center .name {
     font-size: 0.15rem;
     text-align: left;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left .dialog_l_top .top_list .item .item_center .name_label {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left .dialog_l_top .top_list .item .item_center .name_label {
     font-size: 0.12rem;
     text-align: left;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left .dialog_l_top .dialog_l_btn {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left .dialog_l_top .dialog_l_btn {
     height: 0.99rem;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left .dialog_l_top .dialog_l_btn .btn_172 {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left .dialog_l_top .dialog_l_btn .btn_172 {
     margin: 0.11rem auto;
     height: 0.33rem;
     line-height: 0.33rem;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left .dialog_l_bottom {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left .dialog_l_bottom {
     height: 2.6rem;
     border-top: 0.01rem solid #979797;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left .dialog_l_bottom .bottom_list .item {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left .dialog_l_bottom .bottom_list .item {
     width: 100%;
     height: 0.4rem;
     border-bottom: 0.01rem solid #979797;
@@ -497,25 +493,25 @@ html body {
     align-items: center;
     justify-content: space-between;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_left .dialog_l_bottom .bottom_list .item span {
+  .el-dialog .dialog_center .dialog_l_r .dialog_left .dialog_l_bottom .bottom_list .item span {
     padding-left: 0.2rem;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_rig {
+  .el-dialog .dialog_center .dialog_l_r .dialog_rig {
     flex: 1;
     display: flex;
     flex-direction: column;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_rig .dialog_r_top {
+  .el-dialog .dialog_center .dialog_l_r .dialog_rig .dialog_r_top {
     flex: 1;
   }
-  .dialog_wrap .dialog_center .dialog_l_r .dialog_rig .dialog_r_bottom {
+  .el-dialog .dialog_center .dialog_l_r .dialog_rig .dialog_r_bottom {
     height: 1.11rem;
     display: flex;
     align-items: center;
     border-top: 0.01rem solid #979797;
     justify-content: center;
   }
-  .dialog_wrap .dialog_footer {
+  .el-dialog .dialog_footer {
     height: 1.2rem;
     display: flex;
     align-items: center;
