@@ -1,79 +1,33 @@
 <template>
     <div class="studentManage dialog_content">
-        <!-- <div class="left-item">
-            <div class="h3">{{currentClass.courseName}}编程班</div>
-            <ul class="students">
-                <li @click="setRight(student)" :class="{active:currentStudent.id === student.id}" :key="index" v-for="(student,index) in studentlist">
-                    <img :src="defaultImg" />
-                    <div>
-                        <p>{{student.name}}</p>
-                        <p>激活码：{{student.cdk}}</p>
-                    </div>
-                    <i @click="deleteStudent(student)" class="el-icon-delete"></i>
-                </li>
-            </ul>
-            <div class="studentInfo">
-                <div class="info">
-                    <el-button type="default" @click="showCreate = true" class="cac-button-one">创建学生信息</el-button>
-                </div>
-                <ul style="max-height:80px">
-                    <li v-for="code in codeList" :key="code.id">
-                        <span style="float:left;margin-top:5px;">{{code.cdk}}</span>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-        <div class="right-item">
-            <div class="h3">学生信息</div>
-            <div class="infoCon">
-                <ul>
-                    <li>
-                        <p><span>姓名</span>：{{currentStudent.name}}</p>
-                        <p><span>年龄</span>：{{currentStudent.age}}</p>
-                    </li>
-                    <li>
-                        <p><span>机构</span>：{{currentClass.schoolName}}</p>
-                        <p><span>班级</span>：{{currentClass.name}}</p>
-                        <p><span>课程</span>：{{currentClass.courseName}}</p>
-                        <p><span>教师</span>：{{currentClass.teacherName}}</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <el-dialog center append-to-body width="80%" title="创建学生信息" :visible.sync="showCreate">
+        <el-dialog center append-to-body fullscreen title="创建学生信息" :visible.sync="showCreate">
             <createStudent :codeOptions="codeList" :currentClass="currentClass" :currentType="currentType" ref="child"></createStudent>
-        </el-dialog> -->
+        </el-dialog>
                 <div class="dialog_center">
                     <div class="dialog_l_r">
                         <div class="dialog_left">
                             <div class="dialog_title">{{currentClass && currentClass.courseName}}编程班</div>
                             <div class="dialog_l_top">
-                                <div class="top_list">
+                                <div class="top_list" scrollBar>
                                     <div class="item" @click="setRight(student)" :class="{active:currentStudent.id === student.id}" :key="index" v-for="(student,index) in studentlist">
-                                        <!-- <img src="./img/person_photo.png" alt="" class="item_photo"> -->
+                                        <img :src="defaultImg" class="item_photo">
                                         <div class="item_center">
-                                            <p class="name">刘洋</p>
-                                            <p class="name_label">激活码：000</p>
+                                            <p class="name">{{student.name}}</p>
+                                            <p class="name_label">激活码：{{student.cdk}}</p>
                                         </div>
-                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
+                                        <img :src="iconDel" class="item_delete" click="deleteStudent(student)">
                                     </div>
                                 </div>
-                                <div class="dialog_l_btn">
-                                    <div class="btn_172" id="add_info">添加学生信息</div>
-                                    <div class="btn_172">创建学生信息</div>
-                                </div>
                             </div>
+                             <div class="dialog_l_btn">
+                                    <div class="btn_172" id="add_info"  @click="showCreate = true">添加学生信息</div>
+                                </div>
                             <div class="dialog_l_bottom">
                                 <div class="dialog_title">未激活</div>
                                 <div class="bottom_list">
-                                    <div class="item">
-                                        <span>2222222</span>
-                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
-                                    </div>
-                                    <div class="item">
-                                        <span>2222222</span>
-                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
+                                    <div class="item" v-for="code in codeList" :key="code.id">
+                                        <span>{{code.cdk}}</span>
+                                        <img :src="iconDel" alt="" class="item_delete">
                                     </div>
                                 </div>
                             </div>
@@ -83,42 +37,39 @@
                             <div class="dialog_r_top">
                                 <div class="intr_box">
                                     <div class="intr_row">
-                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        <img :src="nameIcon" alt="" style="width: 0.1rem;height: 0.13rem;;">
                                         姓名：
-                                        <span>拉拉</span>
+                                        <span>{{currentStudent.name}}</span>
                                     </div>
                                     <div class="intr_row">
-                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                       <img :src="nameIcon" alt="" style="width: 0.1rem;height: 0.13rem;;">
                                         年龄：
-                                        <span>拉拉</span>
+                                        <span>{{currentStudent.age}}</span>
                                     </div>
 
                                 </div>
-                                <div class="intr_box">
+                                <div class="intr_box" v-if="currentClass">
                                     <div class="intr_row">
-                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        <img :src="nameIcon" alt="" style="width: 0.1rem;height: 0.13rem;;">
                                         机构：
-                                        <span>拉拉</span>
+                                        <span>{{currentClass.schoolName}}</span>
                                     </div>
                                     <div class="intr_row">
-                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        <img :src="nameIcon" alt="" style="width: 0.1rem;height: 0.13rem;;">
                                         班级：
-                                        <span>拉拉</span>
+                                        <span>{{currentClass.name}}</span>
                                     </div>
                                     <div class="intr_row">
-                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        <img :src="nameIcon" alt="" style="width: 0.1rem;height: 0.13rem;;">
                                         课程：
-                                        <span>拉拉</span>
+                                        <span>{{currentClass.courseName}}</span>
                                     </div>
                                     <div class="intr_row">
-                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        <img :src="nameIcon" alt="" style="width: 0.1rem;height: 0.13rem;;">
                                         教师：
-                                        <span>拉拉</span>
+                                        <span>{{currentClass.teacherName}}</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="dialog_r_bottom">
-                                <div class="btn_172" id="submit_s">保存</div>
                             </div>
                         </div>
                     </div>
@@ -133,7 +84,9 @@ export default {
     data(){
         return {
             showManage:true,
-            defaultImg:'../../static/img/student.png',
+            defaultImg:'../../static/image/person_photo.png',
+            iconDel:'../../static/image/delete_icon.png',
+            nameIcon:'../../static/image/name_icon.png',
             currentStudent:'',
             codeList:[],
             showCreate:false
@@ -235,101 +188,129 @@ export default {
 </script>
 <style lang="less" scoped>
     @bottom:1px solid #979797;
+    el-dialog
     .el-icon-delete{
         cursor: pointer;
         color:cornflowerblue;
     }
-    .top{width:100%;height:5px;border-bottom:@bottom}
-    .h3{
-        width:100%;
-        height:44px;
-        line-height:44px;
-        border-bottom:@bottom;
-        color:#000;
-        text-align: center;
-    }
     .studentManage{
-        height:50vh;
-        margin:0;
+          margin:0;
         padding:0;
-        .left-item{
-            float:left;
-            width:30vw;
-            height:100%;
-            border-right:@bottom;
-            ul{
-                margin:0 auto;
-                padding:0 5px;
-                max-height: 150px;
-                overflow-y:auto;
-                li{
-                    height:44px;
-                    border-bottom: 1px solid #979797;
-                    padding-top:10px;
-                    img{
-                        float:left;
-                        width:30px;
-                        height:30px;
-                        border-radius: 50%;
-                        background:#000;
-                    }
-                    height:44px;
-                    border-bottom: 1px solid #979797;
-                    padding-top:10px;
-                    div{
-                        float:left;
-                        margin-left:30px;
-                        margin-top:5px;
-                        width:280px;
-                        p{font-size:12px;}
-                    }
-                    i{
-                        margin-top:15px;
-                        margin-right:0px;
-                    }
-                    &.active{
-                        background:rgba(#F3F6FC);
-                    }
-
+        height:100%;
+        width:100%;
+       .dialog_center{
+            flex: 1;
+            border-top:0.01rem solid #979797;
+            overflow: auto;
+            text-align: center;
+            overflow:hidden;
+            .dialog_l_r{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                .dialog_title{
+                    height: 0.5rem;
+                    line-height: 0.51rem;
+                    border-bottom:0.01rem solid #979797;
+                    font-size: 0.18rem;
+                    text-align: center;
+                    color:#4A4A4A;
                 }
-            }
-            .studentInfo{
-                .info {
-                    height:60px;
-                    border-bottom:@bottom;
-                    .cac-button-one{
-                        margin-top:13px;
-                        width:20px;
-                        height:30px;
+                .dialog_left{
+                    width: 4rem;
+                    border-right: 0.01rem solid #979797;
+                    .item_delete{
+                        width: 0.11rem;
+                        height: 0.13rem;
+                        padding:0 0.23rem;
+                    }
+                    .dialog_l_top{
+                        display: flex;
+                        height: 2.86rem;
+                        flex-direction: column;
+                        overflow-y:auto;
+                        .top_list{
+                            flex:1;
+                            .item{
+                                width: 100%;
+                                height: 0.51rem;
+                                border-bottom: 0.01rem solid #979797;
+                                display: flex;
+                                align-items: center;
+                                .item_photo{
+                                    width: 0.4rem;
+                                    height: 0.4rem;
+                                    display: block;
+                                    padding:0 0.1rem 0 0.17rem;
+                                }
+                                .item_center{
+                                    color:#4A4A4A ;
+                                    flex:1;
+                                    .name{
+                                        font-size: 0.15rem;
+                                        text-align: left;
+                                    }
+                                    .name_label{
+                                        font-size: 0.12rem;
+                                        text-align: left;
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                     .dialog_l_btn{
+                            height: 0.99rem;
+                            padding: auto;
+                            padding: 0.2rem auto;
+                            border-top: 0.01rem solid #979797;
+                            .btn_172{
+                                margin:0.11rem auto;
+                                height: 0.33rem;
+                                line-height: 0.33rem;
+                            }
+                        }
+                    .dialog_l_bottom{
+                        height: 2.6rem;
+                        border-top:0.01rem solid #979797;
+                        .bottom_list{
+                            .item{
+                                width: 100%;
+                                height: 0.4rem;
+                                border-bottom: 0.01rem solid #979797;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                span{
+                                    padding-left:0.2rem;
+                                }
+                            }
+                        }
+                    }
+                }
+                .dialog_rig{
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    .dialog_r_top{
+                        flex:1;
+                    }
+                    .dialog_r_bottom{
+                        height: 1.11rem;
+                        display: flex;
+                        align-items: center;
+                        border-top: 0.01rem solid #979797;
+                        justify-content: center;
                     }
                 }
             }
         }
-        .right-item{
-            float:left;
-            width:45vw;
-            height:100%;
-            ul li{
-                width:450px;
-                padding:10px 5px;
-                background: #F3F6FC;
-                border-radius: 12px;
-                margin-left:10px;
-                margin-top:10px;
-                min-height:60px;
-                overflow: auto;
-                overflow-x:hidden;
-                line-height:100%;
-                p{
-                    float:left;
-                    width:100%;
-                    margin-left:18px;
-                    margin-top:10px;
-                    span{
-                        color:#9b9b9b;
-                    }
-                }
-            }
+        .dialog_footer{
+            height: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content:center;
+            border-top: 0.01rem solid #979797;
         }
     }
 </style>

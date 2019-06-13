@@ -30,7 +30,6 @@
                     <el-option :key="i" v-for="(item,i) in courseList" :label="item.name" :value="item.id"></el-option>
                     </el-select>
             </el-form-item>
-            {{form.hourId}}
               <li class="form_row">
                 <div class="form_lable">· 学习内容:</div>
                 <div class="form_box">
@@ -271,89 +270,143 @@ export default {
         color:#000;
         text-align: center;
     }
-    .studentManage{
-        height:50vh;
-        margin:0;
-        padding:0;
-        .left-item{
-            float:left;
-            width:30vw;
-            height:100%;
-            border-right:@bottom;
-            ul{
-                margin:0 auto;
-                padding:0 5px;
-                max-height: 150px;
-                overflow-y:auto;
-                li{
-                    height:44px;
-                    border-bottom: 1px solid #979797;
-                    padding-top:10px;
-                    img{
-                        float:left;
-                        width:30px;
-                        height:30px;
-                        border-radius: 50%;
-                        background:#000;
-                    }
-                    height:44px;
-                    border-bottom: 1px solid #979797;
-                    padding-top:10px;
-                    div{
-                        float:left;
-                        margin-left:30px;
-                        margin-top:5px;
-                        width:280px;
-                        p{font-size:12px;}
-                    }
-                    i{
-                        margin-top:15px;
-                        margin-right:0px;
-                    }
-                    &.active{
-                        background:rgba(#F3F6FC);
-                    }
+      .dialog_content_big{
+        height: 98%;
+        left:25%;
+        top:1%;
+        background: #fff;
+        border-radius: 0.23rem;
+        display: flex;
+        .dialog_center{
+            border-top: none;
+            padding-top:0.23rem;
+            box-sizing: border-box;
+        }
+        .dialog_bottom{
+            .btn_124{
+                margin: 0rem auto 0.4rem;
+            }
+        }
 
-                }
+    }
+    .dialog_header{
+        height: 0.81rem;
+        text-align: center;
+        line-height: 0.81rem;
+        color:#4A4A4A;
+        font-size: 0.22rem;
+        position: relative;
+    }
+
+    .dialog_center{
+        flex: 1;
+        border-top:0.01rem solid #979797;
+        overflow: auto;
+        text-align: center;
+        .dialog_l_r{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            .dialog_title{
+                height: 0.5rem;
+                line-height: 0.51rem;
+                border-bottom:0.01rem solid #979797;
+                font-size: 0.18rem;
+                text-align: center;
+                color:#4A4A4A;
             }
-            .studentInfo{
-                .info {
-                    height:60px;
-                    border-bottom:@bottom;
-                    .cac-button-one{
-                        margin-top:13px;
-                        width:20px;
-                        height:30px;
+            .dialog_left{
+                width: 2.55rem;
+                border-right: 0.01rem solid #979797;
+                .item_delete{
+                    width: 0.11rem;
+                    height: 0.13rem;
+                    padding:0 0.23rem;
+                }
+                .dialog_l_top{
+                    display: flex;
+                    height: 2.86rem;
+                    flex-direction: column;
+                    .top_list{
+                        flex:1;
+                        .item{
+                            width: 100%;
+                            height: 0.51rem;
+                            border-bottom: 0.01rem solid #979797;
+                            display: flex;
+                            align-items: center;
+                            .item_photo{
+                                width: 0.4rem;
+                                height: 0.4rem;
+                                display: block;
+                                padding:0 0.1rem 0 0.17rem;
+                            }
+                            .item_center{
+                                color:#4A4A4A ;
+                                flex:1;
+                                .name{
+                                    font-size: 0.15rem;
+                                    text-align: left;
+                                }
+                                .name_label{
+                                    font-size: 0.12rem;
+                                    text-align: left;
+                                }
+                            }
+
+                        }
+                    }
+                    .dialog_l_btn{
+                        height: 0.99rem;
+
+                        .btn_172{
+                            margin:0.11rem auto;
+                            height: 0.33rem;
+                            line-height: 0.33rem;
+                        }
+                    }
+                }
+                .dialog_l_bottom{
+                    height: 2.6rem;
+                    border-top:0.01rem solid #979797;
+                    .bottom_list{
+                        .item{
+                            width: 100%;
+                            height: 0.4rem;
+                            border-bottom: 0.01rem solid #979797;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            span{
+                                padding-left:0.2rem;
+                            }
+                        }
                     }
                 }
             }
-        }
-        .right-item{
-            float:left;
-            width:45vw;
-            height:100%;
-            ul li{
-                width:450px;
-                padding:10px 5px;
-                background: #F3F6FC;
-                border-radius: 12px;
-                margin-left:10px;
-                margin-top:10px;
-                min-height:60px;
-                overflow: auto;
-                overflow-x:hidden;
-                line-height:100%;
-                p{
-                    float:left;
-                    width:100%;
-                    margin-left:18px;
-                    margin-top:10px;
-                    span{
-                        color:#9b9b9b;
-                    }
+            .dialog_rig{
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                .dialog_r_top{
+                    flex:1;
+                }
+                .dialog_r_bottom{
+                    height: 1.11rem;
+                    display: flex;
+                    align-items: center;
+                    border-top: 0.01rem solid #979797;
+                    justify-content: center;
                 }
             }
         }
+    }
+    .dialog_footer{
+        height: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content:center;
+        border-top: 0.01rem solid #979797;
     }
 </style>
 

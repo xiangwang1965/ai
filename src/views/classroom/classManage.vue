@@ -171,6 +171,7 @@ export default {
             .info {
                 display:flex;
                 flex:1;
+                margin-top: 0.5rem;
             }
         }
         .right-item{

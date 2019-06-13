@@ -193,17 +193,17 @@
       </div>
       <div class="btn_124 personManagement_btn" id='showPersonDialog' @click="handleManage2">管理</div>
     </div>
- <el-dialog center append-to-body title="学生管理" width="60%" :visible.sync="showManage2">
+ <el-dialog center append-to-body title="学生管理" class="el-dialog2" :visible.sync="showManage2">
        <studentManage :currentType="currentType" ref="studentsManage" :currentClass="current" :studentlist="studentsList"></studentManage>
     </el-dialog>
     <el-dialog center append-to-body title="班级管理" :visible.sync="showManage1">
-       <classManage v-on:refresh="refresh" ref="classManage" :currentIndex="currentIndex" :datalist="currentList"></classManage>
+       <classManage v-on:refresh="refresh" ref="classManage" class="el-dialog1" :currentIndex="currentIndex" :datalist="currentList"></classManage>
     </el-dialog>
 
     <el-dialog center append-to-body title="学习报告" width="60%" :visible.sync="showCourseReportAdd">
        <courseReportAdd :courseList="coursePlanData.list" ref="courseReportAdd" :curClsId="currentClass" :curStudent="curStudent" :studentlist="studentsList"></courseReportAdd>
     </el-dialog>
-    <el-dialog center append-to-body title="学习报告" :visible.sync="showCourseReport">
+    <el-dialog center append-to-body title="学习报告" class="el-dialog3" :visible.sync="showCourseReport" width="60%">
        <courseReport v-on:refresh="refresh" ref="courseReport" :curClsId="currentClass" :curStudent="curStudent" :courseList="coursePlanData.list"></courseReport>
     </el-dialog>
   </div>
@@ -424,6 +424,32 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.el-dialog1 {
+       width: 10rem;
+    height: 6rem;
+    display: -ms-flexbox;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    overflow: hidden;
+}
+.el-dialog2 {
+    display: -ms-flexbox;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    overflow: hidden;
+}
+.el-dialog3 {
+    display: -ms-flexbox;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    overflow-y: auto;
+}
 .classContainer {
   width: 100%;
   height: 100%;
