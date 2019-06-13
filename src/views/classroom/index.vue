@@ -134,7 +134,7 @@
                     </div>
                 </div>
                 <div class="lesson_step_list">
-                    <div class="lesson_item" :key="c" v-for="(item,c) in coursePlanData.list">
+                    <div @click="practiceHandle(item)" class="lesson_item" :key="c" v-for="(item,c) in coursePlanData.list">
                         <div class="lesson_item_icon">
                             <div :class="item.pointclass">
                             </div>
@@ -197,11 +197,15 @@
     <el-dialog center append-to-body title="学习报告" :visible.sync="showCourseReport">
        <courseReport v-on:refresh="refresh" ref="courseReport" :curClsId="currentClass" :curStudent="curStudent" :courseList="coursePlanData.list"></courseReport>
     </el-dialog>
+    <el-dialog center modal-append-to-body fullscreen :visible.sync="showPractice">
+       <practice v-on:refresh="refresh" ref="practice" :hourInfo="hourInfo"></practice>
+    </el-dialog>
   </div>
 </template>
 <script>
 import classApi from "@/services/classroom";
 import courseReportAdd from './courseReportAdd';
+import practice from './practice';
 import courseReport from './courseReport';
 import authUtils from "@/services/auth/utils";
 export default {
@@ -244,7 +248,9 @@ export default {
       studentTabShow:true,
       coursePlanData:{},
       curCourProcess:'0%',
-      curStudent:{}
+      curStudent:{},
+      showPractice:false,
+      hourInfo:{},
     };
   },
   computed:{
@@ -266,9 +272,17 @@ export default {
   },
   components:{
     courseReportAdd,
-    courseReport
+    courseReport,
+    practice
   },
   methods: {
+     practiceHandle(item) {
+         this.showPractice = true;
+          this.hourInfo = item;
+        if(this.$refs.practice){
+            this.$refs.practice.getpptData();
+        }
+     },
     getList(item,index) {
          if (item) {
             this.classTitle = item.name;
@@ -303,6 +317,7 @@ export default {
                 this.coursePlanData = res.data;
                 this.curCourProcess = Math.ceil(this.coursePlanData.point);
                 if (this.coursePlanData.list.length){
+                    this.hourInfo = this.coursePlanData.list[0];
                     this.coursePlanData.list.forEach((item,index)=>{
                         this.coursePlanData.list[index].pointclass= item.status == 0 ? 'dian_icon_up':'dian_icon';
                         if (index == (this.coursePlanData.list.length -1)) {
