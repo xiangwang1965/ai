@@ -336,4 +336,39 @@ html body {
     padding: 0 0.3rem;
     position: relative;
   }
-
+  .tab_blue {
+    border-bottom: 0.03rem solid #4592FE;
+    position: relative;
+    height: 0.44rem;
+  }
+  .tab_blue ul {
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: baseline;
+  }
+  .tab_blue ul li {
+    float: left;
+    color: #fff;
+    text-align: center;
+    font-size: 0.14rem;
+    padding: 0rem 0.25rem;
+    border-radius: 0.06rem 0.06rem 0 0;
+    cursor: pointer;
+    height: 0.35rem;
+    line-height: 0.37rem;
+  }
+  .tab_blue ul li:nth-child(1) {
+    background: #4592FE;
+  }
+  .tab_blue ul li:nth-child(2) {
+    background: #84B7FF;
+  }
+  .tab_blue ul li:nth-child(3) {
+    background: #AACDFF;
+  }
+  .tab_blue ul .tab_active {
+    padding-top: 0.09rem;
+  }
