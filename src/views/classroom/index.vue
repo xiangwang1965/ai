@@ -193,7 +193,7 @@
       </div>
       <div class="btn_124 personManagement_btn" id='showPersonDialog' @click="handleManage2">管理</div>
     </div>
- <el-dialog center append-to-body title="学生管理" width="80%" :visible.sync="showManage2">
+ <el-dialog center append-to-body title="学生管理" width="60%" :visible.sync="showManage2">
        <studentManage :currentType="currentType" ref="studentsManage" :currentClass="current" :studentlist="studentsList"></studentManage>
     </el-dialog>
     <el-dialog center append-to-body title="班级管理" :visible.sync="showManage1">
@@ -255,6 +255,7 @@ export default {
       curCourProcess:'0%',
       showCourseReportAdd:false,
       showCourseReport:false,
+      curStudent:{}
     };
   },
   computed:{
@@ -379,8 +380,8 @@ export default {
     getData(typeId) {
       let params = {
         schoolId: 1,
-        typeId: typeId,
-        teacherId:this.userInfo.id
+        typeId: typeId
+        // teacherId:this.userInfo.id
       };
       let that = this;
       for(let i = 1; i <= 4;i++){

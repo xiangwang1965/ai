@@ -1,7 +1,6 @@
 <template>
-    <div class="studentManage">
-        <div class="top"></div>
-        <div class="left-item">
+    <div class="studentManage dialog_content">
+        <!-- <div class="left-item">
             <div class="h3">{{currentClass.courseName}}编程班</div>
             <ul class="students">
                 <li @click="setRight(student)" :class="{active:currentStudent.id === student.id}" :key="index" v-for="(student,index) in studentlist">
@@ -44,7 +43,86 @@
         </div>
         <el-dialog center append-to-body width="80%" title="创建学生信息" :visible.sync="showCreate">
             <createStudent :codeOptions="codeList" :currentClass="currentClass" :currentType="currentType" ref="child"></createStudent>
-        </el-dialog>
+        </el-dialog> -->
+                <div class="dialog_center">
+                    <div class="dialog_l_r">
+                        <div class="dialog_left">
+                            <div class="dialog_title">{{currentClass && currentClass.courseName}}编程班</div>
+                            <div class="dialog_l_top">
+                                <div class="top_list">
+                                    <div class="item" @click="setRight(student)" :class="{active:currentStudent.id === student.id}" :key="index" v-for="(student,index) in studentlist">
+                                        <!-- <img src="./img/person_photo.png" alt="" class="item_photo"> -->
+                                        <div class="item_center">
+                                            <p class="name">刘洋</p>
+                                            <p class="name_label">激活码：000</p>
+                                        </div>
+                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
+                                    </div>
+                                </div>
+                                <div class="dialog_l_btn">
+                                    <div class="btn_172" id="add_info">添加学生信息</div>
+                                    <div class="btn_172">创建学生信息</div>
+                                </div>
+                            </div>
+                            <div class="dialog_l_bottom">
+                                <div class="dialog_title">未激活</div>
+                                <div class="bottom_list">
+                                    <div class="item">
+                                        <span>2222222</span>
+                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
+                                    </div>
+                                    <div class="item">
+                                        <span>2222222</span>
+                                        <!-- <img src="./img/delete_icon.png" alt="" class="item_delete"> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dialog_rig">
+                            <div class="dialog_title">学生信息</div>
+                            <div class="dialog_r_top">
+                                <div class="intr_box">
+                                    <div class="intr_row">
+                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        姓名：
+                                        <span>拉拉</span>
+                                    </div>
+                                    <div class="intr_row">
+                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        年龄：
+                                        <span>拉拉</span>
+                                    </div>
+
+                                </div>
+                                <div class="intr_box">
+                                    <div class="intr_row">
+                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        机构：
+                                        <span>拉拉</span>
+                                    </div>
+                                    <div class="intr_row">
+                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        班级：
+                                        <span>拉拉</span>
+                                    </div>
+                                    <div class="intr_row">
+                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        课程：
+                                        <span>拉拉</span>
+                                    </div>
+                                    <div class="intr_row">
+                                        <!-- <img src="./img/name_icon.png" alt="" style="width: 0.1rem;height: 0.13rem;;"> -->
+                                        教师：
+                                        <span>拉拉</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dialog_r_bottom">
+                                <div class="btn_172" id="submit_s">保存</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </div>
 </template>
 <script>
@@ -70,7 +148,9 @@ export default {
         }
     },
     created(){
-        this.getCodeList(this.currentClass.id);
+        if (this.currentClass && this.currentClass.id) {
+            this.getCodeList(this.currentClass.id);
+        }
     },
     methods:{
         setClass(){
