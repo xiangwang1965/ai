@@ -15,14 +15,6 @@
                         </div>
                         <div class="btn_148 bg_y" @click="dataHandle(course)">添加</div>
                     </div>
-                    <div class="item">
-                        <div class="img"></div>
-                        <ul class="count" style="margin:0 auto">
-                            <span id="num-jian" class="num-jian">-</span>
-                            <input type="text" class="input-num" id="input-num" value="0" />
-                            <span id="num-jia" class="num-jia">+</span>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
@@ -290,11 +282,15 @@ function fn(ar) {
 }
 
 .toggle_box{
-    display: flex;
-    justify-content: space-between;
+       float: left;
+    position: relative;
+    width:100%;
     .item{
-        width: 1.48rem;
+        width: 1.38rem;
         margin-bottom: 0.3rem;
+        float: left;
+        position: relative;
+        margin-left: 0.25rem;
         .img{
             width: 1.48rem;
             height: 1.48rem;

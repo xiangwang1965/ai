@@ -136,22 +136,20 @@ export default {
     width: 100%;
     height: 100%;
     background: #edf2fc;
-}
-.succeed{
-  width: 1100px;
-  height: 278px;
-  background: #fff;
-  border-radius: 10px;
-  margin: auto;
-  margin-top: 10px;
-}
-.succeedPic{
-  display: block;
-  width: 119px;
-  height: 109px;
-  float: left;
-  margin: 85px 50px 0 360px;
-}
+    overflow:hidden;
+    .succeed{
+        width: 98%;
+        height: 3.5rem;
+        background: #fff;
+        border-radius: 0.25rem;
+        margin: auto;
+        margin-top: 0.25rem;
+    }
+    .succeedPic{
+        width: 2rem;
+        float: left;
+        margin: 0.8rem 0.6rem 0 3rem;
+    }
 .succeedR{
   font-size: 16px;
   color: #2a2a2a;
@@ -198,4 +196,5 @@ background-image:url('../../../static/img/jihuoma.png');
   line-height: 22px;
   border-radius: 10px;
 }
+    }
 </style>

@@ -166,7 +166,6 @@
           <div class="class_infomation">
             <div class="item1">班级信息</div>
             <div class="item2">
-              <span>{{startDate}}</span>
               <span>{{startTime}}-{{endTime}}</span>
               <span>时间</span>
             </div>
@@ -200,10 +199,10 @@
        <classManage v-on:refresh="refresh" ref="classManage" class="el-dialog1" :currentIndex="currentIndex" :datalist="currentList"></classManage>
     </el-dialog>
 
-    <el-dialog center append-to-body title="学习报告" width="60%" :visible.sync="showCourseReportAdd">
+    <el-dialog center append-to-body title="学习报告" custom-class="el-dialog3"  width="60%" :lock-scroll="lockScroll" top="0" :visible.sync="showCourseReportAdd">
        <courseReportAdd :courseList="coursePlanData.list" ref="courseReportAdd" :curClsId="currentClass" :curStudent="curStudent" :studentlist="studentsList"></courseReportAdd>
     </el-dialog>
-    <el-dialog center append-to-body title="学习报告" class="el-dialog3" :visible.sync="showCourseReport" width="60%">
+    <el-dialog center append-to-body title="学习报告" custom-class="el-dialog3" :visible.sync="showCourseReport" width="60%" :lock-scroll="lockScroll" top="0">
        <courseReport v-on:refresh="refresh" ref="courseReport" :curClsId="currentClass" :curStudent="curStudent" :courseList="coursePlanData.list"></courseReport>
     </el-dialog>
   </div>
@@ -255,7 +254,8 @@ export default {
       curCourProcess:'0%',
       showCourseReportAdd:false,
       showCourseReport:false,
-      curStudent:{}
+      curStudent:{},
+      lockScroll:true
     };
   },
   computed:{
@@ -286,7 +286,7 @@ export default {
          if (item) {
             this.classTitle = item.name;
             this.startDate = item.startDate;
-            this.beginTime = item.beginTime;
+            this.startTime = item.startTime;
             this.endTime = item.endTime;
             this.level = item.level;
             this.stuCnt = item.stuCnt;
@@ -449,6 +449,7 @@ export default {
     -ms-flex-direction: column;
     flex-direction: column;
     overflow-y: auto;
+    height:100%;
 }
 .classContainer {
   width: 100%;

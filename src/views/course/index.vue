@@ -51,7 +51,7 @@
                         <div class="tab_blue">
                             <ul>
                                 <li class="tab_item" :class="{tab_active:activeTab == item.id}" :key="t" v-for="(item,t) in tabList" @click="tabHandle(item.id)">
-                                    全部订单
+                                    {{item.name}}
                                 </li>
                             </ul>
                         </div>

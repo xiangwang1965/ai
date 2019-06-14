@@ -207,6 +207,7 @@ html body {
     display: flex;
     flex-direction: column;
     overflow:hidden;
+    margin:auto;
 }
 .el-dialog__body{
     height:100%;
