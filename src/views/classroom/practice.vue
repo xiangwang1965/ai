@@ -241,11 +241,11 @@ export default {
                 width: 0.74rem;
                 height: 0.74rem;
                 border-radius: 100%;
-                background: #FFFFFF;
                 border: 0.01rem solid #979797;
                 position: relative;
                 top: -0.37rem;
                 left: 0.28rem;
+                background:url('../../../static/image/robot.jpeg');
             }
             .talk_list{
                 height: 6.3rem;
