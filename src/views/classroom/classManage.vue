@@ -44,7 +44,7 @@ export default {
     props:['datalist','currentIndex'],
     data(){
         return {
-            defaultImg:'../../static/img/student.png',
+            defaultImg:require('../../../static/img/student.png'),
             showCreate:false,
             currentClass:'',
             className:'',
@@ -109,7 +109,7 @@ export default {
                 this.$message({
                     type: 'info',
                     message: '已取消删除'
-                });          
+                });
             });
         }
     }

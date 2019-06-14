@@ -61,9 +61,8 @@ export default {
     return {
       showManage: true,
       images: {
-        back: "../../static/img/back.png",
-        logo: "../../static/image/logo.png",
-        pagedemo: "./img/page_demo.png"
+        back:require("../../../static/img/back.png"),
+        logo: require("../../../static/image/logo.png")
       },
       fit:'contain',
       showPic:'',

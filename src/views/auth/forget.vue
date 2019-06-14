@@ -36,8 +36,8 @@ export default {
   data() {
     return {
     urls:{
-        username: "../../static/img/username.png",
-        code:"../../static/img/code.png",
+        username: require("../../../static/img/username.png"),
+        code:require("../../../static/img/code.png"),
     },
       multiple: false,
       users: [],
