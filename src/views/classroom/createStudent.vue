@@ -23,7 +23,7 @@
                 <el-input v-model="form.phone" style="width:176px;"></el-input>
             </el-form-item>
             <el-form-item label-position="center" prop="passwd" label-width="120px" label="密码">
-                <el-input v-model="form.passwd" style="width:176px;"></el-input>
+                <el-input type="password" v-model="form.passwd" style="width:176px;"></el-input>
             </el-form-item>
             <el-form-item label-position="center" prop="verificode"  label-width="120px" label="验证码">
                 <el-input v-model="form.verificode" style="width:176px;">
@@ -127,7 +127,7 @@ export default {
                 ]
             }
         }
-        
+
     },
     watch:{
         'form.cdk'(){
@@ -135,7 +135,7 @@ export default {
         }
     },
     created(){
-       
+
     },
     methods:{
         handleSelect(item){
@@ -245,7 +245,7 @@ export default {
                 });
             })
         }
-        
+
     }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="studentManage dialog_content">
-        <el-dialog center append-to-body fullscreen title="创建学生信息" :visible.sync="showCreate">
+        <el-dialog center append-to-body title="创建学生信息" :visible.sync="showCreate">
             <createStudent :codeOptions="codeList" :currentClass="currentClass" :currentType="currentType" ref="child"></createStudent>
         </el-dialog>
                 <div class="dialog_center">
