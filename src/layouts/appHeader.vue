@@ -32,8 +32,8 @@
     data () {
       return {
         showList: false,
-        logoImg: '../../static/image/logo.png',
-        menuIcon: '../../static/image/menuIcon.png',
+        logoImg: require('../../static/image/logo.png'),
+        menuIcon: require('../../static/image/menuIcon.png'),
         user: {
           name: '',
           avatar: '',
