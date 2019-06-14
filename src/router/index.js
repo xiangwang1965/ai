@@ -83,6 +83,7 @@ const router = new Router({
                     path: '/class',
                     component: classroomWrap,
                     beforeEnter: requireAuth,
+                    redirect: requireAuth,
                     children: [
                         { path: '/', name: 'classroom', component: classroom }
                     ]
