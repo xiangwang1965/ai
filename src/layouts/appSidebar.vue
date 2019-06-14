@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       menuList: [],
-      logoImg: "../../static/img/logo-white.png",
+      logoImg: require("../../static/img/logo-white.png"),
       liveList: [
         {
           path: "/class",

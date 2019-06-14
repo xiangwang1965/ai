@@ -24,8 +24,8 @@ export default {
     return {
       list: [],
       urls:{
-          suc: "../../static/img/chenggong.png",
-          card:"../../static/img/jihuma.png"
+          suc: require("../../../static/img/chenggong.png"),
+          card:require("../../../static/img/jihuoma.png"),
       },
       tInfo: {},
       teachId: "",

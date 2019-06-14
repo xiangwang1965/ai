@@ -76,7 +76,7 @@ export default {
       levelsData: [
         {
           tit: "Scartch",
-          icon: "../../static/image/lock_yellow.png",
+          icon: require("../../../static/image/lock_yellow.png"),
           class:'lock_row_y',
           aciveClass:'unlock_y',
           list: [
@@ -92,7 +92,7 @@ export default {
         },
         {
           tit: "PYTHON",
-           icon: "../../static/image/lock_blue.png",
+           icon: require("../../../static/image/lock_blue.png"),
            class:'lock_row_b',
             aciveClass:'unlock_b',
           list: [
@@ -112,7 +112,7 @@ export default {
         },
         {
           tit: "NOIP",
-          icon: "../../static/image/lock_red.png",
+          icon: require("../../../static/image/lock_red.png"),
           class:'lock_row_r',
           aciveClass:'unlock_r',
           list: [
@@ -132,7 +132,7 @@ export default {
         },
         {
           tit: "AI",
-          icon: "../../static/image/lock_purple.png",
+          icon: require("../../../static/image/lock_purple.png"),
           class:'lock_row_p',
           aciveClass:'unlock_p',
           list: [
@@ -156,13 +156,13 @@ export default {
         }
       ],
       corlorImgUrl: {
-        yellow: "../../static/image/lock_yellow.png",
-        blue: "../../static/image/lock_blue.png",
-        red: "../../static/image/lock_red.png",
-        purple: "../../static/image/lock_purple.png"
+        yellow: require("../../../static/image/lock_yellow.png"),
+        blue: require("../../../static/image/lock_blue.png"),
+        red: require("../../../static/image/lock_red.png"),
+        purple: require("../../../static/image/lock_purple.png")
       },
       list: [],
-      url: "../../static/img/default_avatar.png",
+      url: require("../../../static/img/default_avatar.png"),
       tInfo: {
           level:0,
           name:'xxx'

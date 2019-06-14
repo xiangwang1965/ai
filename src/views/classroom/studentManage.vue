@@ -84,9 +84,9 @@ export default {
     data(){
         return {
             showManage:true,
-            defaultImg:'../../static/image/person_photo.png',
-            iconDel:'../../static/image/delete_icon.png',
-            nameIcon:'../../static/image/name_icon.png',
+            defaultImg:require('../../../static/image/person_photo.png'),
+            iconDel:require('../../../static/image/delete_icon.png'),
+            nameIcon:require('../../../static/image/name_icon.png'),
             currentStudent:'',
             codeList:[],
             showCreate:false

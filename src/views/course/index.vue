@@ -231,7 +231,7 @@ export default {
       ],
       activeTab:'1',
       list:[],
-      url: "../../static/img/minipic.png"
+      url: require("../../../static/img/minipic.png")
     };
   },
   created() {

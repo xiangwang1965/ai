@@ -93,7 +93,7 @@ export default {
       dataList: {},
       switchData: [],
       totalPrice: 0,
-      url: "../../static/img/content_default.png"
+      url: require("../../../static/img/content_default.png")
     };
   },
   created() {

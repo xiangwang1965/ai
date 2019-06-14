@@ -44,7 +44,7 @@ export default {
     props:['datalist','currentIndex'],
     data(){
         return {
-            defaultImg:'../../static/img/student.png',
+            defaultImg:require('../../../static/img/student.png'),
             showCreate:false,
             currentClass:'',
             className:'',

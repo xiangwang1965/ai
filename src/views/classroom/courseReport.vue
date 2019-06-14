@@ -127,10 +127,10 @@ export default {
   data() {
     return {
       showManage: true,
-      defaultImg: "../../static/img/student.png",
+      defaultImg: require("../../../static/img/student.png"),
       tInfo: {
-        avatar: "../../static/image/person_background.png",
-        nameIcon: "./img/name_icon.png"
+        avatar: require("../../../static/image/person_background.png"),
+        nameIcon: require("../../../static/image/name_icon.png")
       },
       currentStudent: "",
       codeList: [],

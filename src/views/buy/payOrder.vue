@@ -25,8 +25,8 @@
         data(){
             return {
                 qRImg:'',
-                bg_r:'../../static/image/pay_wechat_bgr.png',
-                bg_l:'../../static/image/pay_wechat_bgl.png',
+                bg_r:require('../../../static/image/pay_wechat_bgr.png'),
+                bg_l:require('../../../static/image/pay_wechat_bgl.png'),
                 out_trade_no: this.$route.query.out_trade_no,
                 totalPric: this.$route.query.totalPric,
                 qrImg: config.API_URL+'upload/pay/'+ this.$route.query.out_trade_no+ '.jpg'

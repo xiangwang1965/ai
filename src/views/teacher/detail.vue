@@ -11,7 +11,7 @@
       <el-row>
         <el-col :span="5">
           <div class="grid-content">
-            <img class="avatar" :src="params.avatar==='' ? '../../../static/avatar.jpg':params.avatar" /><br/>
+            <img class="avatar" :src="params.avatar==='' ? default_avatar:params.avatar" /><br/>
             <span class="username">{{params.name}}</span>
           </div>
         </el-col>
@@ -110,6 +110,7 @@ import RadioClass from '@/components/radioClass'
 export default {
   data () {
     return {
+      default_avatar:require('../../../static/avatar.jpg'),
       currentTab: 'first',
       dialogTableVisible: false,
       dialogTableVisible1: false,
