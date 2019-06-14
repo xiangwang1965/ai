@@ -15,7 +15,7 @@
                                             <p class="name">{{student.name}}</p>
                                             <p class="name_label">激活码：{{student.cdk}}</p>
                                         </div>
-                                        <img :src="iconDel" class="item_delete" click="deleteStudent(student)">
+                                        <img :src="iconDel" class="item_delete" @click="deleteStudent(student)">
                                     </div>
                                 </div>
                             </div>

@@ -184,12 +184,11 @@ export default {
     width: 2.5rem;
     text-align: center;
     p {
-    //   padding-left: 0.1rem;
       color: #fff;
       font-size: 0.18rem;
       padding-top: 0.14rem;
       cursor: pointer;
-      margin-left:0.4rem;
+      margin-left:-1rem;
     }
   }
     .out_login {

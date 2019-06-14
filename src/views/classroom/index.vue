@@ -255,14 +255,15 @@ export default {
       showCourseReportAdd:false,
       showCourseReport:false,
       curStudent:{},
-      lockScroll:true
+      lockScroll:true,
     };
   },
-  computed:{
-    current(){
-      return this.courseList['course' + this.currentType][this.currentIndex];
+   computed: {
+        current(){
+            console.log(this.courseList['course' + this.currentType][this.currentIndex]);
+             return this.courseList['course' + this.currentType][this.currentIndex];
+        }
     },
-  },
   created() {
     this.userInfo = authUtils.getUser();
     this.getData(1);
@@ -283,7 +284,6 @@ export default {
   },
   methods: {
     getList(item,index) {
-         if (item) {
             this.classTitle = item.name;
             this.startDate = item.startDate;
             this.startTime = item.startTime;
@@ -291,10 +291,8 @@ export default {
             this.level = item.level;
             this.stuCnt = item.stuCnt;
             this.currentClass = item.id;
-            }
-        if (index) {
+
             this.currentIndex = index;
-        }
         if (this.isFirst) {
              this.getStudent();
              this.getCoursePlan();
@@ -395,6 +393,7 @@ export default {
         classApi.getData(params).then(res => {
           if (res.data && res.data.length) {
             this.courseList["course" + typeId] = Object.assign({}, res.data);
+            console.log(this.courseList);
             this.currentList = res.data;
             if(this.isFirst){
               this.getList(res.data[0],0);
