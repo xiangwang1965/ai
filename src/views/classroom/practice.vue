@@ -42,7 +42,7 @@
                     style="width: 100%; height: 100%"
                     :src="showPic"
                     :fit="fit"></el-image>
-                     <iframe src="http://edu.wiser-bot.com/wsedu/scratch/build/index.html" frameborder="0" width="100%" height="100%" id="childFrame" scrolling="no"></iframe>
+                     <iframe v-if="showPractice" src="http://edu.wiser-bot.com/wsedu/scratch/build/index.html" frameborder="0" width="100%" height="100%" id="childFrame" scrolling="no"></iframe>
             </div>
         </div>
         <footer>
