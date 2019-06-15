@@ -11,6 +11,7 @@ const thirdPartAuth = () => import('@/views/auth/thirdpartauth')
 const forget = () =>import('@/views/auth/forget')
 //班级管理
 const classroom = () => import('@/views/classroom')
+const practice  = () => import('@/views/classroom/practice')
 const classroomWrap = () => import('@/views/classroom/classWrap')
 //教师档案
 const teacher = () => import('@/views/teacher')
@@ -32,7 +33,7 @@ const courseWrap = () => import('@/views/course/courseWrap')
 Vue.use(Router)
 
 function requireAuth(to, from, next) {
-    var firstPage = '/'
+    var firstPage = '/';
     if (!authUtils.loggedIn()) {
         firstPage = '/auth'
     } else {
@@ -74,6 +75,12 @@ const router = new Router({
             component: thirdPartAuth
         },
         {
+            path: '/practice',
+            name: 'practice',
+            component: practice
+        },
+
+        {
             path: '/',
             component: home,
             redirect:requireAuth,
@@ -83,6 +90,7 @@ const router = new Router({
                     path: '/class',
                     component: classroomWrap,
                     beforeEnter: requireAuth,
+                    redirect: requireAuth,
                     children: [
                         { path: '/', name: 'classroom', component: classroom }
                     ]

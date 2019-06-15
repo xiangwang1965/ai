@@ -18,10 +18,10 @@ api.interceptors.request.use(config => {
     if (config.url.method === 'post') {
         config.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
       if(config.url.indexOf("/ws/api/user/login2") === -1){
-        config.headers['token'] = getToken()
+        config.headers['ttoken'] = getToken()
       }
     } else {
-        config.headers['token'] = getToken()
+        config.headers['ttoken'] = getToken()
     }
   return config
 }, error => {
@@ -33,8 +33,8 @@ api.interceptors.request.use(config => {
 // respone拦截器
 api.interceptors.response.use(res => {
   if (res.data.code == 422) { // TODO
-    Message.error(res.data.message || 'token过期,请退出重新登录')
-    window.location.href = '/auth/login'
+    Message.error(res.data.msg || 'token过期,请退出重新登录')
+    window.location.href = '/auth'
   }
   if (res.data.status_code === 200 && res.data) {
     res.data.ok = true

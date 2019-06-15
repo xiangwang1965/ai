@@ -40,10 +40,10 @@ class Auth extends Base {
   }
   /**
    * 登录接口
-   * @param { Object } params {id, token, type: 1 教师APP、2教师PC、3学生端}
+   * @param { Object } params {id, token, type:0，1，2   学生，教师，机构。}
    */
   login (params) {
-    params.type = 2
+    params.type = 1
     return this.sendPost(this.loginUrl, params).then(res => {
       if (res.code == '001') {
         authUtils.setToken(res.data.token)
@@ -86,19 +86,12 @@ class Auth extends Base {
    * 退出登录
    */
   logout () {
-    let params = {
-      type: 2
-    }
-    return this.sendPost(this.logoutUrl, params).then(res => {
-      if (res.ok) {
-        return new Promise((resolve, reject) => {
-          authUtils.removeToken()
-          authUtils.removeUser()
-          resolve({
-            ok: true
-          })
+    return new Promise((resolve, reject) => {
+        authUtils.removeToken()
+        authUtils.removeUser()
+        resolve({
+        ok: true
         })
-      }
     })
   }
     /**

@@ -3,9 +3,9 @@ import Cookies from 'js-cookie'
 import { MAIN_URL } from '@/config'
 import authApi from './index'
 // 认证信息包括 token && 需要在发请求时带在 header 上
-const TOKEN_KEY = 'tocken'
+const TOKEN_KEY = 'ttoken'
 // 登录后的用户信息
-const USER_KEY = 'USER_INFO'
+const USER_KEY = 'T_USER_INFO'
 const EXPIRES = 1 // 24 小时过期
 
 export function getToken () {
@@ -14,17 +14,6 @@ export function getToken () {
 
 // token 信息
 export function setToken (token) {
-  // if (location.search && !token) {
-  //   let searchArr = location.search.substring(1, location.search.length).split('&')
-  //   searchArr.map((v, i) => {
-  //     let objArr = v.split('=')
-  //     if (objArr[0] === 'token') {
-  //       Cookies.set(TOKEN_KEY, objArr[1], { expires: EXPIRES, domain: MAIN_URL })
-  //       Cookies.set(TOKEN_KEY, objArr[1], { expires: EXPIRES, domain: WB_MAIN_URL })
-  //       token = objArr[1]
-  //     }
-  //   })
-  // }
   if (token) {
     return Cookies.set(TOKEN_KEY, token, { expires: EXPIRES, domain: MAIN_URL })
   }
@@ -66,9 +55,7 @@ export function thirdLoggedIn () {
       let objArr = v.split('=')
       if (objArr[0] === 'token') {
         Cookies.set(TOKEN_KEY, objArr[1], { expires: EXPIRES, domain: MAIN_URL })
-        // Cookies.set(TOKEN_KEY, objArr[1], { expires: EXPIRES, domain: WB_MAIN_URL })
         Cookies.set('FROM_URL', 'wisroom', { expires: EXPIRES, domain: MAIN_URL })
-        // Cookies.set('FROM_URL', 'wisroom', { expires: EXPIRES, domain: WB_MAIN_URL })
         authApi.fetchSchool().then(res => {
           let { id, name, role_name, school, avatar_url, is_teach, is_live } = res.data.users[0]
           let brands = ''
