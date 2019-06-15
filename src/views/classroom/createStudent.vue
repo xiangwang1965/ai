@@ -43,7 +43,7 @@
             </el-form-item>
         </el-form>
         <el-button type="default" @click="submit" class="cac-button-one">创建</el-button>
-        <el-dialog class="confirmWrap" width="80%" center append-to-body title="创建学生信息" :visible.sync="showConfirm">
+        <el-dialog class="confirmWrap" width="60%" center append-to-body title="创建学生信息" :visible.sync="showConfirm">
             <ul class="confirmList">
                 <li>
                     <span>姓名:</span>
@@ -270,16 +270,13 @@ export default {
                     width:100px;
                 }
                 span:last-child{
-                    font-family: HYQiHei-FZS;
-                    font-size: 18px;
+
                     color: #4994FD;
                     letter-spacing: 0;
                 }
             }
         }
         p{
-            font-family: 'HYQiHei-FZS';
-            font-size: 20px;
             letter-spacing: 0;
             text-align: center;
         }

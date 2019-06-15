@@ -56,7 +56,7 @@
               <div class="name">{{item.tit}}</div>
               <div class="lock_level">
                 <div class="lock_item" :key="t" v-for="(l,t) in item.list">
-                  <img :src="item.icon" v-if="tInfo.level != t.level" class="lock">
+                  <img :src="item.icon" v-if="tInfo.level < l.level" class="lock">
                   <p>Leverl {{l.level}}</p>
                   <p>{{l.name}}</p>
                 </div>
