@@ -114,7 +114,14 @@ export default {
         this.menuList = this[authUtils.getUser().third_part + "List"];
       }
     },
-    go(item) {}
+    go(item) {},
+     logout() {
+        authApi.logout().then(res=>{
+            this.$router.push({
+                name:'auth'
+            })
+        });
+    },
   }
 };
 </script>
