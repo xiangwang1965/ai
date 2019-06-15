@@ -8,13 +8,15 @@
         </header>
         <div class="content">
             <div class="content_left">
-                <div class="top"></div>
-                <img :src="images.robot" class="photo"/>
+                <div class="top">小智AI助教</div>
                 <div class="talk_list">
-                    <div class="gradient" :key="p" v-for="(item,p) in showDetail">
+                    <div class="talk-box" :key="p" v-for="(item,p) in showDetail">
+                    <img :src="images.robot" class="photo"/>
+                    <div class="gradient">
                         <div class="gradient-box" >
                             {{item}}
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -25,7 +27,6 @@
                         <div class="num">01</div>
                         <div class="page" @click="changeShowInfo(item)">
                             <img class="page_img" :src="item.image" alt="">
-                            <!-- <div class="change unchange" id="showRemark">+</div> -->
                         </div>
                     </li>
                     <li>
@@ -245,44 +246,48 @@ export default {
             .top{
                 background: #56749F;
                 height: 0.64rem;
+                color: #fff;
+                font-size: 0.3rem;
+                text-align: center;
+                padding-top: 0.2rem;
             }
             .photo{
-                width: 0.74rem;
-                height: 0.74rem;
+                width: 0.5rem;
+                height: 0.5rem;
                 border-radius: 100%;
                 background: #FFFFFF;
                 border: 0.01rem solid #979797;
                 position: relative;
-                top: -0.37rem;
-                left: -1.4rem;
             }
             .talk_list{
                 height: 6.3rem;
                 background: url("../../../static/image/speak_texture.png") no-repeat;
                 background-position: bottom;
+                .talk-box{
+                    display:flex;
+                    flex:1;
+                }
 
             }
             .gradient {
                 margin-left:0.23rem;
                 margin-bottom: 0.29rem;
-                width: 1.89rem;
+                width: 2rem;
                 box-sizing: border-box;
                 padding: 0.04rem;
                 border-radius: 0.2rem;
-                background-image: -webkit-linear-gradient(left,#94CAE8 0%, #6187B7 100% );
-                background-image: -moz-linear-gradient(left,#94CAE8 0%, #6187B7 100% );
-                background-image: linear-gradient(left,#94CAE8 0%, #6187B7 100% );
             }
             .gradient-box {
                 width: 100%;
                 height: 100%;
                 border-radius:0.2rem;
-                background:#fff;
+                background: #4592FE;
                 display: flex;
                 align-items: center;
                 word-wrap:break-word;
                 font-size:0.13rem;
-                color:#4A4A4A;
+                color:#fff;
+                font-weight:bold;
                 padding:0.14rem 0.19rem;
                 box-sizing: border-box;
             }
