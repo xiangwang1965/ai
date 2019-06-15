@@ -1,6 +1,6 @@
 <template>
       <div class="wrap">
-        <appHeader></appHeader>
+        <!-- <appHeader></appHeader> -->
         <div class="content">
             <div class="content_left">
                 <div class="top">
