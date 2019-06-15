@@ -50,7 +50,7 @@ export default {
       logoImg: require("../../static/image/person_background.png"),
       levelsData: [
         {
-          tit: "Scartch",
+          tit: "SCRATCH",
           icon: require("../../static/image/lock_yellow.png"),
           class:'lock_row_y',
           aciveClass:'unlock_y',

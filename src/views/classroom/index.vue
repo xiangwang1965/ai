@@ -15,7 +15,7 @@
           <el-collapse-transition>
             <ul class="class_list" v-show="show1">
               <li
-                :class="{active:currentClass == item.id}"
+                :class="{class_dis:currentClass == item.id}"
                 class="class_item class_item_yellow"
                 v-for="(item,index) in courseList.course1"
                 :key="index"
@@ -40,7 +40,7 @@
           <el-collapse-transition class="class_list">
             <ul class="class_list" v-show="show2">
               <li
-                :class="{active:currentClass == item.id}"
+                :class="{class_dis:currentClass == item.id}"
                 class="class_item class_item_blue"
                 v-for="(item,index) in courseList.course2"
                 :key="index"
@@ -65,7 +65,7 @@
           <el-collapse-transition>
             <ul class="class_list" v-show="show3">
               <li
-                :class="{active:currentClass == item.id}"
+                :class="{class_dis:currentClass == item.id}"
                 class="class_item class_item_red"
                 v-for="(item,index) in courseList.course3"
                 :key="index"
@@ -90,7 +90,7 @@
           <el-collapse-transition>
             <ul class="class_list" v-show="show4">
               <li
-                :class="{active:currentClass == item.id}"
+                :class="{class_dis:currentClass == item.id}"
                 class="class_item class_item_purple"
                 v-for="(item,index) in courseList.course4"
                 :key="index"
@@ -284,7 +284,6 @@ export default {
         }
      },
     getList(item,index) {
-         if (item) {
             this.classTitle = item.name;
             this.startDate = item.startDate;
             this.beginTime = item.beginTime;
@@ -292,10 +291,8 @@ export default {
             this.level = item.level;
             this.stuCnt = item.stuCnt;
             this.currentClass = item.id;
-            }
-        if (index) {
+
             this.currentIndex = index;
-        }
         if (this.isFirst) {
              this.getStudent();
              this.getCoursePlan();

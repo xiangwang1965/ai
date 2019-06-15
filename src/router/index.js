@@ -11,6 +11,7 @@ const thirdPartAuth = () => import('@/views/auth/thirdpartauth')
 const forget = () =>import('@/views/auth/forget')
 //班级管理
 const classroom = () => import('@/views/classroom')
+const practice  = () => import('@/views/classroom/practice')
 const classroomWrap = () => import('@/views/classroom/classWrap')
 //教师档案
 const teacher = () => import('@/views/teacher')
@@ -85,7 +86,8 @@ const router = new Router({
                     beforeEnter: requireAuth,
                     redirect: requireAuth,
                     children: [
-                        { path: '/', name: 'classroom', component: classroom }
+                        { path: '/', name: 'classroom', component: classroom },
+                        { path: 'practice', name: 'practice', component: practice }
                     ]
                 },
                 {

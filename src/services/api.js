@@ -34,7 +34,7 @@ api.interceptors.request.use(config => {
 api.interceptors.response.use(res => {
   if (res.data.code == 422) { // TODO
     Message.error(res.data.message || 'token过期,请退出重新登录')
-    window.location.href = '/auth/login'
+    window.location.href = '/auth'
   }
   if (res.data.status_code === 200 && res.data) {
     res.data.ok = true
