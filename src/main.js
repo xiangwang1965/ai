@@ -72,7 +72,6 @@ Vue.directive('scrollBar', {
 
 
 Vue.use(ElementUI)
-
 window.onresize = setHtmlFontSize;
 function setHtmlFontSize(){
     const designSize = 1920;

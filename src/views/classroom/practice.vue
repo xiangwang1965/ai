@@ -9,7 +9,7 @@
                     </div>
                 <div class="talk_list">
                     <div :key="p" v-for="(item,p) in showDetail">
-                        <div class="talk-box" :key="t" v-for="(d,t) in item">
+                        <div class="talk-box" :key="t" v-for="(d,t) in item" v-if="d">
                             <img :src="images.robot" class="photo"/>
                             <div class="gradient">
                                 <div class="gradient-box" >
@@ -17,6 +17,14 @@
                                 </div>
                             </div>
                         </div>
+                         <!-- <div class="talk-box" :key="t" v-for="(d,t) in item">
+                            <img :src="images.robot" class="photo"/>
+                            <div class="gradient">
+                                <div class="gradient-box" >
+                                    33333
+                                </div>
+                            </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -58,6 +66,8 @@ import classApi from "../../services/classroom";
 import createStudent from "./createStudent";
 import appHeader from '@/layouts/appHeader'
 import config from '@/config'
+import PerfectScrollbar from 'perfect-scrollbar'
+import 'perfect-scrollbar/css/perfect-scrollbar.css'
 export default {
   data() {
     return {
@@ -102,6 +112,11 @@ export default {
             this.showDetail[i] = item.detail;
           }
           console.log(item);
+            const ps = new PerfectScrollbar(this.$el.querySelector('.talk_list'));
+            this.$el.querySelector('.talk_list').scrollTop =this.$el.querySelector('.talk_list').scrollHeight;
+            ps.update();
+        // let scrollH = ;
+        // this.$el.querySelector('.talk_list').scrollTop = scrollH+'px';
       },
       getpptData(hourtype) {
         let params = {
@@ -282,8 +297,9 @@ export default {
                 height: 6.3rem;
                 background: url("../../../static/image/speak_texture.png") no-repeat;
                 background-position: bottom;
-                overflow-y: auto;
-                height: 90%;
+                position:relative;
+                // overflow-y: auto;
+                // height: 90%;
                 .talk-box{
                     display:flex;
                     flex:1;
