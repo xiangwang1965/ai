@@ -31,7 +31,7 @@
                             <el-checkbox :label="c.name" ></el-checkbox>
                         </div>
                         <div class="buy_line_r">
-                            <el-input-number size="mini" v-model="c.num"></el-input-number>
+                            <el-input-number size="mini" v-model="c.num" :min="0"></el-input-number>
                         </div>
                     </div>
                 </el-checkbox-group>
