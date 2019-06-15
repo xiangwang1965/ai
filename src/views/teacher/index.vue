@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="photo_list">
-          <div class="item" :key="i" v-for="(item,i) in list" @click="queryTeacherInfo(item.id)">
+          <div class="item" :class="{class_dis:teachId == item.id}":key="i" v-for="(item,i) in list" @click="queryTeacherInfo(item.id)">
             <img :src="url" alt class="item_img">
             <p>{{item.name}}</p>
           </div>
@@ -33,7 +33,6 @@
       <div class="right_content teacher_info" style="height: 6.67rem">
         <div class="teacher_box">
           <img :src="url" alt class="photo">
-
           <p class="name">{{tInfo.name}}</p>
           <p class="id">ID:{{tInfo.id}}</p>
           <span class="grade">Level{{tInfo.level}}</span>
@@ -181,7 +180,6 @@ export default {
   created() {
     this.getData();
     this.queryTeacherInfo();
-    console.log(this.tInfo.level);
   },
   beforeRouteLeave(to, from, next) {
     if (to.path === "/student") {
@@ -197,7 +195,10 @@ export default {
     getData() {
       teacher.querylist(this.params).then(res => {
         if (res.code === "001") {
-          this.list = res.data;
+            if (this.list.length) {
+                this.list = res.data;
+                this.teachId = this.list[0].id;
+            }
         }
       });
     },
@@ -340,6 +341,9 @@ export default {
         color: #5c5c5c;
         font-size: 0.15rem;
       }
+    }
+    .class_dis {
+        background: #E7EEFF;
     }
   }
   .teacher_info {

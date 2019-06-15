@@ -2,8 +2,8 @@
   <div class="appSideWrap">
     <div class="userInfo">
       <div class="photo"></div>
-      <p class="userName">某某某机构</p>
-      <p class="userID">ID：00001</p>
+      <p class="userName">{{userInfo.name}}</p>
+      <p class="userID">ID:{{userInfo.id}}</p>
     </div>
     <el-aside class="menu">
       <el-menu
@@ -74,7 +74,8 @@ export default {
       routes: ["/class", "/teacher", "/buy", "/course", "/classroom"],
       is_live: 1,
       temp: [],
-      phoneBoxShow:false
+      phoneBoxShow:false,
+      userInfo:{},
     };
   },
   computed: {
@@ -85,22 +86,9 @@ export default {
       }
       return "";
     },
-    hasFaceTeaching() {
-      let num = 0;
-      this.faceTeachingBrand.map(v => {
-        if (authUtils.getUser().brands.indexOf(v) >= 0) {
-          num++;
-        }
-      });
-      if (num === 0) {
-        return false;
-      }
-      return true;
-    }
   },
   created() {
-    this.temp = this.menuList;
-    // this.getUser()
+    this.getUser()
     //this.handleSelect(this.$route.path)
     eventHub.$on("updateUser", this.getUser);
   },
@@ -109,20 +97,10 @@ export default {
           this.phoneBoxShow = true;
       },
     getUser() {
-      // this.is_live = authUtils.getUser() && authUtils.getUser().is_live
-      // this.menuList = this.is_live ? this.liveList : this.tofaceList
-      // 判断是否是平台双师1或魔法双师0
-      this.is_self_live =
-        authUtils.getUser() && authUtils.getUser().is_self_live;
-      this.menuList = [];
-      this.menuList = this.is_self_live ? this.platformList : this.liveList;
-      // 如果third_part存在，使用对应的第三方侧栏
-      if (authUtils.getUser().third_part) {
-        this.menuList = this[authUtils.getUser().third_part + "List"];
-      }
+      this.userInfo = authUtils.getUser();
     },
-    go(item) {},
-     logout() {
+go(item) {},
+logout() {
         authApi.logout().then(res=>{
             this.$router.push({
                 name:'auth'
