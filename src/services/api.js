@@ -18,10 +18,10 @@ api.interceptors.request.use(config => {
     if (config.url.method === 'post') {
         config.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
       if(config.url.indexOf("/ws/api/user/login2") === -1){
-        config.headers['token'] = getToken()
+        config.headers['ttoken'] = getToken()
       }
     } else {
-        config.headers['token'] = getToken()
+        config.headers['ttoken'] = getToken()
     }
   return config
 }, error => {
