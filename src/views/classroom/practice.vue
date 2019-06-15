@@ -9,7 +9,7 @@
         <div class="content">
             <div class="content_left">
                 <div class="top"></div>
-                <div class="photo"></div>
+                <img :src="images.robot" class="photo"/>
                 <div class="talk_list">
                     <div class="gradient" :key="p" v-for="(item,p) in showDetail">
                         <div class="gradient-box" >
@@ -19,7 +19,7 @@
                 </div>
 
             </div>
-            <div class="content_c">
+            <div class="content_c" v-if="!showPractice">
                 <ul class="page_list">
                     <li :key="i" v-for="(item,i) in pptData">
                         <div class="num">01</div>
@@ -38,15 +38,16 @@
                 </ul>
             </div>
             <div class="content_right">
-                <el-image
+                <el-image v-if="!showPractice"
                     style="width: 100%; height: 100%"
                     :src="showPic"
                     :fit="fit"></el-image>
+                     <iframe src="http://edu.wiser-bot.com/wsedu/scratch/build/index.html" frameborder="0" width="100%" height="100%" id="childFrame" scrolling="no"></iframe>
             </div>
         </div>
         <footer>
-            <div class="btn_254" style="background: #ACCFFF;margin: 0 0.17rem 0 4.02rem;">演示</div>
-            <div class="btn_254">实践</div>
+            <div class="btn_254" @click="changeTab(false)" style="background: #ACCFFF;margin: 0 0.17rem 0 4.02rem;">演示</div>
+            <div class="btn_254" @click="changeTab(true)">实践</div>
         </footer>
 
     </div>
@@ -61,7 +62,8 @@ export default {
       showManage: true,
       images: {
         back:require("../../../static/image/back_p.png"),
-        logo: require("../../../static/image/logo_p.png")
+        logo: require("../../../static/image/logo_p.png"),
+        robot:require('../../../static/image/robot.jpeg')
       },
       fit:'contain',
       showPic:'',
@@ -69,7 +71,8 @@ export default {
     //   courseList:[],
         pptData:[],
         showDetail:[],
-        hourid:this.$route.query.hourid
+        hourid:this.$route.query.hourid,
+        showPractice:false,
     };
   },
   components: {
@@ -81,9 +84,12 @@ export default {
     }
   },
   created() {
-      this.getpptData();
+      this.getpptData(1);
   },
   methods: {
+      changeTab(flag) {
+          this.showPractice = flag;
+      },
       goBack(){
            this.$router.back()
       },
@@ -92,10 +98,10 @@ export default {
           this.showDetail = item.detail;
           console.log(item);
       },
-      getpptData() {
+      getpptData(hourtype) {
         let params = {
             hourId:this.hourid,
-            hourType:0
+            hourType: hourtype
         }
         classApi.getpptData(params).then(res=>{
             if (res.code === '001') {
@@ -248,7 +254,7 @@ export default {
                 border: 0.01rem solid #979797;
                 position: relative;
                 top: -0.37rem;
-                left: 0.28rem;
+                left: -1.4rem;
             }
             .talk_list{
                 height: 6.3rem;
