@@ -188,7 +188,7 @@ export default {
       font-size: 0.18rem;
       padding-top: 0.14rem;
       cursor: pointer;
-      margin-left:-1rem;
+      margin-left:-0.8rem;
     }
   }
     .out_login {
