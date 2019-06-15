@@ -4,7 +4,6 @@ import store from '@/vuex/store.js'
 class Auth extends Base {
   constructor () {
     super()
-    this.authUrl = '/ws/api/user/login2'
     this.loginUrl = '/ws/api/user/login2'
     this.getCodeUrl = '/ws/api/verificode'
     this.logoutUrl = '/auth/logout'
@@ -14,11 +13,11 @@ class Auth extends Base {
 
   /**
    * 认证接口
-   * @param { Object } params {telephone, password, type: 1 教师APP、2教师PC、3学生端}
+   * @param { Object } params {telephone, password, type: 2 教师APP、1教师PC、0学生端}
    */
   auth (params) {
     params.type = 2
-    return this.sendPost(this.authUrl, params).then(res => {
+    return this.sendPost(this.loginUrl, params).then(res => {
       if (res.code == '001') {
         authUtils.removeToken()
         // 只有一个yonghu     直接登录
