@@ -55,7 +55,7 @@
             </div>
         </div>
         <footer>
-            <div class="btn_254" @click="changeTab(false)" style="background: #ACCFFF;margin: 0 0.17rem 0 4.02rem;">演示模式</div>
+            <div class="btn_254" @click="changeTab(false)" style="background: #ACCFFF;margin: 0 0.17rem 0 4.02rem;">讲解模式</div>
             <div class="btn_254" @click="changeTab(true)">实践模式</div>
         </footer>
 
