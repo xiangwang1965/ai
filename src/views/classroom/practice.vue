@@ -272,15 +272,14 @@ export default {
             .gradient {
                 margin-left:0.23rem;
                 margin-bottom: 0.29rem;
-                width: 2rem;
                 box-sizing: border-box;
                 padding: 0.04rem;
-                border-radius: 0.2rem;
+                border-radius: 0.2rem 0.2rem 0.2rem 0;
             }
             .gradient-box {
                 width: 100%;
                 height: 100%;
-                border-radius:0.2rem;
+                border-radius:0 0.2rem 0.2rem 0.2rem;
                 background: #4592FE;
                 display: flex;
                 align-items: center;
