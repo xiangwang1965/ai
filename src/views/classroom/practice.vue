@@ -1,14 +1,13 @@
 <template>
       <div class="wrap">
-        <header>
-            <div class="header_left">
-                <img :src="images.back" alt="" class="back" @click="goBack">
-                <img :src="images.logo" alt="" class="logo">
-            </div>
-        </header>
+        <header></header>
         <div class="content">
             <div class="content_left">
-                <div class="top">小智AI助教</div>
+
+                <div class="top">
+                    <img :src="images.back" alt="" class="back" @click="goBack">
+                    <span class="tit">小智AI助教</span>
+                    </div>
                 <div class="talk_list">
                     <div class="talk-box" :key="p" v-for="(item,p) in showDetail">
                     <img :src="images.robot" class="photo"/>
@@ -24,17 +23,17 @@
             <div class="content_c" v-if="!showPractice">
                 <ul class="page_list">
                     <li :key="i" v-for="(item,i) in pptData">
-                        <div class="num">01</div>
+                        <div class="num">{{i+1}}</div>
                         <div class="page" @click="changeShowInfo(item)">
                             <img class="page_img" :src="item.image" alt="">
                         </div>
                     </li>
-                    <li>
+                    <!-- <li>
                         <div class="num">04</div>
                         <div class="page">
                             <div class="change">+</div>
                         </div>
-                    </li>
+                    </li> -->
 
                 </ul>
             </div>
@@ -47,8 +46,8 @@
             </div>
         </div>
         <footer>
-            <div class="btn_254" @click="changeTab(false)" style="background: #ACCFFF;margin: 0 0.17rem 0 4.02rem;">演示</div>
-            <div class="btn_254" @click="changeTab(true)">实践</div>
+            <div class="btn_254" @click="changeTab(false)" style="background: #ACCFFF;margin: 0 0.17rem 0 4.02rem;">演示模式</div>
+            <div class="btn_254" @click="changeTab(true)">实践模式</div>
         </footer>
 
     </div>
@@ -209,7 +208,6 @@ export default {
     header{
         height: 0.97rem;
         line-height: 0.97rem;
-        background: #4592FE;
         .header_left{
             display: flex;
             align-items: center;
@@ -244,12 +242,25 @@ export default {
             background: #F3F6FC;
             border-right: 0.01rem solid #979797;
             .top{
-                background: #56749F;
+                background:#4592FE;
                 height: 0.64rem;
-                color: #fff;
-                font-size: 0.3rem;
-                text-align: center;
                 padding-top: 0.2rem;
+                display:flex;
+                flex:1;
+                .back{
+                    padding-left: 0.3rem;
+                    padding-right: 0.25rem;
+                    width: 0.25rem;
+                    height: 0.4rem;
+                    display: block;
+                }
+                .tit{
+                    display: block;
+                    height: 0.4rem;
+                     color: #fff;
+                    font-size: 0.3rem;
+                    text-align: center;
+                }
             }
             .photo{
                 width: 0.5rem;
@@ -258,6 +269,7 @@ export default {
                 background: #FFFFFF;
                 border: 0.01rem solid #979797;
                 position: relative;
+                margin-top:0.04rem;
             }
             .talk_list{
                 height: 6.3rem;

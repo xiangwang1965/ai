@@ -30,7 +30,6 @@
                     <el-option :key="i" v-for="(item,i) in courseList" :label="item.name" :value="item.id"></el-option>
                     </el-select>
             </el-form-item>
-            {{form.hourId}}
               <li class="form_row">
                 <div class="form_lable">· 学习内容:</div>
                 <div class="form_box">
@@ -43,7 +42,6 @@
                   <textarea v-model="form.task"></textarea>
                 </div>
               </li>
-              {{form.task}}
               <li class="form_row">
                 <div class="form_lable">· 课堂表现:</div>
                 <div class="form_box">

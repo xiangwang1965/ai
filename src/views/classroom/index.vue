@@ -115,7 +115,7 @@
       </div>
     </div>
     <div class="content2">
-      <div class="content_title">SCRATCH初级编程1班</div>
+      <div class="content_title">{{classTitle}}</div>
       <div class="right_content">
         <div class="tab">
           <ul>
@@ -165,8 +165,7 @@
           <div class="class_infomation">
             <div class="item1">班级信息</div>
             <div class="item2">
-              <span>{{startDate}}</span>
-              <span>{{startTime}}-{{endTime}}</span>
+              <span>{{beginTime}}-{{endTime}}</span>
               <span>时间</span>
             </div>
             <div class="item3">
@@ -225,7 +224,7 @@ export default {
       nodata4:false,
       classTitle:'',
       startDate:'',
-      startTime:'',
+      beginTime:'',
       endTime:'',
       level:'',
       stuCnt:'',
@@ -281,7 +280,7 @@ export default {
     getList(item,index) {
             this.classTitle = item.name;
             this.startDate = item.startDate;
-            this.beginTime = item.beginTime;
+            this.beginTime = item.startTime;
             this.endTime = item.endTime;
             this.level = item.level;
             this.stuCnt = item.stuCnt;
