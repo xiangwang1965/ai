@@ -246,9 +246,6 @@ html body {
     overflow: auto;
     text-align: center;
   }
-  .el-dialog .el-dialog__body {
-      padding:0px;
-  }
   .el-dialog .dialog_center .dialog_l_r {
     width: 100%;
     height: 100%;

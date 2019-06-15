@@ -31,7 +31,7 @@
                             <el-checkbox :label="c.name" ></el-checkbox>
                         </div>
                         <div class="buy_line_r">
-                            <el-input-number size="mini" v-model="c.num" :min="0"></el-input-number>
+                            <el-input-number size="mini" v-model="c.num" @change="handleChange(c,c.num)" :min="0"></el-input-number>
                         </div>
                     </div>
                 </el-checkbox-group>
@@ -100,8 +100,13 @@ export default {
     this.getData(1);
   },
   methods: {
-       handleChange(value) {
-        console.log(value);
+       handleChange(item, value) {
+        this.totalPrice = 0;
+        this.switchData.forEach(item=>{
+            this.totalPrice += (+item.price)*item.num;
+        })
+        console.log(this.totalPrice);
+        this.totalPrice = this.totalPrice.toFixed(2);
       },
     switchTab(index) {
       if (index === this.activeIndex) {

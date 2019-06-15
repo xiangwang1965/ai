@@ -450,6 +450,9 @@ export default {
     overflow-y: auto;
     height:100%;
 }
+ .el-dialog .el-dialog__body {
+      padding:0px;
+  }
 .classContainer {
   width: 100%;
   height: 100%;
