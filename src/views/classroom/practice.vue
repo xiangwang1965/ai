@@ -9,6 +9,7 @@
                     </div>
                 <div class="talk_list">
                     <div :key="p" v-for="(item,p) in showDetail">
+
                         <div class="talk-box" :key="t" v-for="(d,t) in item" v-if="d">
                             <img :src="images.robot" class="photo"/>
                             <div class="gradient">
@@ -294,7 +295,7 @@ export default {
                 margin-top:0.04rem;
             }
             .talk_list{
-                height: 6.3rem;
+                height: 11.3rem;
                 background: url("../../../static/image/speak_texture.png") no-repeat;
                 background-position: bottom;
                 position:relative;
@@ -323,9 +324,9 @@ export default {
                 word-wrap:break-word;
                 font-size:0.13rem;
                 color:#fff;
-                font-weight:bold;
                 padding:0.14rem 0.19rem;
                 box-sizing: border-box;
+                text-align:left;
             }
             .gradient_pink{
                 width: 3.05rem;
