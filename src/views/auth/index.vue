@@ -21,7 +21,6 @@
         </div>
          <el-button class="btn" type="primary" round @click="handleLogin">登录</el-button>
         <a id="forget" @click="goForget">忘记密码?</a>
-        <!--<p class="prompt">账号错误</p>-->
         <p class="phone"></p>
       </div>
     </el-form>

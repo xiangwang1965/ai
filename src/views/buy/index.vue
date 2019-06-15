@@ -78,13 +78,13 @@ export default {
         },
         {
           id: 3,
-          name: "NOIP",
+          name: "NOIP算法",
           colorCls: "bg_r",
           IconCls: "el-icon-arrow-right"
         },
         {
           id: 4,
-          name: "NOIP",
+          name: "AI编程",
           colorCls: "bg_p",
           IconCls: "el-icon-arrow-right"
         }

@@ -33,11 +33,12 @@
     <div class="contact">
       <p>联系客服</p>
     </div>
-    <div class="btn_124 out_login">退出登录</div>
+    <div class="btn_124 out_login" @click="logout">退出登录</div>
   </div>
 </template>
 <script>
 import authUtils from "@/services/auth/utils";
+import authApi from "@/services/auth";
 import eventHub from "@/utils/eventHub";
 import { IMS_URL } from "@/config";
 export default {
