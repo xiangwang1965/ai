@@ -1,21 +1,22 @@
 <template>
       <div class="wrap">
-        <header></header>
+        <appHeader></appHeader>
         <div class="content">
             <div class="content_left">
-
                 <div class="top">
                     <img :src="images.back" alt="" class="back" @click="goBack">
                     <span class="tit">小智AI助教</span>
                     </div>
                 <div class="talk_list">
-                    <div class="talk-box" :key="p" v-for="(item,p) in showDetail">
-                    <img :src="images.robot" class="photo"/>
-                    <div class="gradient">
-                        <div class="gradient-box" >
-                            {{item}}
+                    <div :key="p" v-for="(item,p) in showDetail">
+                        <div class="talk-box" :key="t" v-for="(d,t) in item">
+                            <img :src="images.robot" class="photo"/>
+                            <div class="gradient">
+                                <div class="gradient-box" >
+                                    {{d}}
+                                </div>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
 
@@ -23,8 +24,8 @@
             <div class="content_c" v-if="!showPractice">
                 <ul class="page_list">
                     <li :key="i" v-for="(item,i) in pptData">
-                        <div class="num">{{i+1}}</div>
-                        <div class="page" @click="changeShowInfo(item)">
+                        <div class="num">{{item.index}}</div>
+                        <div class="page" @click="changeShowInfo(item,i)">
                             <img class="page_img" :src="item.image" alt="">
                         </div>
                     </li>
@@ -55,6 +56,7 @@
 <script>
 import classApi from "../../services/classroom";
 import createStudent from "./createStudent";
+import appHeader from '@/layouts/appHeader'
 import config from '@/config'
 export default {
   data() {
@@ -76,7 +78,8 @@ export default {
     };
   },
   components: {
-    createStudent
+    createStudent,
+    appHeader
   },
   watch: {
     currentClass() {
@@ -93,9 +96,11 @@ export default {
       goBack(){
            this.$router.back()
       },
-      changeShowInfo(item) {
+      changeShowInfo(item,i) {
           this.showPic = item.image;
-          this.showDetail = item.detail;
+          if (!this.showDetail[i]) {
+            this.showDetail[i] = item.detail;
+          }
           console.log(item);
       },
       getpptData(hourtype) {
@@ -110,10 +115,11 @@ export default {
                     this.pptData.forEach((item,i)=>{
                     this.pptData[i].image = config.API_URL+item.image;
                     this.pptData[i].detail = item.detail.split("\\n");
-                    if (i === 0) {
-                        this.showPic = this.pptData[i].image;
-                        this.showDetail =  this.pptData[i].detail;
-                    }
+                    this.pptData[i].index = String(i+1).padStart(2, '0');
+                        if (i === 0) {
+                            this.showPic = this.pptData[i].image;
+                            this.showDetail[i] = this.pptData[i].detail;
+                        }
                     })
                 }
             }
@@ -229,12 +235,13 @@ export default {
         }
     }
     .content{
-        width: 100%;
+        width: 95%;
         flex: 1;
         background: #F3F6FC;
         border-radius: 0.20rem;
         display: flex;
         border-bottom: 0.01rem solid #979797;
+        margin-top: 0.3rem;
         .content_left{
             width:3.84rem;
             height: 100%;
@@ -242,8 +249,8 @@ export default {
             background: #F3F6FC;
             border-right: 0.01rem solid #979797;
             .top{
-                background:#4592FE;
-                height: 0.64rem;
+                background:#2878e8;
+                height: 0.51rem;
                 padding-top: 0.2rem;
                 display:flex;
                 flex:1;
@@ -275,6 +282,8 @@ export default {
                 height: 6.3rem;
                 background: url("../../../static/image/speak_texture.png") no-repeat;
                 background-position: bottom;
+                overflow-y: auto;
+                height: 90%;
                 .talk-box{
                     display:flex;
                     flex:1;
