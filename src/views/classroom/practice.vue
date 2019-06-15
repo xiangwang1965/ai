@@ -2,7 +2,7 @@
       <div class="wrap">
         <header>
             <div class="header_left">
-                <img :src="images.back" alt="" class="back">
+                <img :src="images.back" alt="" class="back" @click="goBack">
                 <img :src="images.logo" alt="" class="logo">
             </div>
         </header>
@@ -56,13 +56,12 @@ import classApi from "../../services/classroom";
 import createStudent from "./createStudent";
 import config from '@/config'
 export default {
-  props: ["hourInfo"],
   data() {
     return {
       showManage: true,
       images: {
-        back:require("../../../static/img/back.png"),
-        logo: require("../../../static/image/logo.png")
+        back:require("../../../static/image/back_p.png"),
+        logo: require("../../../static/image/logo_p.png")
       },
       fit:'contain',
       showPic:'',
@@ -70,6 +69,7 @@ export default {
     //   courseList:[],
         pptData:[],
         showDetail:[],
+        hourid:this.$route.query.hourid
     };
   },
   components: {
@@ -84,6 +84,9 @@ export default {
       this.getpptData();
   },
   methods: {
+      goBack(){
+           this.$router.back()
+      },
       changeShowInfo(item) {
           this.showPic = item.image;
           this.showDetail = item.detail;
@@ -91,8 +94,7 @@ export default {
       },
       getpptData() {
         let params = {
-            hourId:this.hourInfo.id,
-            // hourId:1,
+            hourId:this.hourid,
             hourType:0
         }
         classApi.getpptData(params).then(res=>{
@@ -211,11 +213,13 @@ export default {
                 width: 0.25rem;
                 height: 0.4rem;
                 display: block;
+                margin:auto;
             }
             .logo{
                 width: 1.73rem;
                 height: 0.58rem;
                 display: block;
+                margin:auto;
             }
         }
     }
@@ -240,15 +244,15 @@ export default {
                 width: 0.74rem;
                 height: 0.74rem;
                 border-radius: 100%;
+                background: #FFFFFF;
                 border: 0.01rem solid #979797;
                 position: relative;
                 top: -0.37rem;
                 left: 0.28rem;
-                background:url('../../../static/image/robot.jpeg');
             }
             .talk_list{
                 height: 6.3rem;
-                background: url('../../../static/image/speak_texture.png') no-repeat;
+                background: url("../../../static/image/speak_texture.png") no-repeat;
                 background-position: bottom;
 
             }
@@ -289,7 +293,7 @@ export default {
             border-right: 0.01rem solid #979797;
             background: #DAE9FF;
             height: 100%;
-            overflow-y: auto;
+            overflow-y:auto;
             .page_list{
                 li{
                     display: flex;
@@ -332,7 +336,7 @@ export default {
                             left:-3.65rem;
                             width: 3.61rem;
                             height: 3.13rem;
-                            background: url("../../../static/image/dialog.png");
+                            background: url("../../../static/image/dialog.png") no-repeat;
                             background-size: 100%;
                             padding: 0.25rem;
                             z-index: 100;
@@ -380,6 +384,7 @@ export default {
         display: flex;
     }
 }
+
 
 </style>
 

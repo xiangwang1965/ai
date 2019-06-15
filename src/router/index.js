@@ -75,6 +75,12 @@ const router = new Router({
             component: thirdPartAuth
         },
         {
+            path: '/practice',
+            name: 'practice',
+            component: practice
+        },
+
+        {
             path: '/',
             component: home,
             redirect:requireAuth,
@@ -86,8 +92,7 @@ const router = new Router({
                     beforeEnter: requireAuth,
                     redirect: requireAuth,
                     children: [
-                        { path: '/', name: 'classroom', component: classroom },
-                        { path: 'practice', name: 'practice', component: practice }
+                        { path: '/', name: 'classroom', component: classroom }
                     ]
                 },
                 {

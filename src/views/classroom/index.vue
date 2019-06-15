@@ -197,15 +197,11 @@
     <el-dialog center append-to-body title="学习报告" :visible.sync="showCourseReport">
        <courseReport v-on:refresh="refresh" ref="courseReport" :curClsId="currentClass" :curStudent="curStudent" :courseList="coursePlanData.list"></courseReport>
     </el-dialog>
-    <el-dialog center modal-append-to-body fullscreen :visible.sync="showPractice">
-       <practice v-on:refresh="refresh" ref="practice" :hourInfo="hourInfo"></practice>
-    </el-dialog>
   </div>
 </template>
 <script>
 import classApi from "@/services/classroom";
 import courseReportAdd from './courseReportAdd';
-import practice from './practice';
 import courseReport from './courseReport';
 import authUtils from "@/services/auth/utils";
 export default {
@@ -249,7 +245,6 @@ export default {
       coursePlanData:{},
       curCourProcess:'0%',
       curStudent:{},
-      showPractice:false,
       hourInfo:{},
     };
   },
@@ -272,16 +267,16 @@ export default {
   },
   components:{
     courseReportAdd,
-    courseReport,
-    practice
+    courseReport
   },
   methods: {
      practiceHandle(item) {
-         this.showPractice = true;
-          this.hourInfo = item;
-        if(this.$refs.practice){
-            this.$refs.practice.getpptData();
-        }
+         this.$router.push({
+             name:'practice',
+             query:{
+                 hourid:item.id
+             }
+         });
      },
     getList(item,index) {
             this.classTitle = item.name;
@@ -461,6 +456,9 @@ export default {
               }
             }
           }
+          .class_dis {
+                background: #E7EEFF;
+            }
           .class_fixed {
             width: 1.2rem;
             height: 1.2rem;
