@@ -1,6 +1,6 @@
-<!-- 订单容器 -->
+<!-- 教师 -->
 <template>
-  <div id="orderWrapPage">
+  <div id="reportPage">
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
@@ -12,13 +12,18 @@
 export default {
   data() {
     return {};
+  },
+  beforeRouteLeave(to, from, next) {
+    from.meta.keepAlive = false;
+    to.meta.keepAlive = true;
+    this.$destroy();
+    next();
   }
 };
 </script>
 <style scoped>
-#orderWrapPage {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+#reportPage {
+  display: flex;
+  flex: 1;
 }
 </style>

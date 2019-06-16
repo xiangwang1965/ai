@@ -1,7 +1,7 @@
 <!-- 教师 -->
 <template>
-  <div id='teacherPage'>
-    <keep-alive >
+  <div id="reportPage">
+    <keep-alive>
       <router-view v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive"></router-view>
@@ -10,21 +10,20 @@
 
 <script>
 export default {
-  data () {
-    return {
-    }
+  data() {
+    return {};
   },
-  beforeRouteLeave (to, from, next) {
-    from.meta.keepAlive = false
-    to.meta.keepAlive = true
-    this.$destroy()
-    next()
+  beforeRouteLeave(to, from, next) {
+    from.meta.keepAlive = false;
+    to.meta.keepAlive = true;
+    this.$destroy();
+    next();
   }
-}
+};
 </script>
 <style scoped>
- #teacherPage {
-     display:flex;
-     flex:1;
- }
+#reportPage {
+  display: flex;
+  flex: 1;
+}
 </style>
