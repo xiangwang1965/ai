@@ -5,10 +5,13 @@ import { LOGIN_URL, WB_MAIN_URL } from "@/config";
 
 const home = () => import("@/views/home");
 const notFound = () => import("@/views/notFound");
-
 const auth = () => import("@/views/auth");
 const thirdPartAuth = () => import("@/views/auth/thirdpartauth");
 const forget = () => import("@/views/auth/forget");
+
+// 订单
+const order = () => import("@/views/order");
+const orderWrap = () => import("@/views/order/orderWrap");
 
 // 课程管理
 const classroom = () => import("@/views/classroom");
@@ -106,6 +109,12 @@ const router = new Router({
                             component: overviewDetail
                         }
                     ]
+                },
+                {
+                    path: "/order",
+                    component: orderWrap,
+                    beforeEnter: requireAuth,
+                    children: [{ path: "/", name: "order", component: order }]
                 }
             ]
         }
