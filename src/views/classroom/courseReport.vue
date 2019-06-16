@@ -5,21 +5,15 @@
           <div class="dialog_left" style="width: 2.36rem">
             <div class="teacher_box" style="width: 100%;padding-top:0.59rem">
               <img :src="tInfo.avatar" alt class="photo">
-              <p class="name">李雷</p>
-              <p class="id">ID:00001</p>
-              <span class="grade">副教授级</span>
-              <p class="phone">联系电话：13333333333</p>
-            </div>
-            <div class="intr_box" style="width: 1.82rem">
-              <div class="intr_row">
-                <img :src="tInfo.nameIcon" alt style="width: 0.1rem;height: 0.13rem;;"> 姓名：
-                <span>拉拉</span>
-              </div>
+              <p class="name">{{stuInfo.name}}</p>
+              <p class="id">ID:{{stuInfo.id}}</p>
+              <span class="grade">level:{{stuInfo.level}}</span>
+              <p class="phone">联系电话：{{stuInfo.phone}}</p>
             </div>
             <div class="intr_box" style="width: 1.82rem">
               <div class="intr_row">
                 <img :src="tInfo.nameIcon" alt style="width: 0.1rem;height: 0.13rem;;"> 机构：
-                <span>拉拉</span>
+                <span>{{stuInfo.shcoolName}}</span>
               </div>
             </div>
           </div>
@@ -135,7 +129,7 @@ export default {
       currentStudent: "",
       codeList: [],
       showCreate: false,
-    //   courseList:[],
+      stuInfo:{},
       form:{
           studentId:1,
           classId:1,
@@ -164,6 +158,7 @@ export default {
     }
   },
   created() {
+      this.getStuInfo(this.curStudent.id);
   },
   methods: {
       getReportInfo() {
@@ -179,18 +174,18 @@ export default {
             console.log(res.data);
         });
     },
-    getCodeList(classId) {
+    getStuInfo(stuId) {
       let params = {
-        clsId: classId
+        id: stuId
       };
-      classApi.getCodeList(params).then(res => {
-        this.codeList = res.data.map(item => {
-          item.value = item.cdk;
-          return item;
-        });
-        if (this.$refs.child) {
-          this.$refs.child.setCodeOptions(this.codeList);
-        }
+      classApi.getStuInfo(params).then(res => {
+          console.log(res);
+          if (res.code === '001') {
+              this.stuInfo = res.data;
+          }
+        // if (this.$refs.child) {
+        //   this.$refs.child.setCodeOptions(this.codeList);
+        // }
       });
     },
     deleteStudent(student) {

@@ -348,18 +348,19 @@ export default {
       }
     },
 
-     courseReport(item){
+    courseReport(item){
       this.showCourseReport = true;
        this.curStudent = item;
       if(this.$refs.courseReport){
          this.$refs.courseReport.getReportInfo();
+         this.$refs.courseReport.getStuInfo(item.id);
       }
     },
     handleReportCreate(item){
       this.showCourseReportAdd = true;
       this.curStudent = item;
        if(this.$refs.courseReportAdd){
-        //  this.$refs.courseReport.setRight(this.currentList[this.currentIndex]);
+         this.$refs.courseReportAdd.getStuInfo(item.id);
       }
     },
     search(){
