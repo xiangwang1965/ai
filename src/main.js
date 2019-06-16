@@ -12,6 +12,9 @@ import eventHub, * as EVENTS from './utils/eventHub'
 import store from './vuex/store.js'
 import pkg from '../package.json'
 import '@/utils'
+import api from  './config.js'
+
+Vue.prototype.api = api;
 // import { MAIN_URL } from '@/config'
 // import authApi from '@/services/auth'
 // import Cookies from 'js-cookie'
