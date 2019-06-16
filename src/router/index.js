@@ -21,9 +21,10 @@ const buy = () => import('@/views/buy')
 const buyWrap = () => import('@/views/buy/buyWrap')
 const payOrder = () => import('@/views/buy/payOrder')
 const success = () => import('@/views/buy/success')
-// 课程订单
-const course = () => import('@/views/course')
-const courseWrap = () => import('@/views/course/courseWrap')
+
+// 订单
+const order = () => import('@/views/order')
+const orderWrap = () => import('@/views/order/orderWrap')
 
 Vue.use(Router)
 
@@ -110,11 +111,11 @@ const router = new Router({
                     ]
                 },
                 {
-                    path: '/course',
-                    component: courseWrap,
+                    path: '/order',
+                    component: orderWrap,
                     beforeEnter: requireAuth,
                     children: [
-                        { path: '/', name: 'course', component: course }
+                        { path: '/', name: 'order', component: order }
                     ]
                 }
             ]

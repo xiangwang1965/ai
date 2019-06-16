@@ -1,6 +1,6 @@
-<!-- 班级容器 -->
+<!-- 订单容器 -->
 <template>
-  <div id='courseWrapPage'>
+  <div id='orderWrapPage'>
     <keep-alive >
       <router-view v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
@@ -17,5 +17,9 @@ export default {
 }
 </script>
 <style scoped>
-
+    #orderWrapPage {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
 </style>
