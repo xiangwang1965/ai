@@ -271,7 +271,7 @@ export default {
             border-right: 0.01rem solid #979797;
             .top{
                 background:#2878e8;
-                height: 0.51rem;
+                height: 0.49rem;
                 padding-top: 0.2rem;
                 display:flex;
                 flex:1;
@@ -360,7 +360,7 @@ export default {
                         color: green;
                         font-size: 0.2rem;
                         .active {
-                            border: solid 0.01rem #4592FE;
+                            border: solid 0.03rem #4592FE;
                             border-radius: 0.1rem;
                             padding: 0.1rem;
                         }
