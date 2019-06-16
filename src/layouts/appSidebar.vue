@@ -7,7 +7,7 @@
         <p class="id">ID:{{tInfo.id}}</p>
         <span class="grade">Level{{tInfo.level}}</span>
 
-        <ul class="entry_wrap" @click="changeTab">
+        <ul class="entry_wrap">
           <router-link to="/class" tag="li">我的课程</router-link>
           <router-link to="/report" tag="li">学习报告</router-link>
           <router-link to="/overview" tag="li">课程总览</router-link>
@@ -44,14 +44,12 @@ export default {
           this.queryTeacherInfo(this.userInfo.id);
       } else {
           this.$message({
-              message:'教师id不存在，请确认用户身份',
+              message:'该学生不存在，请确认用户身份',
               type:'error'
           })
       }
     },
-    changeTab (e) {
-      console.log(e);
-    },
+
     logout() {
         authApi.logout().then(res=>{
             this.$router.push({
@@ -59,7 +57,8 @@ export default {
             })
         });
     },
-     queryTeacherInfo(id) {
+
+    queryTeacherInfo(id) {
       var p = {};
       p.teacherId = id || "1";
       teacherApi.queryTeacherInfo(p).then(res => {
@@ -99,7 +98,7 @@ export default {
 
       line-height: .58rem;
       font-size: .18rem;
-      color: #FFFFFF;
+      color: #fff;
       letter-spacing: .02rem;
       text-align: center;
 
@@ -108,7 +107,7 @@ export default {
 
     li.router-link-active {
       background: rgba(255,255,255,0.30);
-      border: 1px solid #FFFFFF;
+      border: 1px solid #fff;
       border-radius: 29px;
     }
   }

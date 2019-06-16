@@ -17,7 +17,7 @@ class Auth extends Base {
    * @param { Object } params {telephone, password, type: 1 教师APP、2教师PC、3学生端}
    */
   auth (params) {
-    params.type = 2
+    params.type = 3
     return this.sendPost(this.authUrl, params).then(res => {
       if (res.code == '001') {
         authUtils.removeToken()
@@ -25,12 +25,8 @@ class Auth extends Base {
         if (res.data.users.length === 1) {
           return this.login({
             id: res.data.users[0].id, // TODO 如果登录在这里用需要判断学校个数来提示选择
-            token: res.data.token
+            stoken: res.data.token
           })
-        } else {
-          // 多个机构切换
-          res.multiple = true
-          return res
         }
       }
       this.handleError(res, {
@@ -43,7 +39,7 @@ class Auth extends Base {
    * @param { Object } params {id, token, type:0，1，2   学生，教师，机构。}
    */
   login (params) {
-    params.type = 1
+    params.type = 0
     return this.sendPost(this.loginUrl, params).then(res => {
       if (res.code == '001') {
         authUtils.setToken(res.data.token)

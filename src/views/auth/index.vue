@@ -13,7 +13,7 @@
       <div class="login">
         <div class="inputstyle input_username">
             <img :src="urls.username">
-            <input type="text" v-model="form.uid" placeholder="账号" mexlength="11"></input>
+            <input type="text" v-model="form.uid" placeholder="账号" mexlength="11" />
         </div>
         <div class="inputstyle input_password">
           <img class="passwordCode" :src="urls.pwd">
@@ -54,31 +54,12 @@ export default {
   },
   methods: {
     goForget(){
-        this.$router.push('forget');
+      this.$router.push('forget');
     },
     handleLogin() {
       authApi.login(this.form).then(res => {
-        if (res.code == "001") {
-          res.multiple
-            ? this.doToggle(res)
-            : this.$router.push({ path: "/class" });
-        }
-      });
-    },
-    doToggle(res) {
-      this.multiple = res.multiple;
-      this.users = res.data.users;
-      this.token = res.data.token;
-    },
-    doLogin(data) {
-      if (data === true) {
-        this.multiple = false;
-        return false;
-      }
-      data.token = this.token;
-      authApi.login(data).then(res => {
-        if (res.ok) {
-          this.$router.push({ path: "/" });
+        if (res.code == '001') {
+          this.$router.push({ path: "/class" });
         }
       });
     }

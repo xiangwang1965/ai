@@ -25,15 +25,11 @@ const success = () => import('@/views/buy/success')
 const course = () => import('@/views/course')
 const courseWrap = () => import('@/views/course/courseWrap')
 
-
-
-
-
-
 Vue.use(Router)
 
 function requireAuth(to, from, next) {
     var firstPage = '/';
+
     if (!authUtils.loggedIn()) {
         firstPage = '/auth'
     } else {

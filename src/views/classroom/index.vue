@@ -1,14 +1,15 @@
 <template>
   <div id="classContainer" class="classContainer">
     <div class="content1">
-      <p class="content_title">班级管理</p>
+      <p class="content_title">
+        <img :src="icons.class">
+      </p>
       <div class="left_content">
         <div class="class_changeTitle">
           <div class="title_left">
             <span></span>
             当前课程
           </div>
-          <div class="title_right">历史班级</div>
         </div>
         <div class="class_title_list">
           <div class="class_title class_S" @click="getData(1)"></div>
@@ -206,6 +207,9 @@ import authUtils from "@/services/auth/utils";
 export default {
   data() {
     return {
+      icons: {
+        class: require("../../../static/image/my_class_blue.png"),
+      },
       activeNames: ["1"],
       courseList: {
         course1: [],
