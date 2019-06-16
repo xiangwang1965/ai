@@ -102,7 +102,12 @@ const router = new Router({
                     component: overviewWrap,
                     beforeEnter: requireAuth,
                     children: [
-                        { path: "/", name: "overview", component: overview },
+                        {
+                            path: "/",
+                            name: "overview",
+                            component: overview,
+                            meta: { keepAlive: true }
+                        },
                         {
                             path: ":id",
                             name: "detail",

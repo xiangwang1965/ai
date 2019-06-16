@@ -5,20 +5,31 @@
       <span>课程总览</span>
     </p>
 
-    <section class="report-detail-header" v-if="detail[0]">
+    <section class="report-detail-header" v-if="detail.length > 0">
       <img :src="icons.arrowLeft" @click="goBack">
       <span>{{ detail[0].courseName }} · Level {{ level }}</span>
     </section>
 
-    <section class="report-detail-content" v-if="detail[0]">
-      <div>
-        <h4>简介</h4>
-        <p>{{ detail[0].courseDesc }}</p>
+    <section class="report-detail-content" v-if="detail.length > 0">
+      <div v-if="detail[0].courseDesc">
+        <h4 class="report-detail-title">简介</h4>
+        <p class="report-detail-desc">{{ detail[0].courseDesc }}</p>
       </div>
 
-      <div></div>
+      <div>
+        <h4 class="report-detail-title">课程简介</h4>
+        <p class="report-detail-desc">{{ detail[0].typeDesc }}</p>
+      </div>
 
-      <div></div>
+      <div>
+        <h4 class="report-detail-title">课时列表</h4>
+        <div class="report-list">
+          <div class="report-list-child" v-for="(item, index) in detail" :key="index">
+            <span>{{ item.hourName }}</span>
+            <span>{{ item.courseName }}</span>
+          </div>
+        </div>
+      </div>
     </section>
   </section>
 </template>
@@ -107,11 +118,71 @@ export default {
   }
 
   .report-detail-content {
+    overflow: scroll;
     width: 10.75rem;
     height: 5.5rem;
+    padding: 0.3rem 0.5rem;
 
     background: #fff;
     border-radius: 0.06rem;
+    box-sizing: border-box;
+
+    .report-detail-title {
+      width: 2.6rem;
+
+      text-align: left;
+      line-height: 0.2rem;
+      font-size: 0.13rem;
+      color: #ffc151;
+      letter-spacing: 0.05rem;
+
+      border-bottom: 0.02rem solid #ffc151;
+    }
+
+    .report-detail-desc {
+      margin-top: 0.08rem;
+      margin-bottom: 0.36rem;
+
+      text-align: left;
+      font-size: 0.17rem;
+      color: #000;
+      letter-spacing: 0;
+    }
+
+    .report-list {
+      margin-top: 0.3rem;
+      padding-left: 1rem;
+
+      text-align: left;
+      box-sizing: border-box;
+
+      .report-list-child {
+        span {
+          display: inline-block;
+          height: 0.36rem;
+
+          line-height: 0.36rem;
+          font-size: 0.13rem;
+
+          border: 0.01rem solid #ffc151;
+        }
+
+        span:first-child {
+          width: 1.28rem;
+
+          text-align: center;
+        }
+
+        span:last-child {
+          width: 5.14rem;
+          padding-left: 0.4rem;
+
+          text-align: left;
+
+          box-sizing: border-box;
+        }
+      }
+    }
   }
 }
 </style>
