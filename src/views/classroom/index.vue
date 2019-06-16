@@ -3,6 +3,7 @@
     <div class="content1">
       <p class="content_title">
         <img :src="icons.class">
+        <span>我的课程</span>
       </p>
       <div class="left_content">
         <div class="class_changeTitle">
@@ -118,290 +119,221 @@
     <div class="content2">
       <div class="content_title">{{classTitle}}</div>
       <div class="right_content">
-        <div class="tab">
-          <ul>
-            <li class="tab_item" :class="{tab_active:studentTabShow == false}" @click="rightTabHandle(false)">课程</li>
-            <li class="tab_item"  :class="{tab_active:studentTabShow == true}" @click="rightTabHandle(true)">学员管理</li>
-          </ul>
-        </div>
-         <div class="classInfo" id="classInfo">
-             <div class="classInfoItem class_management" v-show="!studentTabShow">
-                <div class="step_wrap">
-                    <p>课程总进度</p>
-                    <div class="step_line">
-                        <div class="step_line_label">{{curCourProcess}}%</div>
-                        <div class="step_line_bg"></div>
-                        <div class="step_line_width" :style="{width:curCourProcess+'%'}"></div>
-                    </div>
+        <div class="classInfo" id="classInfo">
+          <div class="classInfoItem class_management">
+            <div class="step_wrap">
+              <p>课程总进度</p>
+              <div class="step_line">
+                <div class="step_line_label">{{curCourProcess}}%</div>
+                <div class="step_line_bg"></div>
+                <div class="step_line_width" :style="{width:curCourProcess+'%'}"></div>
+              </div>
+            </div>
+            <div class="lesson_step_list">
+              <div
+                @click="practiceHandle(item)"
+                class="lesson_item"
+                :key="c"
+                v-for="(item,c) in coursePlanData.list"
+              >
+                <div class="lesson_item_icon">
+                  <div :class="item.pointclass"></div>
                 </div>
-                <div class="lesson_step_list">
-                    <div @click="practiceHandle(item)" class="lesson_item" :key="c" v-for="(item,c) in coursePlanData.list">
-                        <div class="lesson_item_icon">
-                            <div :class="item.pointclass">
-                            </div>
-                        </div>
-                        <div class="lesson_box">
-                            <div class="lesson_name">{{item.name}}</div>
-                            <div class="lesson_info">
-                                <div class="lesson_step_lable" v-if="item.status == 0">未开始</div>
-                                <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1" >进行中</div>
-                                <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
-                                <div class="lesson_step">
-                                    <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
-                                    <div class="lesson_step_bg"></div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="lesson_box">
+                  <div class="lesson_name">{{item.name}}</div>
+                  <div class="lesson_info">
+                    <div class="lesson_step_lable" v-if="item.status == 0">未开始</div>
+                    <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1">进行中</div>
+                    <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
+                    <div class="lesson_step">
+                      <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
+                      <div class="lesson_step_bg"></div>
                     </div>
+                  </div>
                 </div>
-            </div>
-        <div class="classInfoItem student_management" v-show="studentTabShow">
-          <div class="search_position">
-            <div class="search_box" style="float:right">
-               <el-input placeholder="搜索姓名/ID" size="mini" prefix-icon="el-icon-search"  v-model="searchData">
-                <el-button slot="append" class="search_btn" @click="search"> 搜索</el-button>
-            </el-input>
-            </div>
-          </div>
-          <div class="class_infomation">
-            <div class="item1">班级信息</div>
-            <div class="item2">
-              <span>{{beginTime}}-{{endTime}}</span>
-              <span>时间</span>
-            </div>
-            <div class="item3">
-              <span class="item_num">{{level}}</span>
-              <span class="item_txt">等级</span>
-            </div>
-            <div class="item3">
-              <span class="item_num">{{stuCnt}}</span>
-              <span class="item_txt">班级人数</span>
-            </div>
-          </div>
-          <div class="person_List">
-            <div class="person_box" v-for="(item,i) in studentsList" :key="i">
-              <div class="person_name">{{item.name}}</div>
-              <div class="person_handle">
-                <div class="icon1" @click="courseReport(item)"></div>
-                <div class="icon2" @click="handleReportCreate(item)"></div>
               </div>
             </div>
           </div>
         </div>
-        </div>
       </div>
     </div>
     <el-dialog center append-to-body title="学习报告" width="60%" :visible.sync="showCourseReportAdd">
-       <courseReportAdd :courseList="coursePlanData.list" ref="courseReportAdd" :curClsId="currentClass" :curStudent="curStudent" :studentlist="studentsList"></courseReportAdd>
+      <courseReportAdd
+        :courseList="coursePlanData.list"
+        ref="courseReportAdd"
+        :curClsId="currentClass"
+        :curStudent="curStudent"
+        :studentlist="studentsList"
+      ></courseReportAdd>
     </el-dialog>
     <el-dialog center append-to-body title="学习报告" :visible.sync="showCourseReport">
-       <courseReport v-on:refresh="refresh" ref="courseReport" :curClsId="currentClass" :curStudent="curStudent" :courseList="coursePlanData.list"></courseReport>
+      <courseReport
+        v-on:refresh="refresh"
+        ref="courseReport"
+        :curClsId="currentClass"
+        :curStudent="curStudent"
+        :courseList="coursePlanData.list"
+      ></courseReport>
     </el-dialog>
   </div>
 </template>
 <script>
 import classApi from "@/services/classroom";
-import courseReportAdd from './courseReportAdd';
-import courseReport from './courseReport';
+import courseReportAdd from "./courseReportAdd";
+import courseReport from "./courseReport";
 import authUtils from "@/services/auth/utils";
 export default {
   data() {
     return {
       icons: {
-        class: require("../../../static/image/my_class_blue.png"),
+        class: require("../../../static/image/my_class_blue.png")
       },
-      activeNames: ["1"],
       courseList: {
         course1: [],
         course2: [],
         course3: [],
         course4: []
       },
-      studentsList:[],
+      studentsList: [],
       show1: false,
       show2: false,
       show3: false,
       show4: false,
-      nodata1:false,
-      nodata2:false,
-      nodata3:false,
-      nodata4:false,
-      classTitle:'',
-      startDate:'',
-      beginTime:'',
-      endTime:'',
-      level:'',
-      stuCnt:'',
-      isFirst:true,
-      currentClass:'',
-      showManage1:false,
-      showCourseReportAdd:false,
-      showCourseReport:false,
-      showManage2:false,
-      currentIndex:'',
-      currentList:[],
-      currentType:'',
-      searchData:'',
-      userInfo:{},
+      nodata1: false,
+      nodata2: false,
+      nodata3: false,
+      nodata4: false,
+      classTitle: "",
+      startDate: "",
+      beginTime: "",
+      endTime: "",
+      level: "",
+      stuCnt: "",
+      isFirst: true,
+      currentClass: "",
+      showCourseReportAdd: false,
+      showCourseReport: false,
+      currentIndex: "",
+      currentList: [],
+      currentType: "",
+      userInfo: {},
       /**右侧tab显示模块 */
-      studentTabShow:true,
-      coursePlanData:{},
-      curCourProcess:'0%',
-      curStudent:{},
-      hourInfo:{},
+      coursePlanData: {},
+      curCourProcess: "0%",
+      curStudent: {},
+      hourInfo: {}
     };
   },
-  computed:{
-    current(){
-      return this.courseList['course' + this.currentType][this.currentIndex];
-    },
+  computed: {
+    current() {
+      return this.courseList["course" + this.currentType][this.currentIndex];
+    }
   },
   created() {
     this.userInfo = authUtils.getUser();
     this.getData(1);
   },
-  mounted(){
-    let that = this;
-    window.addEventListener('scroll',function(e){
-      if(this.showManage1 || this.showManage2){
-        e.preventDefault();
-      }
-    },false)
-  },
-  components:{
+  components: {
     courseReportAdd,
     courseReport
   },
   methods: {
-     practiceHandle(item) {
-         this.$router.push({
-             name:'practice',
-             query:{
-                 hourid:item.hour_id
-             }
-         });
-     },
-    getList(item,index) {
-            this.classTitle = item.name;
-            this.startDate = item.startDate;
-            this.beginTime = item.startTime;
-            this.endTime = item.endTime;
-            this.level = item.level;
-            this.stuCnt = item.stuCnt;
-            this.currentClass = item.id;
-
-            this.currentIndex = index;
-        if (this.isFirst) {
-             this.getStudent();
-             this.getCoursePlan();
-        } else {
-            if (this.studentTabShow) {
-                this.getStudent();
-            } else {
-                this.getCoursePlan();
-            }
+    practiceHandle(item) {
+      this.$router.push({
+        name: "practice",
+        query: {
+          hourid: item.hour_id
         }
+      });
+    },
+    getList(item, index) {
+      this.classTitle = item.name;
+      this.startDate = item.startDate;
+      this.beginTime = item.startTime;
+      this.endTime = item.endTime;
+      this.level = item.level;
+      this.stuCnt = item.stuCnt;
+      this.currentClass = item.id;
+
+      this.currentIndex = index;
+      this.getCoursePlan();
     },
     getCoursePlan() {
       let params = {
-        clsId: this.currentClass,
-        // clsId: 1,
+        clsId: this.currentClass
       };
-        classApi.getCoursePlan(params).then(res => {
-            if (res.code === '001') {
-                this.coursePlanData = res.data;
-                this.curCourProcess = Math.ceil(this.coursePlanData.point);
-                if (this.coursePlanData.list.length){
-                    this.hourInfo = this.coursePlanData.list[0];
-                    this.coursePlanData.list.forEach((item,index)=>{
-                        this.coursePlanData.list[index].pointclass= item.status == 0 ? 'dian_icon_up':'dian_icon';
-                        if (index == (this.coursePlanData.list.length -1)) {
-                            this.coursePlanData.list[index].pointclass += ' dian_icon_last';
-                        }
-                    })
-                }
-
-            }
-
-      })
-    },
-    rightTabHandle() {
-        this.studentTabShow = !this.studentTabShow;
-        if (!this.studentTabShow) {
-            this.getCoursePlan();
-        } else {
-            this.getStudent();
+      classApi.getCoursePlan(params).then(res => {
+        if (res.code === "001") {
+          this.coursePlanData = res.data;
+          this.curCourProcess = Math.ceil(this.coursePlanData.point);
+          if (this.coursePlanData.list.length) {
+            this.hourInfo = this.coursePlanData.list[0];
+            this.coursePlanData.list.forEach((item, index) => {
+              this.coursePlanData.list[index].pointclass =
+                item.status == 0 ? "dian_icon_up" : "dian_icon";
+              if (index == this.coursePlanData.list.length - 1) {
+                this.coursePlanData.list[index].pointclass += " dian_icon_last";
+              }
+            });
+          }
         }
+      });
     },
-    courseReport(item){
+
+    courseReport(item) {
       this.showCourseReport = true;
-       this.curStudent = item;
-      if(this.$refs.courseReport){
-         this.$refs.courseReport.getReportInfo();
+      this.curStudent = item;
+      if (this.$refs.courseReport) {
+        this.$refs.courseReport.getReportInfo();
       }
     },
-    handleReportCreate(item){
+
+    handleReportCreate(item) {
       this.showCourseReportAdd = true;
       this.curStudent = item;
-       if(this.$refs.courseReportAdd){
+      if (this.$refs.courseReportAdd) {
         //  this.$refs.courseReport.setRight(this.currentList[this.currentIndex]);
       }
     },
-    search(){
-      let params = {
-        clsId:this.currentClass,
-        searchTxt:this.searchData
-      }
-      classApi.search(params).then(res => {
-        this.studentsList = res.data;
-      })
+
+    refresh(data) {
+      this.courseList["course" + this.currentType] = Object.assign({}, data);
+      this.getList(data[0], 0);
     },
-    refresh(data){
-      this.courseList['course' + this.currentType] = Object.assign({},data);
-      this.getList(data[0],0);
-    },
+
     getData(typeId) {
       let params = {
         schoolId: 1,
         typeId: typeId,
-        teacherId:this.userInfo.id
+        teacherId: this.userInfo.id
       };
       let that = this;
-      for(let i = 1; i <= 4;i++){
-        if(typeId !== i){
-          this['show' + i] = false;
+      for (let i = 1; i <= 4; i++) {
+        if (typeId !== i) {
+          this["show" + i] = false;
         }
       }
       this.currentType = typeId;
       this["show" + typeId] = !this["show" + typeId];
-      if (!this.courseList['course'+ typeId.length]) {
+      if (!this.courseList["course" + typeId.length]) {
         classApi.getData(params).then(res => {
           if (res.data && res.data.length) {
             this.courseList["course" + typeId] = Object.assign({}, res.data);
             this.currentList = res.data;
-            if(this.isFirst){
-              this.getList(res.data[0],0);
+            if (this.isFirst) {
+              this.getList(res.data[0], 0);
               this.currentClass = res.data[0].id;
-              this['nodata' + typeId] = false;
+              this["nodata" + typeId] = false;
             }
           } else {
             this.courseList["course" + typeId] = [];
             this.currentList = [];
-            this['nodata' + typeId] = true;
+            this["nodata" + typeId] = true;
           }
         });
       } else {
-        this.currentList = this.courseList['course'+ typeId.length];
+        this.currentList = this.courseList["course" + typeId.length];
       }
-    },
-    getStudent() {
-      let params = {
-        clsId: this.currentClass,
-        searchTxt:''
-      };
-      classApi.getStudent(params).then(res => {
-        this.studentsList = res.data;
-      });
     }
   }
 };
@@ -413,6 +345,25 @@ export default {
   display: flex;
   flex: 1;
   .content1 {
+    .content_title {
+      display: flex;
+      justify-items: center;
+      height: 0.27rem;
+      margin-bottom: 0.2rem;
+
+      img {
+        width: 0.34rem;
+        height: 0.27rem;
+      }
+
+      span {
+        margin-left: 0.07rem;
+        line-height: initial;
+        font-size: 0.15rem;
+        color: #4592fe;
+        letter-spacing: 1.5px;
+      }
+    }
     .left_content {
       .class_title_list {
         .class_list {
@@ -460,8 +411,8 @@ export default {
             }
           }
           .class_dis {
-                background: #E7EEFF;
-            }
+            background: #e7eeff;
+          }
           .class_fixed {
             width: 1.2rem;
             height: 1.2rem;
@@ -551,6 +502,7 @@ export default {
       height: 1.04rem;
       margin: 0.16rem 0 0.19rem 0;
       p {
+        text-align: left;
         font-size: 0.16rem;
         padding: 0.17rem 0 0 0.25rem;
         color: #ffc151;
@@ -574,7 +526,7 @@ export default {
           top: 0;
           left: 0;
           background: #ffc151;
-        //   width: curCourProcess;
+          //   width: curCourProcess;
           height: 0.06rem;
           z-index: 10;
         }
