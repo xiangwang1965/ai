@@ -34,10 +34,8 @@
                 <div class="form_lable">· 课后作业:</div>
                 <div class="form_box">
                   <textarea v-model="form.task"></textarea>
-                  {{form.task}}
                 </div>
               </li>
-              {{form.task}}
               <li class="form_row">
                 <div class="form_lable">· 课堂表现:</div>
                 <div class="form_box">

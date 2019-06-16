@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="photo_list">
-          <div class="item" :class="{class_dis:teachId == item.id}":key="i" v-for="(item,i) in list" @click="queryTeacherInfo(item.id)">
+          <div class="item" :class="{class_dis:teachId == item.id}" :key="i" v-for="(item,i) in list" @click="queryTeacherInfo(item.id)">
             <img :src="url" alt class="item_img">
             <p>{{item.name}}</p>
           </div>
@@ -179,7 +179,6 @@ export default {
   },
   created() {
     this.getData();
-    this.queryTeacherInfo();
   },
   beforeRouteLeave(to, from, next) {
     if (to.path === "/student") {
@@ -195,16 +194,18 @@ export default {
     getData() {
       teacher.querylist(this.params).then(res => {
         if (res.code === "001") {
-            if (this.list.length) {
+            if (res.data.length) {
                 this.list = res.data;
+                console.log(this.list);
                 this.teachId = this.list[0].id;
+                this.queryTeacherInfo();
             }
         }
       });
     },
     queryTeacherInfo(id) {
       var p = {};
-      p.teacherId = id || "1";
+      p.teacherId = id;
       teacher.queryTeacherInfo(p).then(res => {
         if (res.code === "001") {
           this.tInfo = res.data;

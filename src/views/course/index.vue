@@ -1,213 +1,58 @@
 <template>
   <div class="classContainer content_right">
-    <!-- <div class="left">
-      <h1 class="title">课程订单</h1>
-      <div class="sideContainer">
-        <div class="item">
-          <div class="tabs">
-            <div>
-              <span :class="{active:activeTab == item.id}" :key="t" v-for="(item,t) in tabList" @click="tabHandle(item.id)">{{item.name}}</span>
+    <div class="content1">
+        <p class="content_title">购买激活码</p>
+        <div class="left_content ">
+            <div class="tab_blue">
+                <ul>
+                    <li class="tab_item" :class="{tab_active:activeTab == item.id}" :key="t" v-for="(item,t) in tabList" @click="tabHandle(item.id)">
+                        {{item.name}}
+                    </li>
+                </ul>
             </div>
-          </div>
-          <div class="classList">
-              <div class="order" :key="i" v-for = "(item,i) in list">
-                <div class="num">
-                  <p id="orderNum">
-                    订单编号：
-                    <span>{{item.orderNo}}</span>
-                  </p>
-                  <p id="state" v-if="item.status == '0'">进行中</p>
-                    <p id="state" v-else-if="item.status == '2'">作废</p>
-                      <p id="state" v-else>已完成</p>
+            <div class="orderListBox" id="orderListBox">
+                <div class="orderList" style="display: block" v-scrollBar>
+                    <div class="order_Item" :key="i" v-for = "(item,i) in list">
+                        <div class='order_header'>
+                            <span>订单号:{{item.orderNo}}</span>
+                            <span v-if="item.status == 1">交易成功</span>
+                            <span v-if="item.status == 0">待支付</span>
+                            <span v-if="item.status == 2">作废</span>
+                        </div>
+                        <div class="order_con">
+                            <div class="con_left">
+                                SCRATH
+                            </div>
+                            <div class="con_right">
+                                <div class="row" style="font-size: 0.12rem">
+                                    <span>{{item.orderName}}</span>
+                                </div>
+                                <div class="row">
+                                    <span>校区：{{item.schoolName}}</span>
+                                </div>
+                                <div class="row">
+                                    <span>课时</span>
+                                    <span>合计：￥{{item.totlaPic}}</span>
+                                </div>
+                                <div class="row">
+                                    <span></span>
+                                    <span>交易时间：{{item.tradeTime}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="content clearfix">
-                  <img id="contentPic" :src="url" alt>
-                  <div class="contentL">
-                    <p id="class">{{item.orderName}}</p>
-                    <p id="hour">{{item.schoolName}}</p>
-                    <p style="text-align:right">
-                        <span>
-                        合计：
-                        <i>￥{{item.totlaPic}}</i>
-                      </span></p>
-                       <p style="text-align:right" id="time">交易时间：{{item.tradeTime}}</p>
-                  </div>
-                </div>
-                <div class="stateBtn">
-                  <p id="btn">继续支付</p>
-                </div>
-              </div>
-          </div>
+            </div>
         </div>
-      </div>
     </div>
-    <div class="center"></div>
-    <div class="right">
-      <h3>订单详情</h3>
-    </div> -->
-                <div class="content1">
-                    <p class="content_title">购买激活码</p>
-                    <div class="left_content ">
-                        <div class="tab_blue">
-                            <ul>
-                                <li class="tab_item" :class="{tab_active:activeTab == item.id}" :key="t" v-for="(item,t) in tabList" @click="tabHandle(item.id)">
-                                    {{item.name}}
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="orderListBox" id="orderListBox">
-                            <div class="orderList" style="display: block">
-                                <div class="order_Item" :key="i" v-for = "(item,i) in list">
-                                    <div class='order_header'>
-                                        <span>订单号:{{item.orderNo}}</span>
-                                        <span>交易成功</span>
-                                    </div>
-                                    <div class="order_con">
-                                        <div class="con_left">
-                                            SCRATH
-                                        </div>
-                                        <div class="con_right">
-                                            <div class="row" style="font-size: 0.12rem">
-                                                <span>{{item.orderName}}</span>
-                                            </div>
-                                            <div class="row">
-                                                <span>校区：{{item.schoolName}}</span>
-                                            </div>
-                                            <div class="row">
-                                                <span>课时</span>
-                                                <span>合计：￥{{item.totlaPic}}</span>
-                                            </div>
-                                            <div class="row">
-                                                <span></span>
-                                                <span>交易时间：{{item.tradeTime}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="orderList">
-                                <div class="order_Item">
-                                    <div class='order_header'>
-                                        <span>订单号</span>
-                                        <span>交易成功</span>
-                                    </div>
-                                    <div class="order_con">
-                                        <div class="con_left bg_b">
-                                            SCRATH
-                                        </div>
-                                        <div class="con_right">
-                                            <div class="row" style="font-size: 0.12rem">
-                                                <span>SCRATH编程课程·Level1</span>
-                                            </div>
-                                            <div class="row">
-                                                <span>校区：</span>
-                                            </div>
-                                            <div class="row">
-                                                <span>课时</span>
-                                                <span>合计：000，000</span>
-                                            </div>
-                                            <div class="row">
-                                                <span></span>
-                                                <span>交易时间：2000-00-00 00:00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="order_Item">
-                                    <div class='order_header'>
-                                        <span>订单号</span>
-                                        <span>交易成功</span>
-                                    </div>
-                                    <div class="order_con">
-                                        <div class="con_left">
-                                            SCRATH
-                                        </div>
-                                        <div class="con_right">
-                                            <div class="row" style="font-size: 0.12rem">
-                                                <span>SCRATH编程课程·Level2</span>
-                                            </div>
-                                            <div class="row">
-                                                <span>校区：</span>
-                                            </div>
-                                            <div class="row">
-                                                <span>课时</span>
-                                                <span>合计：000，000</span>
-                                            </div>
-                                            <div class="row">
-                                                <span></span>
-                                                <span>交易时间：2000-00-00 00:00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="orderList">
-                                <div class="order_Item">
-                                    <div class='order_header'>
-                                        <span>订单号</span>
-                                        <span>交易成功</span>
-                                    </div>
-                                    <div class="order_con">
-                                        <div class="con_left bg_r">
-                                            SCRATH
-                                        </div>
-                                        <div class="con_right">
-                                            <div class="row" style="font-size: 0.12rem">
-                                                <span>SCRATH编程课程·Level3</span>
-                                            </div>
-                                            <div class="row">
-                                                <span>校区：</span>
-                                            </div>
-                                            <div class="row">
-                                                <span>课时</span>
-                                                <span>合计：000，000</span>
-                                            </div>
-                                            <div class="row">
-                                                <span></span>
-                                                <span>交易时间：2000-00-00 00:00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="order_Item">
-                                    <div class='order_header'>
-                                        <span>订单号</span>
-                                        <span>交易成功</span>
-                                    </div>
-                                    <div class="order_con">
-                                        <div class="con_left">
-                                            SCRATH
-                                        </div>
-                                        <div class="con_right">
-                                            <div class="row" style="font-size: 0.12rem">
-                                                <span>SCRATH编程课程·Level4</span>
-                                            </div>
-                                            <div class="row">
-                                                <span>校区：</span>
-                                            </div>
-                                            <div class="row">
-                                                <span>课时</span>
-                                                <span>合计：000，000</span>
-                                            </div>
-                                            <div class="row">
-                                                <span></span>
-                                                <span>交易时间：2000-00-00 00:00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="content2">
-                    <div class="content_title">
-                        购买激活码清单
-                    </div>
-                    <div class="right_content " style="height: 6.67rem">
-                       <!-- <img src="../img/order.png" alt="" class="center_img"> -->
-                    </div>
-                </div>
+    <div class="content2">
+        <div class="content_title">
+            购买激活码清单
+        </div>
+        <div class="right_content " style="height: 6.67rem">
+            <!-- <img src="../img/order.png" alt="" class="center_img"> -->
+        </div>
+    </div>
   </div>
 </template>
 <script>
@@ -260,6 +105,7 @@ export default {
   .orderListBox{
     .orderList{
         display: none;
+        position:relative;
         .order_Item{
             width: 4.5rem;
             height: 1.26rem;
