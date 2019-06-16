@@ -6,6 +6,7 @@ class Report extends CRUD {
 
         this.getAllCoursesUrl = "/ws/api/course/getAllCourses";
         this.getCoursesDetailsUrl = "/ws/api/course/getCoursesDetails";
+        this.getProcessAndLevelUrl = "/ws/api/course/getProcessAndLevel";
     }
 
     getAllCourses(params) {
@@ -14,6 +15,10 @@ class Report extends CRUD {
 
     getCoursesDetail(params) {
         return this.sendGet(this.getCoursesDetailsUrl, params);
+    }
+
+    getProcessAndLevel(params) {
+        return this.sendGet(this.getProcessAndLevelUrl, params);
     }
 }
 

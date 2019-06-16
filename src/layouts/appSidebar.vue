@@ -5,6 +5,11 @@
         <img :src="logoImg" alt class="photo">
         <p class="name">{{tInfo.name}}</p>
         <p class="id">ID:{{tInfo.id}}</p>
+          <el-popover
+              placement="right"
+              trigger="hover">
+              <el-button class="grade" slot="reference">Level{{tInfo.level}}</el-button>
+          </el-popover>
         <span class="grade">Level{{tInfo.level}}</span>
 
         <ul class="entry_wrap">
@@ -13,7 +18,6 @@
           <router-link to="/overview" tag="li">课程总览</router-link>
           <router-link to="/order" tag="li">我的订单</router-link>
         </ul>
-
         <div class="btn_124 out_login" @click="logout">退出登录</div>
       </div>
     </div>
@@ -23,6 +27,7 @@
 import authUtils from "@/services/auth/utils";
 import authApi from "@/services/auth";
 import studentApi from "@/services/student";
+import reportApi from "@/services/report";
 import eventHub from "@/utils/eventHub";
 import { IMS_URL } from "@/config";
 export default {
@@ -30,7 +35,8 @@ export default {
     return {
       logoImg: require("../../static/image/person_background.png"),
       userInfo: {},
-      tInfo: {}
+      tInfo: {},
+      processAndLevel: {}
     };
   },
   created() {
@@ -69,7 +75,16 @@ export default {
             this.tInfo = res.data;
           }
         });
-    }
+    },
+
+      getProcessAndLevel() {
+          reportApi.getProcessAndLevel()
+              .then(res => {
+                  if (res.code === "001") {
+                      this.processAndLevel = res.data;
+                  }
+              });
+      }
   }
 };
 </script>
@@ -81,6 +96,9 @@ export default {
   background: url("../../static/image/contentLeftBg.png");
   background-size: 100%;
   position: relative;
+    .grade {
+        cursor: pointer;
+    }
   .out_login {
     position: absolute;
     bottom: 0.84rem;

@@ -6,7 +6,7 @@ class Order extends CRUD {
         this.allOrdersUrl = '/ws/api/order/orders'; // 全部订单
         this.curOrdersUrl = '/ws/api/order/curOrders'; // 进行中的订单
         this.hisOrdersUrl = '/ws/api/order/hisOrders'; // 历史订单
-        this.detailsOrders = '/ws/api/order/detailsOrders'; // 订单详情
+        this.detailsOrdersUrl = '/ws/api/order/detailsOrders'; // 订单详情
     };
     queryOrders (params) {
         if (params.typeid === '1') {
@@ -16,7 +16,7 @@ class Order extends CRUD {
         } else if (params.typeid === '3') {
             return this.sendGet(this.hisOrdersUrl, params)
         } else if (params.typeid === '4') {
-            return this.sendGet(this.detailsOrders, params)
+            return this.sendGet(this.detailsOrdersUrl, params)
         }
     };
 }
