@@ -43,7 +43,7 @@ class Auth extends Base {
    * @param { Object } params {id, token, type:0，1，2   学生，教师，机构。}
    */
   login (params) {
-    params.type = 1
+    params.type = 0
     return this.sendPost(this.loginUrl, params).then(res => {
       if (res.code == '001') {
         authUtils.setToken(res.data.token)
