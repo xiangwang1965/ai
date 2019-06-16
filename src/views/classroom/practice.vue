@@ -48,11 +48,11 @@
                 </ul>
             </div>
             <div class="content_right">
-                <el-image v-if="!showPractice"
+                <!-- <el-image v-if="!showPractice"
                     style="width: 100%; height: 100%"
                     :src="showPic"
                     :fit="fit"></el-image>
-                     <iframe v-if="showPractice" src="http://edu.wiser-bot.com/wsedu/scratch/build/index.html" frameborder="0" width="100%" height="100%" id="childFrame" scrolling="no"></iframe>
+                     <iframe v-if="showPractice" src="http://edu.wiser-bot.com/wsedu/scratch/build/index.html" frameborder="0" width="100%" height="100%" id="childFrame" scrolling="no"></iframe> -->
             </div>
         </div>
         <footer>
@@ -258,6 +258,7 @@ export default {
         display: flex;
         border-bottom: 0.01rem solid #979797;
         margin-top: 0.3rem;
+        border-radius:0;
         .content_left{
             width:3.84rem;
             height: 100%;
@@ -286,19 +287,20 @@ export default {
                 }
             }
             .photo{
-                width: 0.5rem;
-                height: 0.5rem;
+                width: 0.3rem;
+                height: 0.3rem;
                 border-radius: 100%;
                 background: #FFFFFF;
                 border: 0.01rem solid #979797;
                 position: relative;
-                margin-top:0.04rem;
+                margin-top:0.02rem;
             }
             .talk_list{
                 height: 11.3rem;
                 background: url("../../../static/image/speak_texture.png") no-repeat;
                 background-position: bottom;
                 position:relative;
+                padding-top:0.1rem;
                 // overflow-y: auto;
                 // height: 90%;
                 .talk-box{
@@ -308,10 +310,10 @@ export default {
 
             }
             .gradient {
-                margin-left:0.23rem;
-                margin-bottom: 0.29rem;
+                margin-left: 0.23rem;
+                -webkit-box-sizing: border-box;
                 box-sizing: border-box;
-                padding: 0.04rem;
+                padding: 0.02rem;
                 border-radius: 0.2rem 0.2rem 0.2rem 0;
             }
             .gradient-box {
@@ -324,7 +326,7 @@ export default {
                 word-wrap:break-word;
                 font-size:0.13rem;
                 color:#fff;
-                padding:0.14rem 0.19rem;
+                padding:0.05rem 0.05rem;
                 box-sizing: border-box;
                 text-align:left;
             }
