@@ -5,15 +5,15 @@
           <div class="dialog_left" style="width: 2.36rem">
             <div class="teacher_box" style="width: 100%;padding-top:0.59rem">
               <img :src="tInfo.avatar" alt class="photo">
-              <p class="name">{{userInfo.name}}</p>
-              <p class="id">ID:{{userInfo.id}}</p>
-              <span class="grade">level:{{userInfo.level}}</span>
-              <p class="phone">联系电话：{{userInfo.phone}}</p>
+              <p class="name">{{stuInfo.name}}</p>
+              <p class="id">ID:{{stuInfo.id}}</p>
+              <span class="grade">level:{{stuInfo.level}}</span>
+              <p class="phone">联系电话：{{stuInfo.phone}}</p>
             </div>
             <div class="intr_box" style="width: 1.82rem">
               <div class="intr_row">
                 <img :src="tInfo.nameIcon" alt style="width: 0.1rem;height: 0.13rem;;"> 机构：
-                <span>{{userInfo.shcoolName}}</span>
+                <span>{{stuInfo.shcoolName}}</span>
               </div>
             </div>
           </div>
@@ -127,7 +127,7 @@ export default {
       currentStudent: "",
       codeList: [],
       showCreate: false,
-      userInfo:{},
+      stuInfo:{},
       form:{
           studentId:this.curStudent.id,
           classId:this.curClsId,
@@ -175,10 +175,10 @@ export default {
       let params = {
         id: stuId
       };
-      classApi.getUserInfo(params).then(res => {
+      classApi.getStuInfo(params).then(res => {
           console.log(res);
           if (res.code === '001') {
-              this.userInfo = res.data;
+              this.stuInfo = res.data;
           }
         // if (this.$refs.child) {
         //   this.$refs.child.setCodeOptions(this.codeList);

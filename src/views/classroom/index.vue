@@ -334,7 +334,7 @@ export default {
        this.curStudent = item;
       if(this.$refs.courseReport){
          this.$refs.courseReport.getReportInfo();
-         this.$refs.courseReportAdd.getStuInfo(item.id);
+         this.$refs.courseReport.getStuInfo(item.id);
       }
     },
     handleReportCreate(item){
