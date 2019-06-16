@@ -103,8 +103,9 @@ export default {
 <style lang="less" scoped>
 .classContainer {
   .orderListBox{
+      height:100%;
     .orderList{
-        display: none;
+        height:100%;
         position:relative;
         .order_Item{
             width: 4.5rem;
