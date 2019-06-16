@@ -166,7 +166,7 @@ export default {
           level:0,
           name:'xxx'
       },
-      teachId: "",
+      teachId: '',
       dateOption: {
         disabledDate: time => {
           return time.getTime() > Date.now();
@@ -197,8 +197,7 @@ export default {
             if (res.data.length) {
                 this.list = res.data;
                 console.log(this.list);
-                this.teachId = this.list[0].id;
-                this.queryTeacherInfo();
+                this.queryTeacherInfo(this.list[0].id);
             }
         }
       });
@@ -206,115 +205,14 @@ export default {
     queryTeacherInfo(id) {
       var p = {};
       p.teacherId = id;
+      this.teachId = id;
       teacher.queryTeacherInfo(p).then(res => {
         if (res.code === "001") {
           this.tInfo = res.data;
         }
       });
     },
-    getGradeList() {
-      let params = {
-        school_id: this.schoolId
-      };
-      courseApi.getGradeList(params).then(res => {
-        this.optionGrade = res;
-      });
-    },
-    getStudent() {
-      let params = {
-        student_id: this.student_id
-      };
-      studentApi.queryDetail(params).then(res => {
-        if (res.ok) {
-          this.params = res.data;
-          this.params.telephone = Number(this.params.telephone);
-          // 家长电话只为数字类型
-          this.params.parent_telephone =
-            this.params.parent_telephone === ""
-              ? ""
-              : Number(this.params.parent_telephone);
-          // gender后台返回0时显示未知
-          !this.params.gender && (this.params.gender = 3);
-        }
-      });
-    },
-    handleAllDate(val) {},
-    handleAddClass() {
-      this.$dialog.open("classTypeChoose");
-    },
-    handleDelete(index, row) {
-      this.$confirm("是否确定删除该学生?", "提示", {
-        confirmButtonText: "确 定",
-        confirmButtonClass: "cac-button-one dialog_confirm_button is-round",
-        cancelButtonText: "取 消",
-        cancelButtonClass: "cac-button-two dialog_cancel_button is-round"
-      })
-        .then(() => {
-          this.tableData.splice(index, 1);
-          this.$message({
-            type: "success",
-            message: "删除成功!",
-            center: true
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-            center: true
-          });
-        });
-    },
-    doCreate(formName) {
-      if (this.canSubmit) {
-        this.canSubmit = false;
-        this.loading = true;
-        this.$refs[formName].validate(valid => {
-          if (valid) {
-            let params = this.params;
-            if (this.status === "create") {
-              let loadingInstance = this.$loading({
-                text: "创建中...",
-                target: ".content_right"
-              });
-              studentApi.create(params).then(res => {
-                setTimeout(() => {
-                  loadingInstance.close();
-                }, 500);
-                this.canSubmit = true;
-                this.loading = false;
-                if (res.ok) {
-                  this.$router.back();
-                }
-              });
-            } else {
-              params.student_id = this.student_id;
-              let loadingInstance = this.$loading({
-                text: "修改中...",
-                target: ".content_right"
-              });
-              studentApi.update(params).then(res => {
-                setTimeout(() => {
-                  loadingInstance.close();
-                }, 500);
-                this.canSubmit = true;
-                this.loading = false;
-                if (res.ok) {
-                  this.$router.back();
-                }
-              });
-            }
-          } else {
-            this.canSubmit = true;
-            this.loading = false;
-            return false;
-          }
-        });
-      }
-    },
-    doCancle() {
-      this.$router.back();
-    }
+
   }
 };
 </script>
