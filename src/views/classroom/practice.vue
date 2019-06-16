@@ -357,7 +357,7 @@ export default {
                     .num{
                         width: 0.57rem;
                         text-align: center;
-                        color: #fff;
+                        color: green;
                         font-size: 0.2rem;
                         .active {
                             border: solid 0.01rem #4592FE;
