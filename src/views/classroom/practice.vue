@@ -9,7 +9,6 @@
                     </div>
                 <div class="talk_list">
                     <div :key="p" v-for="(item,p) in showDetail">
-
                         <div class="talk-box" :key="t" v-for="(d,t) in item" v-if="d">
                             <img :src="images.robot" class="photo"/>
                             <div class="gradient">
@@ -26,7 +25,7 @@
             <div class="content_c" v-if="!showPractice">
                 <ul class="page_list">
                     <li :key="i" v-for="(item,i) in pptData">
-                        <div class="num">{{item.index}}</div>
+                        <div class="num"><span :class="{active:showPicNum == item.index}">{{item.index}}</span></div>
                         <div class="page" @click="changeShowInfo(item,i)">
                             <img class="page_img" :src="item.image" alt="">
                         </div>
@@ -73,8 +72,8 @@ export default {
       },
       fit:'contain',
       showPic:'',
+      showPicNum:1,
       codeList: [],
-    //   courseList:[],
         pptData:[],
         showDetail:[],
         hourid:this.$route.query.hourid,
@@ -102,6 +101,7 @@ export default {
       },
       changeShowInfo(item,i) {
           this.showPic = item.image;
+          this.showPicNum = item.index;
           if (!this.showDetail[i]) {
             this.showDetail[i] = item.detail;
           }
@@ -347,6 +347,11 @@ export default {
                         text-align: center;
                         color: #fff;
                         font-size: 0.2rem;
+                        .active {
+                            border: solid 0.01rem #4592FE;
+                            border-radius: 0.1rem;
+                            padding: 0.1rem;
+                        }
                     }
                     .page{
                         width: 1.95rem;
