@@ -7,9 +7,11 @@
                     <img :src="images.back" alt="" class="back" @click="goBack">
                     <span class="tit">小智AI助教</span>
                     </div>
+
                 <div class="talk_list">
-                    <div :key="p" v-for="(item,p) in showDetail">
-                        <div class="talk-box" :key="t" v-for="(d,t) in item" v-if="d">
+                      <transition-group name="list" tag="div">
+                    <div :key="'list'+p" v-for="(item,p) in showDetail">
+                        <div class="talk-box" :key="d.id" v-for="(d,t) in item" v-if="d">
                             <img :src="images.robot" class="photo"/>
                             <div class="gradient">
                                 <div class="gradient-box" >
@@ -19,6 +21,7 @@
                         </div>
 
                     </div>
+                    </transition-group>
                 </div>
 
             </div>
@@ -211,6 +214,15 @@ export default {
   mounted() {}
 };
 </script><style lang="less" scoped>
+
+.list-enter-active, .list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to
+/* .list-leave-active for below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
 .wrap{
     width: 100%;
     height: 100%;
@@ -288,7 +300,7 @@ export default {
                 margin-top:0.02rem;
             }
             .talk_list{
-                height: 11.3rem;
+                height: 90%;
                 background: url("../../../static/image/speak_texture.png") no-repeat;
                 background-position: bottom;
                 position:relative;
