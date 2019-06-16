@@ -44,6 +44,7 @@
         </div>
     </div>
     <div class="right" v-else>
+        <!-- TODO 图片的地址有问题-->
         <img class="orderImg" src="../../../static/img/minipic.png" alt="">
         <p class="orderTip">选择订单查看详情</p>
     </div>
@@ -110,11 +111,10 @@ export default {
         });
     },
       formatDate: function (tradeTime) {
-          if (!tradeTime || tradeTime == null || tradeTime.length !== 14) {
-              return '未完成';
-          } else {
+          if (tradeTime && tradeTime.length === 14) {
               return `${tradeTime.substr(0, 4)}-${tradeTime.substr(4, 2)}-${tradeTime.substr(6, 2)} ${tradeTime.substr(8, 2)}:${tradeTime.substr(10, 2)}`;
           }
+          return '未完成';
       }
   }
 };
