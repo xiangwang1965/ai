@@ -5,21 +5,15 @@
           <div class="dialog_left" style="width: 2.36rem">
             <div class="teacher_box" style="width: 100%;padding-top:0.59rem">
               <img :src="tInfo.avatar" alt class="photo">
-              <p class="name">李雷</p>
-              <p class="id">ID:00001</p>
-              <span class="grade">副教授级</span>
-              <p class="phone">联系电话：13333333333</p>
-            </div>
-            <div class="intr_box" style="width: 1.82rem">
-              <div class="intr_row">
-                <img :src="tInfo.nameIcon" alt style="width: 0.1rem;height: 0.13rem;;"> 姓名：
-                <span>拉拉</span>
-              </div>
+              <p class="name">{{userInfo.name}}</p>
+              <p class="id">ID:{{userInfo.id}}</p>
+              <span class="grade">level:{{userInfo.level}}</span>
+              <p class="phone">联系电话：{{userInfo.phone}}</p>
             </div>
             <div class="intr_box" style="width: 1.82rem">
               <div class="intr_row">
                 <img :src="tInfo.nameIcon" alt style="width: 0.1rem;height: 0.13rem;;"> 机构：
-                <span>拉拉</span>
+                <span>{{userInfo.shcoolName}}</span>
               </div>
             </div>
           </div>
@@ -133,7 +127,7 @@ export default {
       currentStudent: "",
       codeList: [],
       showCreate: false,
-    //   courseList:[],
+      userInfo:{},
       form:{
           studentId:this.curStudent.id,
           classId:this.curClsId,
@@ -162,13 +156,13 @@ export default {
     }
   },
   created() {
-    // this.getCodeList(this.currentClass.id);
+    this.getStuInfo(this.curStudent.id);
     console.log(this);
   },
   methods: {
       getCoursePlan(currentClass) {
       let params = {
-        clsId: currentClass,
+        clsId: this.curStudent.id,
       };
         classApi.getCoursePlan(params).then(res => {
             if (res.code === '001') {
@@ -177,18 +171,18 @@ export default {
 
       })
     },
-    getCodeList(classId) {
+    getStuInfo(stuId) {
       let params = {
-        clsId: classId
+        id: stuId
       };
-      classApi.getCodeList(params).then(res => {
-        this.codeList = res.data.map(item => {
-          item.value = item.cdk;
-          return item;
-        });
-        if (this.$refs.child) {
-          this.$refs.child.setCodeOptions(this.codeList);
-        }
+      classApi.getUserInfo(params).then(res => {
+          console.log(res);
+          if (res.code === '001') {
+              this.userInfo = res.data;
+          }
+        // if (this.$refs.child) {
+        //   this.$refs.child.setCodeOptions(this.codeList);
+        // }
       });
     },
     deleteStudent(student) {

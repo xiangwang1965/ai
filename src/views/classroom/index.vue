@@ -190,10 +190,10 @@
         </div>
       </div>
     </div>
-    <el-dialog center append-to-body title="学习报告" width="60%" :visible.sync="showCourseReportAdd">
+    <el-dialog center append-to-body title="学习报告" width="60%" :visible.sync="showCourseReportAdd" top="1vh">
        <courseReportAdd :courseList="coursePlanData.list" ref="courseReportAdd" :curClsId="currentClass" :curStudent="curStudent" :studentlist="studentsList"></courseReportAdd>
     </el-dialog>
-    <el-dialog center append-to-body title="学习报告" :visible.sync="showCourseReport">
+    <el-dialog center append-to-body title="学习报告" :visible.sync="showCourseReport" top="1vh">
        <courseReport v-on:refresh="refresh" ref="courseReport" :curClsId="currentClass" :curStudent="curStudent" :courseList="coursePlanData.list"></courseReport>
     </el-dialog>
   </div>
@@ -334,13 +334,14 @@ export default {
        this.curStudent = item;
       if(this.$refs.courseReport){
          this.$refs.courseReport.getReportInfo();
+         this.$refs.courseReportAdd.getStuInfo(item.id);
       }
     },
     handleReportCreate(item){
       this.showCourseReportAdd = true;
       this.curStudent = item;
        if(this.$refs.courseReportAdd){
-        //  this.$refs.courseReport.setRight(this.currentList[this.currentIndex]);
+         this.$refs.courseReportAdd.getStuInfo(item.id);
       }
     },
     search(){
