@@ -18,14 +18,7 @@
                                 </div>
                             </div>
                         </div>
-                         <!-- <div class="talk-box" :key="t" v-for="(d,t) in item">
-                            <img :src="images.robot" class="photo"/>
-                            <div class="gradient">
-                                <div class="gradient-box" >
-                                    33333
-                                </div>
-                            </div>
-                        </div> -->
+
                     </div>
                 </div>
 
@@ -48,11 +41,11 @@
                 </ul>
             </div>
             <div class="content_right">
-                <!-- <el-image v-if="!showPractice"
+                <el-image v-if="!showPractice"
                     style="width: 100%; height: 100%"
                     :src="showPic"
                     :fit="fit"></el-image>
-                     <iframe v-if="showPractice" src="http://edu.wiser-bot.com/wsedu/scratch/build/index.html" frameborder="0" width="100%" height="100%" id="childFrame" scrolling="no"></iframe> -->
+                     <iframe v-if="showPractice" src="http://edu.wiser-bot.com/wsedu/scratch/build/index.html" frameborder="0" width="100%" height="100%" id="childFrame" scrolling="no"></iframe>
             </div>
         </div>
         <footer>
@@ -217,8 +210,7 @@ export default {
   },
   mounted() {}
 };
-</script>
-<style lang="less" scoped>
+</script><style lang="less" scoped>
 .wrap{
     width: 100%;
     height: 100%;
@@ -315,6 +307,7 @@ export default {
                 box-sizing: border-box;
                 padding: 0.02rem;
                 border-radius: 0.2rem 0.2rem 0.2rem 0;
+                 margin-bottom:0.1rem;
             }
             .gradient-box {
                 width: 100%;
