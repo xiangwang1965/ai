@@ -6,17 +6,6 @@
 
         <div class="header_right" style="cursor: pointer">
              <img :src="menuIcon">
-            <!-- <el-dropdown trigger="click" @command="handleCommand">
-                <span class="el-dropdown-link">
-                    <img :src="menuIcon">
-                    <span class="user_name" :title="user.name">{{ user.name }}</span>
-                    <i class="el-icon-arrow-down"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="gotoResetPassword">修改密码</el-dropdown-item>
-                <el-dropdown-item command="logout">退出</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown> -->
         </div>
   </el-header>
 </template>
