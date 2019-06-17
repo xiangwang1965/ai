@@ -41,8 +41,6 @@
 <script>
 import authUtils from "@/services/auth/utils";
 import authApi from "@/services/auth";
-import teacherApi from '@/services/teacher'
-import eventHub from "@/utils/eventHub";
 import { IMS_URL } from "@/config";
 export default {
   data() {
