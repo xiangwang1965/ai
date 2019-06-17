@@ -32,7 +32,7 @@
     data () {
       return {
         showList: false,
-        logoImg: require('../../static/image/logo.png'),
+        logoImg: require('../../static/image/logo-teacher.png'),
         menuIcon: require('../../static/image/menuIcon.png'),
         user: {
           name: '',
