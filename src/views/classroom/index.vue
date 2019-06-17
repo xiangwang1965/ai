@@ -6,7 +6,7 @@
         <div class="class_changeTitle">
           <div class="title_left">
             <span></span>
-            当前课程
+            当前班级
           </div>
           <div class="title_right">历史班级</div>
         </div>

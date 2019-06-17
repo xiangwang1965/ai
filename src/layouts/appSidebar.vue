@@ -1,6 +1,7 @@
 <template>
   <div class="appSideWrap">
     <div class="content_left">
+      <img class="person" :src="person">
       <div class="teacher_box">
         <img :src="logoImg" alt class="photo">
         <p class="name">{{tInfo.name}}</p>
@@ -24,7 +25,7 @@
             <div :class="item.class" class="lock_row" :key="i" v-for="(item,i) in levelsData">
               <div class="name">{{item.tit}}</div>
               <div class="lock_level">
-                <div class="lock_item" :key="t" v-for="(l,t) in item.list">
+                <div class="lock_item"   :key="t" v-for="(l,t) in item.list">
                   <img :src="item.icon" v-if="tInfo.level < l.level" class="lock">
                   <p>Leverl {{l.level}}</p>
                   <p>{{l.name}}</p>
@@ -48,12 +49,13 @@ export default {
     return {
       menuList: [],
       logoImg: require("../../static/image/person_background.png"),
+      person: require('../../static/image/person_photo1.png'),
       levelsData: [
         {
           tit: "SCRATCH",
           icon: require("../../static/image/lock_yellow.png"),
           class:'lock_row_y',
-          aciveClass:'unlock_y',
+          activeClass:'unlock_y',
           list: [
             {
               level: 1,
@@ -69,7 +71,7 @@ export default {
           tit: "PYTHON",
            icon: require("../../static/image/lock_blue.png"),
            class:'lock_row_b',
-            aciveClass:'unlock_b',
+            activeClass:'unlock_blue',
           list: [
             {
               level: 3,
@@ -89,7 +91,7 @@ export default {
           tit: "NOIP",
           icon: require("../../static/image/lock_red.png"),
           class:'lock_row_r',
-          aciveClass:'unlock_r',
+          activeClass:'unlock_red',
           list: [
             {
               level: 6,
@@ -109,7 +111,7 @@ export default {
           tit: "AI",
           icon: require("../../static/image/lock_purple.png"),
           class:'lock_row_p',
-          aciveClass:'unlock_p',
+          activeClass:'unlock_purple',
           list: [
             {
               level: 9,
@@ -130,8 +132,6 @@ export default {
           ]
         }
       ],
-      routes: ["/class", "/teacher", "/buy", "/course", "/classroom"],
-      is_live: 1,
       temp: [],
       userInfo:{},
       tInfo:{}
@@ -161,13 +161,11 @@ export default {
   created() {
     this.temp = this.menuList;
     this.getUser()
-    // this.handleSelect(this.$route.path)
     eventHub.$on("updateUser", this.getUser);
   },
   methods: {
     getUser() {
-      // this.is_live = authUtils.getUser() && authUtils.getUser().is_live
-      // this.menuList = this.is_live ? this.liveList : this.tofaceList
+
       // 判断是否是平台双师1或魔法双师0
       console.log(authUtils.getUser());
       this.userInfo = authUtils.getUser();
@@ -179,14 +177,6 @@ export default {
               type:'error'
           })
       }
-    //   this.is_self_live =
-    //     authUtils.getUser() && authUtils.getUser().is_self_live;
-    //   this.menuList = [];
-    //   this.menuList = this.is_self_live ? this.platformList : this.liveList;
-    //   // 如果third_part存在，使用对应的第三方侧栏
-    //   if (authUtils.getUser().third_part) {
-    //     this.menuList = this[authUtils.getUser().third_part + "List"];
-    //   }
     },
     go(item) {},
     logout() {
@@ -213,14 +203,30 @@ export default {
 .appSideWrap {
     width:4.5rem;
     height: 100%;
-    background: url("../../static/image/contentLeftBg.png");
+    background: url("../../static/image/personalcenter_bg.png");
     background-size: 100%;
     position: relative;
-    .out_login{
-        position: absolute;
-        border:1px solid #fff;
-        bottom: 0.42rem;
-        left:1.19rem;
+    .content_left{
+        .person {
+            position: absolute;
+            top: 0.1rem;
+            left: 0.1rem;
+            width: 1rem;
+        }
+        .teacher_box {
+            .name {
+                color:#fff
+            }
+            .id {
+                color:#fff
+            }
+        }
+        .out_login{
+            position: absolute;
+            border:1px solid #fff;
+            bottom: 0.42rem;
+            left:1.19rem;
+        }
     }
 
 }
