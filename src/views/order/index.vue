@@ -1,7 +1,10 @@
 <template>
   <div class="classContainer">
     <div class="left">
-      <h1 class="title">我的订单</h1>
+        <p class="title">
+            <img src="../../../static/image/course_icon.png">
+            <span>我的订单</span>
+        </p>
       <div class="sideContainer">
         <div class="item">
           <div class="tabs">
@@ -129,6 +132,25 @@ export default {
         width: 5.12rem;
         position: relative;
         border-right: 1px solid #ccc;
+
+        .title {
+            display: flex;
+            justify-items: center;
+            height: 0.3rem;
+            margin-bottom: 0.5rem;
+            line-height: 0.3rem;
+
+            img {
+                width: 0.3rem;
+                height: 0.3rem;
+            }
+
+            span {
+                margin-left: 6px;
+                line-height: inherit;
+            }
+        }
+
         .sideContainer {
             width: 4.5rem;
             .tabs {

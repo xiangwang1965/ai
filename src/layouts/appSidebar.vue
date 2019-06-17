@@ -7,16 +7,46 @@
         <p class="id">ID:{{tInfo.id}}</p>
           <el-popover
               placement="right"
-              trigger="hover">
-              <el-button class="grade" slot="reference">Level{{tInfo.level}}</el-button>
+              trigger="hover"
+              width="300">
+              <div class="popover_box">
+                  <p class="popover_title">
+                      <img src="../../static/image/my_class_blue.png">
+                      <span>学习进度</span>
+                  </p>
+                  <div class="clearfix"></div>
+                  <div class="popover_content border">
+                      <p class="title">我的学习等级</p>
+                      <div class="user_level">
+                          <div class="level_list">
+                              <span v-for="n in 10" :key="n" :class="{ active: n <= processAndLevel.userLever }"></span>
+                          </div>
+                          <div class="level_btn">Level{{processAndLevel.userLever}}</div>
+                      </div>
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="popover_content">
+                      <p class="title">我的学习进度百分比</p>
+                      <div class="percent">
+                          <div class="percent_item">
+                              <el-progress type="circle" :width="114" :percentage="processAndLevel.nowLeverPercent"></el-progress>
+                              <div class="percent_title">当前Levle进度百分比</div>
+                          </div>
+                          <div class="percent_item">
+                              <el-progress type="circle" :width="114" :percentage="processAndLevel.beatLearnNumPercent"></el-progress>
+                              <div class="percent_title">打败学习人数百分比</div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <el-button class="grade" slot="reference">Level{{processAndLevel.userLever}}</el-button>
           </el-popover>
-        <span class="grade">Level{{tInfo.level}}</span>
 
         <ul class="entry_wrap">
-          <router-link to="/class" tag="li">我的课程</router-link>
-          <router-link to="/report" tag="li">学习报告</router-link>
-          <router-link to="/overview" tag="li">课程总览</router-link>
-          <router-link to="/order" tag="li">我的订单</router-link>
+          <router-link to="/class" tag="li"><i class="icon_class"></i>我的课程</router-link>
+          <router-link to="/report" tag="li"><i class="icon_report"></i>学习报告</router-link>
+          <router-link to="/overview" tag="li"><i class="icon_overview"></i>课程总览</router-link>
+          <router-link to="/order" tag="li"><i class="icon_order"></i>我的订单</router-link>
         </ul>
         <div class="btn_124 out_login" @click="logout">退出登录</div>
       </div>
@@ -41,6 +71,7 @@ export default {
   },
   created() {
     this.getUser();
+    this.getProcessAndLevel();
     eventHub.$on("updateUser", this.getUser);
   },
   methods: {
@@ -82,6 +113,8 @@ export default {
               .then(res => {
                   if (res.code === "001") {
                       this.processAndLevel = res.data;
+                      this.processAndLevel.beatLearnNumPercent = parseInt(this.processAndLevel.beatLearnNumPercent, 10);
+                      this.processAndLevel.nowLeverPercent = parseInt(this.processAndLevel.nowLeverPercent, 10);
                   }
               });
       }
@@ -97,7 +130,18 @@ export default {
   background-size: 100%;
   position: relative;
     .grade {
+        margin: 0;
+        padding: 0;
         cursor: pointer;
+        border: none;
+        height: .3rem;
+        width: .76rem;
+        line-height: .3rem;
+        color: #fff;
+        font-size: .16rem;
+        &:hover{
+            color: #fff;
+        }
     }
   .out_login {
     position: absolute;
@@ -114,6 +158,8 @@ export default {
     margin: 0.3rem auto 0;
 
     li {
+        position: relative;
+      cursor: pointer;
       height: 0.58rem;
       margin-bottom: 0.13rem;
 
@@ -122,15 +168,119 @@ export default {
       color: #fff;
       letter-spacing: 0.02rem;
       text-align: center;
-
+        border: 1px solid #fff;
       border-radius: 29px;
+        i {
+            position: absolute;
+            display: inline-block;
+            top: 50%;
+            left: .3rem;
+            margin-top: -.18rem;
+            width: .36rem;
+            height: .36rem;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            &.icon_class {
+                background-image: url("../../static/img/basic.png");
+            }
+            &.icon_report {
+                background-image: url("../../static/img/basic.png");
+            }
+            &.icon_overview {
+                background-image: url("../../static/img/basic.png");
+            }
+            &.icon_order {
+                background-image: url("../../static/img/basic.png");
+            }
+        }
     }
 
     li.router-link-active {
       background: rgba(255, 255, 255, 0.3);
       border: 1px solid #fff;
       border-radius: 29px;
+        i {
+            &.icon_class {
+                background-image: url("../../static/img/basic-active.png");
+            }
+            &.icon_report {
+                background-image: url("../../static/img/basic-active.png");
+            }
+            &.icon_overview {
+                background-image: url("../../static/img/basic-active.png");
+            }
+            &.icon_order {
+                background-image: url("../../static/img/basic-active.png");
+            }
+        }
     }
   }
+}
+.popover_box {
+    .popover_title {
+        color: #4592fe;
+        font-size: .16rem;
+        line-height: .26rem;
+        vertical-align: middle;
+        img {
+            float: left;
+            margin-right: .1rem;
+            width: .26rem;
+            height: .26rem;
+        }
+    }
+    .popover_content{
+        margin: .2rem;
+        &.border {
+            border-bottom: 1px solid #979797;
+        }
+        .title {
+            margin-bottom: .16rem;
+            font-size: .14rem;
+            color: #aba8a8;
+            letter-spacing: .01rem;
+        }
+        .user_level {
+            height: .46rem;
+            line-height: .46rem;
+            .level_list {
+                display: inline-block;
+                float: left;
+                span{
+                    margin-right: .1rem;
+                    display: inline-block;
+                    height: .46rem;
+                    width: .08rem;
+                    border-radius: .06rem;
+                    background-color: #eaeaea;
+                    &.active {
+                        background-image: linear-gradient(-180deg, #FFE289 24%, #FFC151 100%);
+                    }
+                }
+            }
+            .level_btn {
+                float: left;
+                padding: 0 .2rem;
+                display: inline-block;
+                border-radius: .23rem;
+                font-size: .14rem;
+                color: #fff;
+                background-image: linear-gradient(-180deg, #FFE289 0%, #FFC151 100%);
+            }
+        }
+        .percent {
+            display: flex;
+            .percent_item {
+                &:nth-child(1){
+                    margin-right: .3rem;
+                }
+                .percent_title {
+                    font-size: .12rem;
+                    color: #5c5c5c;
+                }
+            }
+        }
+    }
 }
 </style>
