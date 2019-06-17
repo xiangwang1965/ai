@@ -1,8 +1,6 @@
 <template>
 <div class="dialog_wrap" id="addteacher">
-    <!-- <el-dialog center append-to-body title="创建学生信息" :visible.sync="showCreate">
-        <createStudent :codeOptions="codeList" :currentClass="currentClass" :currentType="currentType" ref="child"></createStudent>
-    </el-dialog> -->
+
     <div class="dialog_content">
         <div class="dialog_center">
             <el-form ref="form" class="dialog_form"  :rules="formRules" :model="form" size="mini" label-position="left" label-width="80px" >
@@ -42,6 +40,17 @@
             <div class="btn_172" id="submit_form" @click="submit">保存</div>
         </div>
     </div>
+    <el-dialog class="dialog_wrap dialog_result" visible.sync="showSucBox">
+            <div class="dialog_content">
+                <div class="dialog_header">
+                    <span class="dialog_back" id="resultclose"></span>
+                </div>
+                <div class="dialog_center">
+                    <img :src="sucImg" alt="" class="result_icon">
+                    <p class="result_txt">创建成功！</p>
+                </div>
+            </div>
+        </el-dialog>
 </div>
 </template>
 <script>
@@ -52,6 +61,8 @@ export default {
     props:['currentType','currentClass','codeOptions'],
     data(){
         return {
+            sucImg: require('../../../static/image/result_success.png'),
+            showSucBox:false,
             value:'',
             value1:'',
             showConfirm:false,
