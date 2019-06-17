@@ -1,12 +1,15 @@
 <template>
   <el-header class="header">
       <div class="header_left">
-            <img :src="logoImg">
+          <div class="img_box">
+              <img :src="logoImg">
+          </div>
         </div>
 
         <div class="header_right" style="cursor: pointer">
              <img :src="menuIcon">
         </div>
+      <div class="clearfix"></div>
   </el-header>
 </template>
 
@@ -21,7 +24,7 @@
     data () {
       return {
         showList: false,
-        logoImg: require('../../static/image/logo.png'),
+        logoImg: require('../../static/image/logo_p.png'),
         menuIcon: require('../../static/image/menuIcon.png'),
         user: {
           name: '',
@@ -120,11 +123,14 @@
     // padding: 0 20px;
     .header_left {
         float: left;
-        img {
+        .img_box {
+            margin: 0.42rem 0 0 0.30rem;
             width: 3.30rem;
             height: 0.65rem;
-            display: block;
-            margin: 0.42rem 0 0 0.30rem;
+        }
+        img {
+           width: 1.54rem;
+           height: .64rem;
         }
     }
     .header_right{

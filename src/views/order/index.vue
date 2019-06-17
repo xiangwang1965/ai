@@ -47,9 +47,7 @@
         </div>
     </div>
     <div class="right" v-else>
-        <!-- TODO 图片的地址有问题-->
-        <img class="orderImg" src="../../../static/img/minipic.png" alt="">
-        <p class="orderTip">选择订单查看详情</p>
+        <img class="orderImg" src="../../../static/img/order.png" alt="">
     </div>
   </div>
 </template>
@@ -237,8 +235,7 @@ export default {
         }
         .orderImg {
             margin-top: 2.5rem;
-            width: 1.14rem;
-            height: 1.22rem;
+            width: 3rem;
         }
         .orderTip {
             font-size: .3rem;

@@ -26,7 +26,7 @@
         <div class="report-list">
           <div class="report-list-child" v-for="(item, index) in detail" :key="index">
             <span>{{ item.hourName }}</span>
-            <span>{{ item.courseName }}</span>
+            <span>{{ item.point }}</span>
           </div>
         </div>
       </div>
