@@ -9,23 +9,10 @@ const notFound = () => import('@/views/notFound')
 const auth = () => import('@/views/auth')
 const thirdPartAuth = () => import('@/views/auth/thirdpartauth')
 const forget = () =>import('@/views/auth/forget')
-//班级管理
+//教师管理
 const classroom = () => import('@/views/classroom')
 const practice  = () => import('@/views/classroom/practice')
 const classroomWrap = () => import('@/views/classroom/classWrap')
-//教师档案
-const teacher = () => import('@/views/teacher')
-const teacherWrap = () => import('@/views/teacher/teacherWrap')
-// 购买激活码
-const buy = () => import('@/views/buy')
-const buyWrap = () => import('@/views/buy/buyWrap')
-const payOrder = () => import('@/views/buy/payOrder')
-const success = () => import('@/views/buy/success')
-// 课程订单
-const course = () => import('@/views/course')
-const courseWrap = () => import('@/views/course/courseWrap')
-
-
 
 
 
@@ -93,32 +80,6 @@ const router = new Router({
                     redirect: requireAuth,
                     children: [
                         { path: '/', name: 'classroom', component: classroom }
-                    ]
-                },
-                {
-                    path: '/teacher',
-                    component: teacherWrap,
-                    beforeEnter: requireAuth,
-                    children: [
-                        { path: '/', name: 'teacher', component: teacher }
-                    ]
-                },
-                {
-                    path: '/buy',
-                    component: buyWrap,
-                    beforeEnter: requireAuth,
-                    children: [
-                        {path: '/', name: 'buy', component: buy},
-                        {path: 'payOrder',name:'payorder',component: payOrder},
-                        {path: 'success' ,name:'success', component:success}
-                    ]
-                },
-                {
-                    path: '/course',
-                    component: courseWrap,
-                    beforeEnter: requireAuth,
-                    children: [
-                        { path: '/', name: 'course', component: course }
                     ]
                 }
             ]
