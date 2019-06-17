@@ -177,13 +177,13 @@ logout() {
     margin: 0 0 0 0.53rem;
     border-top: 0.005rem solid #fff;
     width: 2.5rem;
-    text-align: center;
+    text-align: left;
     p {
       color: #fff;
       font-size: 0.18rem;
       padding-top: 0.14rem;
       cursor: pointer;
-      margin-left:-0.8rem;
+      padding-left:20px;
     }
   }
     .out_login {

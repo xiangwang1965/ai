@@ -20,11 +20,9 @@
             <img :src="url" alt class="item_img">
             <p>{{item.name}}</p>
           </div>
-          <!-- <div class="item" id="updata">
-                    <img src="../img/photo_updata.png" alt="" class="item_img">
-          </div>-->
-          <!-- <div class="item">
-          </div>-->
+          <div class="item" id="updata" @click="handleTeacher">
+                <img :src="updateImg" alt="" class="item_img">
+          </div>
         </div>
       </div>
     </div>
@@ -65,13 +63,19 @@
         </div>
       </div>
     </div>
+    <el-dialog title="添加教师管理" :visible.sync="teacherManage">
+        <teacherCreate ref="teacherCreate" :currentClass="currentTeacher"></teacherCreate>
+    </el-dialog>
   </div>
+
 </template>
 <script>
 import teacher from "@/services/teacher";
+import teacherCreate from './teacherCreate';
 export default {
   data() {
     return {
+    teacherManage:false,
       levelsData: [
         {
           tit: "Scartch",
@@ -162,6 +166,7 @@ export default {
       },
       list: [],
       url: require("../../../static/img/default_avatar.png"),
+      updateImg: require('../../../static/image/photo_updata.png'),
       tInfo: {
           level:0,
           name:'xxx'
@@ -172,6 +177,7 @@ export default {
           return time.getTime() > Date.now();
         }
       },
+      currentTeacher:{},
       params: {
         searchTxt: ""
       }
@@ -190,13 +196,15 @@ export default {
     }
     next();
   },
+  components:{
+    teacherCreate
+  },
   methods: {
     getData() {
       teacher.querylist(this.params).then(res => {
         if (res.code === "001") {
             if (res.data.length) {
                 this.list = res.data;
-                console.log(this.list);
                 this.queryTeacherInfo(this.list[0].id);
             }
         }
@@ -212,6 +220,9 @@ export default {
         }
       });
     },
+    handleTeacher(){
+        this.teacherManage= true;
+    }
 
   }
 };

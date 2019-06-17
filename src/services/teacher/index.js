@@ -4,8 +4,11 @@ class Teacher extends CRUD {
   constructor () {
     super()
     this.queryUrl = '/ws/api/user/getTeachers'
-
     this.queryTeacherUrl = '/ws/api/class/teacherInfo'
+    this.addTeacherUrl = '/ws/api/class/addTeacher'
+  }
+  addTeacher(params) {
+    return this.sendPost(this.addTeacherUrl, params)
   }
   queryStudenEdit () {
     return this.sendGet( this.queryStudenEditUrl)
