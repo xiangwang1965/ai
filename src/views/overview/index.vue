@@ -67,7 +67,7 @@ export default {
     height: 0.3rem;
     margin-bottom: 0.5rem;
     line-height: 0.3rem;
-
+    color: #4592FE;
     img {
       width: 0.3rem;
       height: 0.3rem;

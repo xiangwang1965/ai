@@ -71,7 +71,7 @@ export default {
         }],
         activeTab: '1',
         list: [],
-        url: require("../../../static/img/minipic.png"), // TODO 图片的地址有问题
+        url: require("../../../static/img/icon_scrath.png"),
         orderDetail: {
             isShow: false
         }
@@ -137,6 +137,7 @@ export default {
             height: 0.3rem;
             margin-bottom: 0.5rem;
             line-height: 0.3rem;
+            color: #4592FE;
 
             img {
                 width: 0.3rem;

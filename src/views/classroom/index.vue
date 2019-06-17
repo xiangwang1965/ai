@@ -378,7 +378,7 @@ export default {
     .content_title {
       display: flex;
       justify-items: center;
-      height: 0.27rem;
+      height: 0.28rem;
       margin-bottom: 0.2rem;
 
       img {
@@ -388,7 +388,7 @@ export default {
 
       span {
         margin-left: 0.07rem;
-        line-height: initial;
+        line-height: 0.28rem;
         font-size: 0.15rem;
         color: #4592fe;
         letter-spacing: 1.5px;

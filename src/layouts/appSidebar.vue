@@ -178,20 +178,20 @@ export default {
             margin-top: -.18rem;
             width: .36rem;
             height: .36rem;
-            background-size: cover;
+            background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             &.icon_class {
-                background-image: url("../../static/img/basic.png");
+                background-image: url("../../static/img/icon_class.png");
             }
             &.icon_report {
-                background-image: url("../../static/img/basic.png");
+                background-image: url("../../static/img/icon_report.png");
             }
             &.icon_overview {
-                background-image: url("../../static/img/basic.png");
+                background-image: url("../../static/img/icon_overview.png");
             }
             &.icon_order {
-                background-image: url("../../static/img/basic.png");
+                background-image: url("../../static/img/icon_order.png");
             }
         }
     }
@@ -200,20 +200,6 @@ export default {
       background: rgba(255, 255, 255, 0.3);
       border: 1px solid #fff;
       border-radius: 29px;
-        i {
-            &.icon_class {
-                background-image: url("../../static/img/basic-active.png");
-            }
-            &.icon_report {
-                background-image: url("../../static/img/basic-active.png");
-            }
-            &.icon_overview {
-                background-image: url("../../static/img/basic-active.png");
-            }
-            &.icon_order {
-                background-image: url("../../static/img/basic-active.png");
-            }
-        }
     }
   }
 }
