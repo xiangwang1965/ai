@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="class_title_list">
-          <div class="class_title class_S" @click="getData(1)"></div>
+          <div class="class_title class_S" @click="getCurrentCourses(1)"></div>
           <el-collapse-transition>
             <ul class="class_list" v-show="show1">
               <li
@@ -38,7 +38,7 @@
               <div class="nodata" v-show="nodata1">暂无数据</div>
             </ul>
           </el-collapse-transition>
-          <div class="class_title class_P" @click="getData(2)"></div>
+          <div class="class_title class_P" @click="getCurrentCourses(2)"></div>
           <el-collapse-transition class="class_list">
             <ul class="class_list" v-show="show2">
               <li
@@ -63,7 +63,7 @@
               <div class="nodata" v-show="nodata2">暂无数据</div>
             </ul>
           </el-collapse-transition>
-          <div class="class_title class_N" @click="getData(3)"></div>
+          <div class="class_title class_N" @click="getCurrentCourses(3)"></div>
           <el-collapse-transition>
             <ul class="class_list" v-show="show3">
               <li
@@ -88,7 +88,7 @@
               <div class="nodata" v-show="nodata3">暂无数据</div>
             </ul>
           </el-collapse-transition>
-          <div class="class_title class_A" @click="getData(4)"></div>
+          <div class="class_title class_A" @click="getCurrentCourses(4)"></div>
           <el-collapse-transition>
             <ul class="class_list" v-show="show4">
               <li
@@ -231,7 +231,7 @@ export default {
   },
   created() {
     this.userInfo = authUtils.getUser();
-    this.getData(1);
+    this.getCurrentCourses(1);
   },
   components: {
     courseReportAdd,
@@ -301,11 +301,9 @@ export default {
       this.getList(data[0], 0);
     },
 
-    getData(typeId) {
+      getCurrentCourses(typeId) {
       let params = {
-        schoolId: 1,
-        typeId: typeId,
-        teacherId: this.userInfo.id
+        typeId: typeId
       };
       let that = this;
       for (let i = 1; i <= 4; i++) {
@@ -316,7 +314,7 @@ export default {
       this.currentType = typeId;
       this["show" + typeId] = !this["show" + typeId];
       if (!this.courseList["course" + typeId.length]) {
-        classApi.getData(params).then(res => {
+        classApi.getCurrentCourses(params).then(res => {
           if (res.data && res.data.length) {
             this.courseList["course" + typeId] = Object.assign({}, res.data);
             this.currentList = res.data;
@@ -334,7 +332,39 @@ export default {
       } else {
         this.currentList = this.courseList["course" + typeId.length];
       }
-    }
+    },
+      getHisCourses(typeId){
+          let params = {
+              typeId: typeId
+          };
+          let that = this;
+          for (let i = 1; i <= 4; i++) {
+              if (typeId !== i) {
+                  this["show" + i] = false;
+              }
+          }
+          this.currentType = typeId;
+          this["show" + typeId] = !this["show" + typeId];
+          if (!this.courseList["course" + typeId.length]) {
+              classApi.getHisCourses(params).then(res => {
+                  if (res.data && res.data.length) {
+                      this.courseList["course" + typeId] = Object.assign({}, res.data);
+                      this.currentList = res.data;
+                      if (this.isFirst) {
+                          this.getList(res.data[0], 0);
+                          this.currentClass = res.data[0].id;
+                          this["nodata" + typeId] = false;
+                      }
+                  } else {
+                      this.courseList["course" + typeId] = [];
+                      this.currentList = [];
+                      this["nodata" + typeId] = true;
+                  }
+              });
+          } else {
+              this.currentList = this.courseList["course" + typeId.length];
+          }
+      }
   }
 };
 </script>
