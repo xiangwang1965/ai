@@ -17,38 +17,25 @@
               </div>
             </div>
           </div>
-            <el-form ref="form" :model="form"  @keyup.enter.native="handleSub" class="dialog_rig" style="padding:0 0.2rem;text-align: left;width:7.14rem">
+            <el-form ref="form" :label-position="formalign" :model="form"  @keyup.enter.native="handleSub" class="dialog_rig" label-width="80px" size="mini">
             <ul class="form dialog_form">
                 <el-form-item label="· 课时选择:">
                     <el-select v-model="form.hourId" placeholder="请选择课时">
                     <el-option :key="i" v-for="(item,i) in courseList" :label="item.name" :value="item.id"></el-option>
                     </el-select>
             </el-form-item>
-              <li class="form_row">
-                <div class="form_lable">· 学习内容:</div>
-                <div class="form_box">
-                  <textarea v-model="form.value"></textarea>
-                </div>
-              </li>
-              <li class="form_row">
-                <div class="form_lable">· 课后作业:</div>
-                <div class="form_box">
-                  <textarea v-model="form.task"></textarea>
-                </div>
-              </li>
-              <li class="form_row">
-                <div class="form_lable">· 课堂表现:</div>
-                <div class="form_box">
-                  <textarea v-model="form.feedback"></textarea>
-                </div>
-              </li>
-              <li class="form_row">
-                <div class="form_lable">· 老师反馈:</div>
-                <div class="form_box">
-                  <textarea  v-model="form.behavior"></textarea>
-                </div>
-              </li>
-
+            <el-form-item label="· 学习内容:" prop="value">
+                <el-input type="textarea" v-model="form.value" :rows="4" size="mini"></el-input>
+            </el-form-item>
+            <el-form-item label="· 课后作业:" prop="task">
+                <el-input type="textarea" v-model="form.task" :rows="4"></el-input>
+            </el-form-item>
+            <el-form-item label="· 课堂表现:" prop="feedback">
+                <el-input type="textarea" v-model="form.feedback" :rows="4"></el-input>
+            </el-form-item>
+             <el-form-item label="· 老师反馈:" prop="behavior">
+                <el-input type="textarea" v-model="form.behavior" :rows="4"></el-input>
+            </el-form-item>
               <li class="form_row">
                 <div class="form_lable">· 课堂评估:</div>
                 <div class="form_box">
@@ -109,6 +96,22 @@
             </el-form>
         </div>
       </div>
+
+      <el-dialog :visible.sync="showSucBox" center append-to-body>
+        <div class="dialog_wrap dialog_result" style="" id="addResult">
+        <div class="dialog_content">
+            <div class="dialog_header">
+                <span class="dialog_back" id="resultclose"></span>
+            </div>
+            <div class="dialog_center">
+                <img :src="sucImg" class="result_icon">
+                <p class="result_txt">保存成功！</p>
+            </div>
+
+        </div>
+
+    </div>
+    </el-dialog>
     </div>
 </template>
 <script>
@@ -118,8 +121,11 @@ export default {
   props: ["curStudent",'studentlist','courseList','curClsId'],
   data() {
     return {
+        showSucBox:true,
+      formalign:'left',
       showManage: true,
       defaultImg: require("../../../static/img/student.png"),
+      sucImg: require('../../../static/image/result_success.png'),
       tInfo: {
         avatar: require("../../../static/image/person_background.png"),
         nameIcon: require("../../../static/image/name_icon.png")
@@ -248,103 +254,12 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-    @bottom:1px solid #979797;
-    .el-icon-delete{
-        cursor: pointer;
-        color:cornflowerblue;
+    .dialog_center {
+        overflow:hidden;
     }
-    .top{width:100%;height:5px;border-bottom:@bottom}
-    .h3{
-        width:100%;
-        height:44px;
-        line-height:44px;
-        border-bottom:@bottom;
-        color:#000;
-        text-align: center;
-    }
-    .studentManage{
-        height:50vh;
-        margin:0;
-        padding:0;
-        .left-item{
-            float:left;
-            width:30vw;
-            height:100%;
-            border-right:@bottom;
-            ul{
-                margin:0 auto;
-                padding:0 5px;
-                max-height: 150px;
-                overflow-y:auto;
-                li{
-                    height:44px;
-                    border-bottom: 1px solid #979797;
-                    padding-top:10px;
-                    img{
-                        float:left;
-                        width:30px;
-                        height:30px;
-                        border-radius: 50%;
-                        background:#000;
-                    }
-                    height:44px;
-                    border-bottom: 1px solid #979797;
-                    padding-top:10px;
-                    div{
-                        float:left;
-                        margin-left:30px;
-                        margin-top:5px;
-                        width:280px;
-                        p{font-size:12px;}
-                    }
-                    i{
-                        margin-top:15px;
-                        margin-right:0px;
-                    }
-                    &.active{
-                        background:rgba(#F3F6FC);
-                    }
-
-                }
-            }
-            .studentInfo{
-                .info {
-                    height:60px;
-                    border-bottom:@bottom;
-                    .cac-button-one{
-                        margin-top:13px;
-                        width:20px;
-                        height:30px;
-                    }
-                }
-            }
-        }
-        .right-item{
-            float:left;
-            width:45vw;
-            height:100%;
-            ul li{
-                width:450px;
-                padding:10px 5px;
-                background: #F3F6FC;
-                border-radius: 12px;
-                margin-left:10px;
-                margin-top:10px;
-                min-height:60px;
-                overflow: auto;
-                overflow-x:hidden;
-                line-height:100%;
-                p{
-                    float:left;
-                    width:100%;
-                    margin-left:18px;
-                    margin-top:10px;
-                    span{
-                        color:#9b9b9b;
-                    }
-                }
-            }
-        }
+    .el-form-item {
+        margin-left:0.34rem;
+        margin-right:0.34rem
     }
 </style>
 

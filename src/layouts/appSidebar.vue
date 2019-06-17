@@ -25,7 +25,7 @@
             <div :class="item.class" class="lock_row" :key="i" v-for="(item,i) in levelsData">
               <div class="name">{{item.tit}}</div>
               <div class="lock_level">
-                <div class="lock_item"   :key="t" v-for="(l,t) in item.list">
+                <div class="lock_item" :class="l.activeClass" :key="t" v-for="(l,t) in item.list">
                   <img :src="item.icon" v-if="tInfo.level < l.level" class="lock">
                   <p>Leverl {{l.level}}</p>
                   <p>{{l.name}}</p>
@@ -55,15 +55,16 @@ export default {
           tit: "SCRATCH",
           icon: require("../../static/image/lock_yellow.png"),
           class:'lock_row_y',
-          activeClass:'unlock_y',
           list: [
             {
               level: 1,
-              name: "初级编程"
+              name: "初级编程",
+              activeClass:'unlock_y',
             },
             {
               level: 2,
-              name: "初级编程"
+              name: "初级编程",
+              activeClass:'unlock_y',
             }
           ]
         },
@@ -71,13 +72,14 @@ export default {
           tit: "PYTHON",
            icon: require("../../static/image/lock_blue.png"),
            class:'lock_row_b',
-            activeClass:'unlock_blue',
           list: [
             {
+              activeClass:'unlock_blue',
               level: 3,
               name: "初级编程"
             },
             {
+              activeClass:'unlock_blue',
               level: 4,
               name: "初级编程"
             },
@@ -91,17 +93,20 @@ export default {
           tit: "NOIP",
           icon: require("../../static/image/lock_red.png"),
           class:'lock_row_r',
-          activeClass:'unlock_red',
+
           list: [
             {
+                activeClass:'unlock_red',
               level: 6,
               name: "初级编程"
             },
             {
+                activeClass:'unlock_red',
               level: 7,
               name: "初级编程"
             },
             {
+                activeClass:'unlock_red',
               level: 8,
               name: "初级编程"
             }
@@ -111,21 +116,25 @@ export default {
           tit: "AI",
           icon: require("../../static/image/lock_purple.png"),
           class:'lock_row_p',
-          activeClass:'unlock_purple',
+
           list: [
             {
+                activeClass:'unlock_purple',
               level: 9,
               name: "初级编程"
             },
             {
+                activeClass:'unlock_purple',
               level: 10,
               name: "初级编程"
             },
             {
+                activeClass:'unlock_purple',
               level: 11,
               name: "初级编程"
             },
             {
+                activeClass:'unlock_purple',
               level: 12,
               name: "初级编程"
             }
@@ -192,6 +201,15 @@ export default {
       teacherApi.queryTeacherInfo(p).then(res => {
         if (res.code === "001") {
           this.tInfo = res.data;
+          if (this.tInfo.level) {
+              this.levelsData.forEach((item,i)=>{
+                  item.list.forEach((it,t)=>{
+                      if (this.tInfo.level < it.level) {
+                          this.levelsData[i].list[t].activeClass = '';
+                      }
+                  })
+              })
+          }
         }
       });
     }

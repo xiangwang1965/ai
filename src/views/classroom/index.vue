@@ -193,7 +193,7 @@
     <el-dialog center append-to-body title="学习报告" width="60%" :visible.sync="showCourseReportAdd" top="1vh">
        <courseReportAdd :courseList="coursePlanData.list" ref="courseReportAdd" :curClsId="currentClass" :curStudent="curStudent" :studentlist="studentsList"></courseReportAdd>
     </el-dialog>
-    <el-dialog center append-to-body title="学习报告" :visible.sync="showCourseReport" top="1vh">
+    <el-dialog center append-to-body title="学习报告" width="60%" :visible.sync="showCourseReport" top="1vh">
        <courseReport v-on:refresh="refresh" ref="courseReport" :curClsId="currentClass" :curStudent="curStudent" :courseList="coursePlanData.list"></courseReport>
     </el-dialog>
   </div>
@@ -377,9 +377,9 @@ export default {
             this.courseList["course" + typeId] = Object.assign({}, res.data);
             this.currentList = res.data;
             if(this.isFirst){
-              this.getList(res.data[0],0);
               this.currentClass = res.data[0].id;
               this.courseId = res.data[0].courseId;
+              this.getList(res.data[0],0);
               this['nodata' + typeId] = false;
             }
           } else {

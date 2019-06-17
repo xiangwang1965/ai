@@ -7,7 +7,6 @@
                     <img :src="images.back" alt="" class="back" @click="goBack">
                     <span class="tit">小智AI助教</span>
                     </div>
-
                 <div class="talk_list">
                       <transition-group name="list" tag="div">
                     <div :key="'list'+p" v-for="(item,p) in showDetail">
@@ -30,7 +29,7 @@
                     <li :key="i" v-for="(item,i) in pptData">
                         <div class="num"><span :class="{active:showPicNum == item.index}">{{item.index}}</span></div>
                         <div class="page" @click="changeShowInfo(item,i)">
-                            <img class="page_img" :src="item.image" alt="">
+                            <img class="page_img" :class="showPicNum == item.index? 'page_img_active':''" :src="item.image" alt="">
                         </div>
                     </li>
                     <!-- <li>
@@ -51,8 +50,8 @@
             </div>
         </div>
         <footer>
-            <div class="btn_254" @click="changeTab(false)" style="background: #ACCFFF;margin: 0 0.17rem 0 4.02rem;">讲解模式</div>
-            <div class="btn_254" @click="changeTab(true)">实践模式</div>
+            <div :class="!showPractice? 'btn_254':'btn_255'" @click="changeTab(false)" style="margin: 0 0.17rem 0 4.02rem;">讲解模式</div>
+            <div :class="showPractice? 'btn_254':'btn_255'" @click="changeTab(true)">实践模式</div>
         </footer>
 
     </div>
@@ -68,6 +67,7 @@ export default {
   data() {
     return {
       showManage: true,
+      activeClass:'btn_254',
       images: {
         back:require("../../../static/image/back_p.png"),
         logo: require("../../../static/image/logo_p.png"),
@@ -298,6 +298,7 @@ export default {
                 border: 0.01rem solid #979797;
                 position: relative;
                 margin-top:0.02rem;
+                margin-left:0.1rem;
             }
             .talk_list{
                 height: 90%;
@@ -314,7 +315,7 @@ export default {
 
             }
             .gradient {
-                margin-left: 0.23rem;
+                margin-left: 0.13rem;
                 -webkit-box-sizing: border-box;
                 box-sizing: border-box;
                 padding: 0.02rem;
@@ -359,6 +360,7 @@ export default {
                         text-align: center;
                         color: green;
                         font-size: 0.2rem;
+                        line-height:1.25rem;
                         .active {
                             border: solid 0.03rem #4592FE;
                             border-radius: 0.1rem;
@@ -374,6 +376,9 @@ export default {
                             width: 100%;
                             height: 100%;
                             display: block;
+                        }
+                       .page_img_active{
+                            border:2px solid red
                         }
                         .change{
                             position: absolute;
