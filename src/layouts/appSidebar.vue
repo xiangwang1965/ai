@@ -238,6 +238,9 @@ export default {
             .id {
                 color:#fff
             }
+            .lesson_lock {
+                margin-top:0.3rem;
+            }
         }
         .out_login{
             position: absolute;

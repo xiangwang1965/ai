@@ -13,7 +13,7 @@
         <div class="class_title_list">
           <div class="class_title class_S" @click="getData(1)"></div>
           <el-collapse-transition>
-            <ul class="class_list" v-show="show1">
+            <ul class="class_list" v-show="show1" v-scrollBar>
               <li
                 :class="{class_dis:currentClass == item.id}"
                 class="class_item class_item_yellow"
@@ -38,7 +38,7 @@
           </el-collapse-transition>
           <div class="class_title class_P" @click="getData(2)"></div>
           <el-collapse-transition class="class_list">
-            <ul class="class_list" v-show="show2">
+            <ul class="class_list" v-show="show2" v-scrollBar>
               <li
                 :class="{class_dis:currentClass == item.id}"
                 class="class_item class_item_blue"
@@ -63,7 +63,7 @@
           </el-collapse-transition>
           <div class="class_title class_N" @click="getData(3)"></div>
           <el-collapse-transition>
-            <ul class="class_list" v-show="show3">
+            <ul class="class_list" v-show="show3" v-scrollBar>
               <li
                 :class="{class_dis:currentClass == item.id}"
                 class="class_item class_item_red"
@@ -88,7 +88,7 @@
           </el-collapse-transition>
           <div class="class_title class_A" @click="getData(4)"></div>
           <el-collapse-transition>
-            <ul class="class_list" v-show="show4">
+            <ul class="class_list" v-show="show4" v-scrollBar>
               <li
                 :class="{class_dis:currentClass == item.id}"
                 class="class_item class_item_purple"
@@ -134,15 +134,30 @@
                     </div>
                 </div>
                 <div class="lesson_step_list">
-                    <div @click="practiceHandle(item)" class="lesson_item" :key="c" v-for="(item,c) in coursePlanData.list">
+                    <div @click="practiceHandle(item,c)" class="lesson_item" :key="c" v-for="(item,c) in coursePlanData.list">
                         <div class="lesson_item_icon">
                             <div :class="item.pointclass">
                             </div>
                         </div>
-                        <div class="lesson_box">
+                        <div v-if="c >1" :class="item.status == 0? 'lesson_box_active':'lesson_box'" >
                             <div class="lesson_name">{{item.name}}</div>
                             <div class="lesson_info">
-                                <div class="lesson_step_lable" v-if="item.status == 0">未开始</div>
+                                <div class="lesson_step_lable" v-if="item.status == 0">
+                                    <img class="fixed_lock" :src="lockImg" alt="">
+                                    </div>
+                                <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1" >进行中</div>
+                                <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
+                                <div class="lesson_step" v-if="item.status != 0">
+                                    <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
+                                    <div class="lesson_step_bg"></div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="lesson_box" v-else>
+                            <div class="lesson_name">{{item.name}}</div>
+                            <div class="lesson_info">
+                                <div class="lesson_step_lable" v-if="item.status == 0">
+                                    未开始</div>
                                 <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1" >进行中</div>
                                 <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
                                 <div class="lesson_step">
@@ -206,6 +221,7 @@ import authUtils from "@/services/auth/utils";
 export default {
   data() {
     return {
+      lockImg:require('../../../static/image/lock.png'),
       activeNames: ["1"],
       courseList: {
         course1: [],
@@ -272,7 +288,10 @@ export default {
       toggleReportAdd() {
           this.showCourseReportAdd = !this.showCourseReportAdd;
       },
-     practiceHandle(item) {
+     practiceHandle(item, index) {
+         if (item.status == 0 && index > 1) {
+             return false;
+         }
          this.$router.push({
              name:'practice',
              query:{
@@ -420,8 +439,8 @@ export default {
     .left_content {
       .class_title_list {
         .class_list {
+            position:relative;
           .class_item {
-            width: 4.47rem;
             height: 0.68rem;
             background: #fff;
             box-shadow: 0 0 0.01rem 0 rgba(0, 0, 0, 0.5);
@@ -430,6 +449,7 @@ export default {
             box-sizing: border-box;
             margin-left: 0.02rem;
             margin-bottom: 0.21rem;
+            margin-right:0.02rem;
             overflow: hidden;
             position: relative;
             .fixed_lock {
@@ -641,11 +661,16 @@ export default {
             width: 0;
           }
         }
+        .lesson_box_active {
+            background: #E7EEFF;
+          }
         .lesson_box {
+            background: #fff;
+        }
+        .lesson_box, .lesson_box_active {
           flex: 1;
           height: 0.8rem;
           border-radius: 0.42rem;
-          background: #fff;
           display: flex;
           .lesson_name {
             width: 1.48rem;
@@ -662,6 +687,12 @@ export default {
               color: #c1c1c1;
               margin-right: 0.25rem;
               margin-top: 0.14rem;
+              .fixed_lock {
+                    position: relative;
+                    width: 0.21rem;
+                    height: 0.2rem;
+                    top: 0.15rem;
+              }
             }
             .lesson_step_lable_ing {
               color: #ffc151;
