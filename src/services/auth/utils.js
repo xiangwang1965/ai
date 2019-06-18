@@ -6,7 +6,7 @@ import authApi from './index'
 const TOKEN_KEY = 'tocken'
 // 登录后的用户信息
 const USER_KEY = 'USER_INFO'
-const EXPIRES = 1 // 24 小时过期
+const EXPIRES = new Date(new Date().getTime() + 50 * 60 * 1000)// 24 小时过期
 
 export function getToken () {
   return Cookies.get(TOKEN_KEY)

@@ -4,7 +4,7 @@
         <div class="left-item">
             <div class="h3">现有班级</div>
             <ul class="students">
-                <li v-for="item in datalist" :class="{active:currentClass=== item.id}" @click="setRight(item)" :key="item.id">
+                <li v-for="item in datalist" :class="{active:currentClass=== item.id}" @click="gecurClassDetail(item)" :key="item.id">
                     <div>
                         <p>{{item.courseName}}</p>
                         <p style="margin-top:4px;">时间：{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</p>
@@ -33,7 +33,7 @@
             </div>
         </div>
         <el-dialog append-to-body width="50%" title="创建班级" :visible.sync="showCreate">
-            <createClass ref="child"></createClass>
+            <createClass ref="child" v-on:toggleCreate="toggleCreate"></createClass>
         </el-dialog>
     </div>
 </template>
@@ -57,10 +57,14 @@ export default {
         createClass
     },
     mounted(){
-        this.setRight(this.datalist[this.currentIndex]);
+        this.gecurClassDetail(this.datalist[this.currentIndex]);
     },
     methods:{
-        setRight(data){
+        toggleCreate(){
+            this.showCreate = !this.showCreate;
+            this.$emit("refresh",this.datalist);
+        },
+        gecurClassDetail(data){
             if(!data){
                 this.className = '';
                 this.course = '';
@@ -98,7 +102,7 @@ export default {
                             this.datalist.splice(index,1);
                         }
                     });
-                    this.setRight(this.datalist[0]);
+                    this.gecurClassDetail(this.datalist[0]);
                     this.$emit('refresh',this.datalist);
                     this.$message({
                         type: 'success',

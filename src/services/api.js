@@ -39,7 +39,7 @@ api.interceptors.response.use(res => {
     if (window.location.href.indexOf('wiser-bot') > -1) {
         window.location.href = config.LOGIN_URL
     } else {
-        window.location.href = '/auth'
+        window.location.href = '/auth?showLogin=true'
     }
   }
   if (res.data.status_code === 200 && res.data) {

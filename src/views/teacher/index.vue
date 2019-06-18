@@ -64,7 +64,7 @@
       </div>
     </div>
     <el-dialog title="添加教师管理" :visible.sync="teacherManage">
-        <teacherCreate ref="teacherCreate" :currentClass="currentTeacher"></teacherCreate>
+        <teacherCreate ref="teacherCreate" :currentClass="currentTeacher"  v-on:refresh="refresh"></teacherCreate>
     </el-dialog>
   </div>
 
@@ -200,6 +200,10 @@ export default {
     teacherCreate
   },
   methods: {
+    refresh() {
+        this.teacherManage = false;
+        this.getData();
+    },
     getData() {
       teacher.querylist(this.params).then(res => {
         if (res.code === "001") {

@@ -42,6 +42,7 @@ export default {
         margin: 0 auto;
         background: #F3F6FC;
         border-radius: 0.20rem;
+        margin-top:1rem;
     }
     .content_right{
         flex: 1;

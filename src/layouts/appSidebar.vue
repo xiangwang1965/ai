@@ -162,16 +162,14 @@ logout() {
         color: #ffffff;
         cursor: pointer;
         background-color: transparent !important;
-        border-left: 1px solid transparent;
+        border-left: 2px solid transparent;
         padding-left: 0px;
-        border-radius: 25px 0 0 25px;
         text-align: left;
       }
       .el-menu-item.is-active {
-        border-left: 1px solid #fff;
+        border-left: 2px solid #fff;
         color: #fff !important;
         opacity: 1;
-        border-radius: 25px 0 0 25px;
       }
       li {
         border-bottom: none;

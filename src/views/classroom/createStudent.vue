@@ -80,7 +80,7 @@
 import classApi from '../../services/classroom'
 import utils from '../../utils'
 export default {
-    props:['currentType','currentClass','codeOptions'],
+    props:['currentType','currentClass','codeOptions','courseId'],
     data(){
         return {
             value:'',
@@ -222,7 +222,7 @@ export default {
         },
         createStudent(){
             this.form.clsId = this.currentClass.id;
-            this.form.courseId = this.currentType;
+            this.form.courseId = this.courseId;
             classApi.createStudent(this.form).then(res => {
                 if(res.code === '001'){
                     this.showConfirm = false;

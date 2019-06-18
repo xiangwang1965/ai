@@ -1,7 +1,7 @@
 <template>
     <div class="studentManage dialog_content">
         <el-dialog center append-to-body title="创建学生信息" :visible.sync="showCreate">
-            <createStudent :codeOptions="codeList" :currentClass="currentClass" :currentType="currentType" ref="child"></createStudent>
+            <createStudent :codeOptions="codeList" :currentClass="currentClass" :currentType="currentType" :courseId="courseId" ref="child"></createStudent>
         </el-dialog>
                 <div class="dialog_center">
                     <div class="dialog_l_r">
@@ -80,7 +80,7 @@
 import classApi from '../../services/classroom';
 import createStudent from "./createStudent";
 export default {
-    props:['studentlist','currentClass','currentType'],
+    props:['studentlist','currentClass','currentType','courseId'],
     data(){
         return {
             showManage:true,

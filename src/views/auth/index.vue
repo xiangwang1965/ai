@@ -1,16 +1,22 @@
 <template>
   <div class="authView">
-    <div class="loginForm1">
+        <el-header class="header" v-if="!showLogin">
+            <div class="header_right" style="cursor: pointer">
+             <img :src="menuIcon">
+        </div>
+  </el-header>
+    <div class="loginForm1" v-if="!showLogin">
         <div class="tit">
             <img :src="urls.logoIndex">
         </div>
-        <div class="bottom">
+        <div class="bottom" @click="loginBoxHandle">
             <div class="img">
                 <img :src="urls.arrow">
             </div>
             <span class="bTit"> 点击登录</span>
         </div>
     </div>
+     <transition name="slide-fade">
     <el-form
       class="loginForm"
       ref="form"
@@ -35,6 +41,7 @@
         <p class="phone"></p>
       </div>
     </el-form>
+    </transition>
   </div>
 </template>
 
@@ -46,6 +53,7 @@ export default {
   data() {
     return {
     showLogin:false,
+    menuIcon: require('../../../static/image/menuIcon.png'),
     urls:{
         username: require("../../../static/img/username.png"),
         pwd:require("../../../static/img/password.png"),
@@ -66,6 +74,9 @@ export default {
     toggleSchool
   },
   methods: {
+    loginBoxHandle(){
+        this.showLogin = true;
+    },
     goForget(){
         this.$router.push('forget');
     },
@@ -100,6 +111,22 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateY(100px);
+  opacity: 0;
+}
+
 .authView {
   width: 100%;
   height: 100%;
@@ -175,15 +202,20 @@ export default {
     line-height: 48px;
     }
     .bottom{
+        margin-top:300px;
         .img {
             img {
                 height:0.5rem;
+                margin-left: -0.2rem;
             }
         }
         .bTit{
-            color:#fff;
-            font-size:0.25rem;
-            letter-spacing:0.1rem;
+            opacity: 0.58;
+            font-family: HYQiHei-FZS;
+            font-size: 19px;
+            color: #FFFFFF;
+            letter-spacing: 15px;
+            text-align: center;
         }
     }
 }
@@ -383,4 +415,18 @@ input[type="number"] {
   margin-top: -100px;
   z-index: 999;
 }
+
+
+  .header {
+    .header_right{
+        float: right;
+        img{
+            width: 0.72rem;
+            height: 0.43rem;
+            display: block;
+            margin:0.49rem 0.08rem 0 0;
+        }
+    }
+  }
+
 </style>

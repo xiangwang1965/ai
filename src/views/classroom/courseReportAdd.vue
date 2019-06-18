@@ -17,45 +17,32 @@
               </div>
             </div>
           </div>
-            <el-form ref="form" :model="form"  @keyup.enter.native="handleSub" class="dialog_rig" style="padding:0 0.2rem;text-align: left;width:7.14rem">
+            <el-form ref="form" :label-position="formalign" :model="form"  @keyup.enter.native="handleSub" class="dialog_rig" label-width="2rem" size="mini">
             <ul class="form dialog_form">
                 <el-form-item label="· 课时选择:">
                     <el-select v-model="form.hourId" placeholder="请选择课时">
                     <el-option :key="i" v-for="(item,i) in courseList" :label="item.name" :value="item.id"></el-option>
                     </el-select>
-            </el-form-item>
-              <li class="form_row">
-                <div class="form_lable">· 学习内容:</div>
-                <div class="form_box">
-                  <textarea v-model="form.value"></textarea>
-                </div>
-              </li>
-              <li class="form_row">
-                <div class="form_lable">· 课后作业:</div>
-                <div class="form_box">
-                  <textarea v-model="form.task"></textarea>
-                </div>
-              </li>
-              <li class="form_row">
-                <div class="form_lable">· 课堂表现:</div>
-                <div class="form_box">
-                  <textarea v-model="form.feedback"></textarea>
-                </div>
-              </li>
-              <li class="form_row">
-                <div class="form_lable">· 老师反馈:</div>
-                <div class="form_box">
-                  <textarea  v-model="form.behavior"></textarea>
-                </div>
-              </li>
-
+                </el-form-item>
+                <el-form-item label="· 学习内容:" prop="value">
+                    <el-input type="textarea" v-model="form.value" :rows="4" size="mini"></el-input>
+                </el-form-item>
+                <el-form-item label="· 课后作业:" prop="task">
+                    <el-input type="textarea" v-model="form.task" :rows="4"></el-input>
+                </el-form-item>
+                <el-form-item label="· 课堂表现:" prop="feedback">
+                    <el-input type="textarea" v-model="form.feedback" :rows="4"></el-input>
+                </el-form-item>
+                <el-form-item label="· 老师反馈:" prop="behavior">
+                    <el-input type="textarea" v-model="form.behavior" :rows="4"></el-input>
+                </el-form-item>
               <li class="form_row">
                 <div class="form_lable">· 课堂评估:</div>
                 <div class="form_box">
                   <p>打分制度为从低到高</p>
                   <div class="radio_group">
                      <el-form-item label="操作能力">
-                          <el-radio-group v-model="form.operation">
+                          <el-radio-group v-model="form.operation" size="mini">
                             <el-radio :label="1">1分</el-radio>
                             <el-radio :label="2">2分</el-radio>
                             <el-radio :label="3">3分</el-radio>
@@ -64,7 +51,7 @@
                         </el-radio-group>
                      </el-form-item>
                     <el-form-item label="创新能力">
-                          <el-radio-group v-model="form.innovate">
+                          <el-radio-group v-model="form.innovate" size="mini">
                             <el-radio :label="1">1分</el-radio>
                             <el-radio :label="2">2分</el-radio>
                             <el-radio :label="3">3分</el-radio>
@@ -73,7 +60,7 @@
                         </el-radio-group>
                      </el-form-item>
                     <el-form-item label="交流能力">
-                          <el-radio-group v-model="form.exchange">
+                          <el-radio-group v-model="form.exchange" size="mini">
                             <el-radio :label="1">1分</el-radio>
                             <el-radio :label="2">2分</el-radio>
                             <el-radio :label="3">3分</el-radio>
@@ -82,7 +69,7 @@
                         </el-radio-group>
                      </el-form-item>
                      <el-form-item label="团队能力">
-                          <el-radio-group v-model="form.team">
+                          <el-radio-group v-model="form.team" size="mini">
                             <el-radio :label="1">1分</el-radio>
                             <el-radio :label="2">2分</el-radio>
                             <el-radio :label="3">3分</el-radio>
@@ -91,7 +78,7 @@
                         </el-radio-group>
                      </el-form-item>
                      <el-form-item label="抗挫折能力">
-                          <el-radio-group v-model="form.resist">
+                          <el-radio-group v-model="form.resist" size="mini">
                             <el-radio :label="1">1分</el-radio>
                             <el-radio :label="2">2分</el-radio>
                             <el-radio :label="3">3分</el-radio>
@@ -109,6 +96,14 @@
             </el-form>
         </div>
       </div>
+
+      <el-dialog :visible.sync="showSucBox" custom-class="dialog_result" center append-to-body  width="30%" id="dialog_result">
+            <div class="dialog_center">
+                <img :src="sucImg" class="result_icon">
+                <p class="result_txt">保存成功！</p>
+            </div>
+
+    </el-dialog>
     </div>
 </template>
 <script>
@@ -118,8 +113,11 @@ export default {
   props: ["curStudent",'studentlist','courseList','curClsId'],
   data() {
     return {
+    showSucBox:false,
+      formalign:'left',
       showManage: true,
       defaultImg: require("../../../static/img/student.png"),
+      sucImg: require('../../../static/image/result_success.png'),
       tInfo: {
         avatar: require("../../../static/image/person_background.png"),
         nameIcon: require("../../../static/image/name_icon.png")
@@ -162,7 +160,7 @@ export default {
   methods: {
       getCoursePlan(currentClass) {
       let params = {
-        clsId: currentClass,
+        clsId: this.curStudent.id,
       };
         classApi.getCoursePlan(params).then(res => {
             if (res.code === '001') {
@@ -221,14 +219,16 @@ export default {
       });
     },
     handleSub() {
+        this.$emit('toggleReportAdd');
       classApi
         .courseReportAdd(this.form)
         .then(res => {
           if (res.code === "001") {
-            this.$message({
-              message: "提交成功",
-              type: "success"
-            });
+            // this.$message({
+            //   message: "提交成功",
+            //   type: "success"
+            // });
+            this.showSucBox = true;
           } else {
             this.$message({
               message: "提交失败",
@@ -236,115 +236,51 @@ export default {
             });
           }
         })
-        .catch(err => {
-          this.$message({
-            message: "删除失败",
-            type: "error"
-          });
-        });
     }
   },
   mounted() {}
 };
 </script>
 <style lang="less" scoped>
-    @bottom:1px solid #979797;
-    .el-icon-delete{
-        cursor: pointer;
-        color:cornflowerblue;
+    .dialog_center {
+        overflow:hidden;
     }
-    .top{width:100%;height:5px;border-bottom:@bottom}
-    .h3{
-        width:100%;
-        height:44px;
-        line-height:44px;
-        border-bottom:@bottom;
-        color:#000;
-        text-align: center;
+    .dialog_form {
+        .el-form-item {
+            margin-left:0.34rem;
+            margin-right:0.34rem
+        }
+        .form_row{
+            .el-form-item {
+                margin:auto;
+            }
     }
-    .studentManage{
-        height:50vh;
-        margin:0;
-        padding:0;
-        .left-item{
-            float:left;
-            width:30vw;
-            height:100%;
-            border-right:@bottom;
-            ul{
-                margin:0 auto;
-                padding:0 5px;
-                max-height: 150px;
-                overflow-y:auto;
-                li{
-                    height:44px;
-                    border-bottom: 1px solid #979797;
-                    padding-top:10px;
-                    img{
-                        float:left;
-                        width:30px;
-                        height:30px;
-                        border-radius: 50%;
-                        background:#000;
-                    }
-                    height:44px;
-                    border-bottom: 1px solid #979797;
-                    padding-top:10px;
-                    div{
-                        float:left;
-                        margin-left:30px;
-                        margin-top:5px;
-                        width:280px;
-                        p{font-size:12px;}
-                    }
-                    i{
-                        margin-top:15px;
-                        margin-right:0px;
-                    }
-                    &.active{
-                        background:rgba(#F3F6FC);
-                    }
 
-                }
-            }
-            .studentInfo{
-                .info {
-                    height:60px;
-                    border-bottom:@bottom;
-                    .cac-button-one{
-                        margin-top:13px;
-                        width:20px;
-                        height:30px;
-                    }
-                }
-            }
+    .dialog_result{
+        height:3.61rem;
+    }
+    }
+    #dialog_result {
+       .dialog_center {
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-top: 0;
+        text-align:center;
+        overflow:auto;
+         .result_icon {
+            width: 1.1rem;
+            height: 1.14rem;
+            display: block;
         }
-        .right-item{
-            float:left;
-            width:45vw;
-            height:100%;
-            ul li{
-                width:450px;
-                padding:10px 5px;
-                background: #F3F6FC;
-                border-radius: 12px;
-                margin-left:10px;
-                margin-top:10px;
-                min-height:60px;
-                overflow: auto;
-                overflow-x:hidden;
-                line-height:100%;
-                p{
-                    float:left;
-                    width:100%;
-                    margin-left:18px;
-                    margin-top:10px;
-                    span{
-                        color:#9b9b9b;
-                    }
-                }
-            }
-        }
+       .result_txt {
+            text-align: center;
+            color: #4A4A4A;
+            font-size: 0.25rem;
+            margin-top: 0.27rem;
+       }
+       }
     }
 </style>
 
