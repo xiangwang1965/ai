@@ -147,18 +147,33 @@
                 <div class="lesson_item_icon">
                   <div :class="item.pointclass"></div>
                 </div>
-                <div class="lesson_box">
-                  <div class="lesson_name">{{item.name}}</div>
-                  <div class="lesson_info">
-                    <div class="lesson_step_lable" v-if="item.status == 0">未开始</div>
-                    <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1">进行中</div>
-                    <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
-                    <div class="lesson_step">
-                      <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
-                      <div class="lesson_step_bg"></div>
-                    </div>
-                  </div>
-                </div>
+                <div v-if="c >1" :class="item.status == 0? 'lesson_box_active':'lesson_box'" >
+                            <div class="lesson_name">{{item.name}}</div>
+                            <div class="lesson_info">
+                                <div class="lesson_step_lable" v-if="item.status == 0">
+                                    <img class="fixed_lock" :src="lockImg" alt="">
+                                    </div>
+                                <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1" >进行中</div>
+                                <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
+                                <div class="lesson_step" v-if="item.status != 0">
+                                    <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
+                                    <div class="lesson_step_bg"></div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="lesson_box" v-else>
+                            <div class="lesson_name">{{item.name}}</div>
+                            <div class="lesson_info">
+                                <div class="lesson_step_lable" v-if="item.status == 0">
+                                    未开始</div>
+                                <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1" >进行中</div>
+                                <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
+                                <div class="lesson_step">
+                                    <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
+                                    <div class="lesson_step_bg"></div>
+                                </div>
+                            </div>
+                        </div>
               </div>
             </div>
           </div>
@@ -272,6 +287,7 @@ import courseReport from "./courseReport";
 export default {
   data() {
     return {
+        lockImg:require('../../../static/image/lock.png'),
       courseId: "",
       activeNames: ["1"],
       courseList: {
@@ -749,11 +765,16 @@ export default {
             width: 0;
           }
         }
+         .lesson_box_active {
+            background: #E7EEFF;
+          }
         .lesson_box {
+            background: #fff;
+        }
+        .lesson_box, .lesson_box_active{
           flex: 1;
           height: 0.8rem;
           border-radius: 0.42rem;
-          background: #fff;
           display: flex;
           .lesson_name {
             width: 1.48rem;
@@ -770,6 +791,12 @@ export default {
               color: #c1c1c1;
               margin-right: 0.25rem;
               margin-top: 0.14rem;
+              .fixed_lock {
+                    position: relative;
+                    width: 0.21rem;
+                    height: 0.2rem;
+                    top: 0.15rem;
+              }
             }
             .lesson_step_lable_ing {
               color: #ffc151;
