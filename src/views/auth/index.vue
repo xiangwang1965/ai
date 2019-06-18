@@ -69,6 +69,11 @@ export default {
       }
     };
   },
+  created(){
+      if(this.$route.query.showLogin) {
+          this.showLogin = true;
+      }
+  },
   components: {
     appHeader,
     toggleSchool
