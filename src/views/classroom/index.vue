@@ -292,7 +292,7 @@ export default {
             this.level = item.level;
             this.stuCnt = item.stuCnt;
             this.currentClass = item.id;
-
+             this.courseId = item.courseId;
             this.currentIndex = index;
         if (this.isFirst) {
              this.getStudent();
