@@ -191,7 +191,10 @@ export default {
     logout() {
         authApi.logout().then(res=>{
             this.$router.push({
-                name:'auth'
+                name:'auth',
+                query:{
+                    showLogin:true
+                }
             })
         });
     },
