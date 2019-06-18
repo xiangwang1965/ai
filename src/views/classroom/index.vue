@@ -367,6 +367,7 @@ export default {
     search(){
       let params = {
         clsId:this.currentClass,
+        courseId:this.courseId,
         searchTxt:this.searchData
       }
       classApi.search(params).then(res => {
