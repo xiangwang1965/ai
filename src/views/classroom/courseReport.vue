@@ -17,32 +17,32 @@
               </div>
             </div>
           </div>
-             <el-form ref="form" :label-position="formalign" :model="form"  @keyup.enter.native="handleSub" class="dialog_rig" label-width="80px" size="mini">
+            <el-form ref="form" :label-position="formalign" :model="form" class="dialog_rig" label-width="2rem" size="mini">
             <ul class="form dialog_form">
                 <el-form-item label="· 课时选择:">
                     <el-select v-model="form.hourId" placeholder="请选择课时">
                     <el-option :key="i" v-for="(item,i) in courseList" :label="item.name" :value="item.id"></el-option>
                     </el-select>
-            </el-form-item>
-            <el-form-item label="· 学习内容:" prop="value">
-                <el-input type="textarea" v-model="form.value" :rows="4" size="mini"></el-input>
-            </el-form-item>
-            <el-form-item label="· 课后作业:" prop="task">
-                <el-input type="textarea" v-model="form.task" :rows="4"></el-input>
-            </el-form-item>
-            <el-form-item label="· 课堂表现:" prop="feedback">
-                <el-input type="textarea" v-model="form.feedback" :rows="4"></el-input>
-            </el-form-item>
-             <el-form-item label="· 老师反馈:" prop="behavior">
-                <el-input type="textarea" v-model="form.behavior" :rows="4"></el-input>
-            </el-form-item>
+                </el-form-item>
+                <el-form-item label="· 学习内容:" prop="value">
+                    <el-input type="textarea" v-model="form.value" :rows="4" size="mini"></el-input>
+                </el-form-item>
+                <el-form-item label="· 课后作业:" prop="task">
+                    <el-input type="textarea" v-model="form.task" :rows="4"></el-input>
+                </el-form-item>
+                <el-form-item label="· 课堂表现:" prop="feedback">
+                    <el-input type="textarea" v-model="form.feedback" :rows="4"></el-input>
+                </el-form-item>
+                <el-form-item label="· 老师反馈:" prop="behavior">
+                    <el-input type="textarea" v-model="form.behavior" :rows="4"></el-input>
+                </el-form-item>
               <li class="form_row">
                 <div class="form_lable">· 课堂评估:</div>
                 <div class="form_box">
                   <p>打分制度为从低到高</p>
                   <div class="radio_group">
                      <el-form-item label="操作能力">
-                          <el-radio-group v-model="form.operation">
+                          <el-radio-group v-model="form.operation" size="mini">
                             <el-radio :label="1">1分</el-radio>
                             <el-radio :label="2">2分</el-radio>
                             <el-radio :label="3">3分</el-radio>
@@ -51,7 +51,7 @@
                         </el-radio-group>
                      </el-form-item>
                     <el-form-item label="创新能力">
-                          <el-radio-group v-model="form.innovate">
+                          <el-radio-group v-model="form.innovate" size="mini">
                             <el-radio :label="1">1分</el-radio>
                             <el-radio :label="2">2分</el-radio>
                             <el-radio :label="3">3分</el-radio>
@@ -60,7 +60,7 @@
                         </el-radio-group>
                      </el-form-item>
                     <el-form-item label="交流能力">
-                          <el-radio-group v-model="form.exchange">
+                          <el-radio-group v-model="form.exchange" size="mini">
                             <el-radio :label="1">1分</el-radio>
                             <el-radio :label="2">2分</el-radio>
                             <el-radio :label="3">3分</el-radio>
@@ -69,7 +69,7 @@
                         </el-radio-group>
                      </el-form-item>
                      <el-form-item label="团队能力">
-                          <el-radio-group v-model="form.team">
+                          <el-radio-group v-model="form.team" size="mini">
                             <el-radio :label="1">1分</el-radio>
                             <el-radio :label="2">2分</el-radio>
                             <el-radio :label="3">3分</el-radio>
@@ -78,7 +78,7 @@
                         </el-radio-group>
                      </el-form-item>
                      <el-form-item label="抗挫折能力">
-                          <el-radio-group v-model="form.resist">
+                          <el-radio-group v-model="form.resist" size="mini">
                             <el-radio :label="1">1分</el-radio>
                             <el-radio :label="2">2分</el-radio>
                             <el-radio :label="3">3分</el-radio>
@@ -102,6 +102,7 @@ export default {
   props: ["curStudent", 'curClsId','studentlist','courseList'],
   data() {
     return {
+        formalign:'left',
       showManage: true,
       defaultImg: require("../../../static/img/student.png"),
       tInfo: {
@@ -175,12 +176,23 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.dialog_center {
-        overflow:hidden;
+    .dialog_center {
+            overflow:hidden;
+        }
+     .dialog_form {
+        .el-form-item {
+            margin-left:0.34rem;
+            margin-right:0.34rem
+        }
+        .form_row{
+            .el-form-item {
+                margin:auto;
+            }
     }
-    .el-form-item {
-        margin-left:0.34rem;
-        margin-right:0.34rem
+
+    .dialog_result{
+        height:3.61rem;
+    }
     }
 
 </style>

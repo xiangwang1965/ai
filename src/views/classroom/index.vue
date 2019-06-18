@@ -191,7 +191,7 @@
       </div>
     </div>
     <el-dialog center append-to-body title="学习报告" width="60%" :visible.sync="showCourseReportAdd" top="1vh">
-       <courseReportAdd :courseList="coursePlanData.list" ref="courseReportAdd" :curClsId="currentClass" :curStudent="curStudent" :studentlist="studentsList"></courseReportAdd>
+       <courseReportAdd :courseList="coursePlanData.list" ref="courseReportAdd" :curClsId="currentClass" :curStudent="curStudent" :studentlist="studentsList" v-on:toggleReportAdd="toggleReportAdd"></courseReportAdd>
     </el-dialog>
     <el-dialog center append-to-body title="学习报告" width="60%" :visible.sync="showCourseReport" top="1vh">
        <courseReport v-on:refresh="refresh" ref="courseReport" :curClsId="currentClass" :curStudent="curStudent" :courseList="coursePlanData.list"></courseReport>
