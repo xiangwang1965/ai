@@ -69,7 +69,12 @@ export default {
           path: "/course",
           title: "课程订单",
           icon: "icon-cac-wisroom"
-        }
+        },
+        {
+        path: "",
+        title: "数据魔方",
+        icon: "icon-cac-platform"
+        },
       ],
       routes: ["/class", "/teacher", "/buy", "/course", "/classroom"],
       is_live: 1,
