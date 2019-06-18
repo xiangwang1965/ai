@@ -1,12 +1,23 @@
 <template>
   <div class="authView">
+    <div class="loginForm1">
+        <div class="tit">
+            <img :src="urls.logoIndex">
+        </div>
+        <div class="bottom">
+            <div class="img">
+                <img :src="urls.arrow">
+            </div>
+            <span class="bTit"> 点击登录</span>
+        </div>
+    </div>
     <el-form
       class="loginForm"
       ref="form"
       :model="form"
       size="mini"
       @keyup.enter.native="handleLogin"
-    >
+    v-if="showLogin">
      <h1 class="title">登录</h1>
      <span class="minTit">LOGIN RIGEST</span>
       <span class="tit2">欢迎您回来</span>
@@ -34,9 +45,12 @@ import toggleSchool from "./components/toggleSchool";
 export default {
   data() {
     return {
+    showLogin:false,
     urls:{
         username: require("../../../static/img/username.png"),
         pwd:require("../../../static/img/password.png"),
+        logoIndex:require('../../../static/image/logoIndex.png'),
+        arrow:require('../../../static/image/arrow.png'),
     },
       multiple: false,
       users: [],
@@ -85,7 +99,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .authView {
   width: 100%;
   height: 100%;
@@ -113,31 +127,65 @@ export default {
   border: 3px solid #4b93f9;
   border-radius: 25px;
   box-shadow: 0 0 25px #cac6c6;
-}
-.title {
-  font-size: 33px;
-  color: #fff;
-  letter-spacing: 20px;
-  text-align: center;
-  line-height: 48px;
-}
-.minTit {
+  .title {
+    font-size: 33px;
+    color: #fff;
+    letter-spacing: 20px;
+    text-align: center;
+    line-height: 48px;
+    }
+    .minTit {
     display:block;
     opacity: 0.7;
-font-family: ArialRoundedMTBold;
-font-size: 12px;
-color: #FFFFFF;
-letter-spacing: 1.6px;
-text-align: center;
+    font-family: ArialRoundedMTBold;
+    font-size: 12px;
+    color: #FFFFFF;
+    letter-spacing: 1.6px;
+    text-align: center;
+    }
+    .tit2 {
+        margin-top:30px;
+        display:block;
+        font-family: HYQiHei-EES;
+    font-size: 13px;
+    color: #FFFFFF;
+    letter-spacing: 1.73px;
+    text-align: center;
+    }
 }
-.tit2 {
-    margin-top:30px;
-    display:block;
-    font-family: HYQiHei-EES;
-font-size: 13px;
-color: #FFFFFF;
-letter-spacing: 1.73px;
-text-align: center;
+.loginForm1 {
+  position: absolute;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  background-clip: padding-box;
+  margin-left: -248px;
+  margin-top: -271px;
+  left: 50%;
+  top: 50%;
+  width: 496px;
+  height: 542px;
+  padding: 35px 35px 15px 35px;
+
+  .title {
+    font-size: 33px;
+    color: #fff;
+    letter-spacing: 20px;
+    text-align: center;
+    line-height: 48px;
+    }
+    .bottom{
+        .img {
+            img {
+                height:0.5rem;
+            }
+        }
+        .bTit{
+            color:#fff;
+            font-size:0.25rem;
+            letter-spacing:0.1rem;
+        }
+    }
 }
 .center {
   width: 1234px;
