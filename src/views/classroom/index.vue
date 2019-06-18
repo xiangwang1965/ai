@@ -217,6 +217,7 @@ import courseReport from './courseReport';
 export default {
   data() {
     return {
+    courseId:'',
       activeNames: ["1"],
       courseList: {
         course1: [],
@@ -397,8 +398,9 @@ export default {
             console.log(this.courseList);
             this.currentList = res.data;
             if(this.isFirst){
-              this.getList(res.data[0],0);
               this.currentClass = res.data[0].id;
+              this.courseId = res.data[0].courseId;
+              this.getList(res.data[0],0);
               this['nodata' + typeId] = false;
             }
           } else {
@@ -414,6 +416,7 @@ export default {
     getStudent() {
       let params = {
         clsId: this.currentClass,
+        courseId:this.courseId,
         searchTxt:''
       };
       classApi.getStudent(params).then(res => {
