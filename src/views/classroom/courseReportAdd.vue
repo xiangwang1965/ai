@@ -97,20 +97,12 @@
         </div>
       </div>
 
-      <el-dialog :visible.sync="showSucBox" center append-to-body>
-        <div class="dialog_wrap dialog_result" style="" id="addResult">
-        <div class="dialog_content">
-            <div class="dialog_header">
-                <span class="dialog_back" id="resultclose"></span>
-            </div>
+      <el-dialog :visible.sync="showSucBox" custom-class="dialog_result" center append-to-body  width="30%" id="dialog_result">
             <div class="dialog_center">
                 <img :src="sucImg" class="result_icon">
                 <p class="result_txt">保存成功！</p>
             </div>
 
-        </div>
-
-    </div>
     </el-dialog>
     </div>
 </template>
@@ -121,7 +113,7 @@ export default {
   props: ["curStudent",'studentlist','courseList','curClsId'],
   data() {
     return {
-        showSucBox:true,
+    showSucBox:false,
       formalign:'left',
       showManage: true,
       defaultImg: require("../../../static/img/student.png"),
@@ -227,14 +219,16 @@ export default {
       });
     },
     handleSub() {
+    this.$emit('toggleReportAdd');
       classApi
         .courseReportAdd(this.form)
         .then(res => {
           if (res.code === "001") {
-            this.$message({
-              message: "提交成功",
-              type: "success"
-            });
+            // this.$message({
+            //   message: "提交成功",
+            //   type: "success"
+            // });
+            this.showSucBox = true;
           } else {
             this.$message({
               message: "提交失败",
@@ -242,12 +236,6 @@ export default {
             });
           }
         })
-        .catch(err => {
-          this.$message({
-            message: "删除失败",
-            type: "error"
-          });
-        });
     }
   },
   mounted() {}
@@ -260,6 +248,31 @@ export default {
     .el-form-item {
         margin-left:0.34rem;
         margin-right:0.34rem
+    }
+    .dialog_result{
+        height:3.61rem;
+    }
+    #dialog_result {
+       .dialog_center {
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-top: 0;
+        text-align:center;
+        overflow:auto;
+         .result_icon {
+            width: 1.1rem;
+            height: 1.14rem;
+            display: block;
+        }
+       .result_txt {
+            text-align: center;
+            color: #4A4A4A;
+            font-size: 0.25rem;
+            margin-top: 0.27rem;
+       }
+       }
     }
 </style>
 

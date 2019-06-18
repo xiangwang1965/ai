@@ -269,6 +269,9 @@ export default {
     courseReport
   },
   methods: {
+      toggleReportAdd() {
+          this.showCourseReportAdd = !this.showCourseReportAdd;
+      },
      practiceHandle(item) {
          this.$router.push({
              name:'practice',
