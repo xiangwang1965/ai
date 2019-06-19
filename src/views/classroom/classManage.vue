@@ -4,7 +4,7 @@
         <div class="left-item">
             <div class="h3">现有班级</div>
             <ul class="students">
-                <li v-for="item in datalist" :class="{active:currentClass=== item.id}" @click="gecurClassDetail(item)" :key="item.id">
+                <li v-for="item in currentList" :class="{active:currentClass=== item.id}" @click="gecurClassDetail(item)" :key="item.id">
                     <div>
                         <p>{{item.courseName}}</p>
                         <p style="margin-top:4px;">时间：{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</p>
@@ -28,9 +28,9 @@
                     </li>
                 </ul>
             </div>
-            <div class="save">
+            <!-- <div class="save">
                 <div type="default" class="btn_172">保存</div>
-            </div>
+            </div> -->
         </div>
         <el-dialog append-to-body width="50%" title="创建班级" :visible.sync="showCreate">
             <createClass ref="child" v-on:toggleCreate="toggleCreate"></createClass>
@@ -41,7 +41,7 @@
 import createClass from "./createClass";
 import classApi from '../../services/classroom';
 export default {
-    props:['datalist','currentIndex'],
+    props:['currentIndex'],
     data(){
         return {
             defaultImg:require('../../../static/img/student.png'),
@@ -50,19 +50,24 @@ export default {
             className:'',
             course:'',
             school:'',
-            teacher:''
+            teacher:'',
+        }
+    },
+    computed: {
+        currentList(){
+            return this.$store.state.currentList;
         }
     },
     components:{
         createClass
     },
     mounted(){
-        this.gecurClassDetail(this.datalist[this.currentIndex]);
+        this.gecurClassDetail(this.currentList[this.currentIndex]);
     },
     methods:{
         toggleCreate(){
             this.showCreate = !this.showCreate;
-            this.$emit("refresh",this.datalist);
+            this.$emit("refresh",this.currentList);
         },
         gecurClassDetail(data){
             if(!data){
@@ -97,17 +102,14 @@ export default {
                     clsId:item.id
                 }
                 classApi.deleteClass(params).then(res => {
-                    this.datalist.forEach((cla,index) => {
+                    this.currentList.forEach((cla,index) => {
                         if(cla.id === item.id){
-                            this.datalist.splice(index,1);
+                            this.currentList.splice(index,1);
                         }
                     });
-                    this.gecurClassDetail(this.datalist[0]);
-                    this.$emit('refresh',this.datalist);
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    });
+                    this.gecurClassDetail(this.currentList[0]);
+                    this.$store.state.currentList = this.currentList;
+                    this.$emit('refresh',this.currentList);
                 })
             }).catch(() => {
                 this.$message({

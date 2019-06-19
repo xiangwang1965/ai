@@ -4,12 +4,13 @@ Vue.use(Vuex)
 
 var state = {
   count: 1,
-  brandList: []
+  list: [],
+  currentList:[],
 }
 
 var mutations = {
-  init () {
-    console.log('vuex init')
+  setCurrentList (list) {
+      state.currentList = list;
   }
 }
 

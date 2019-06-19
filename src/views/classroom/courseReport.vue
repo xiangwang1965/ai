@@ -20,7 +20,7 @@
             <el-form ref="form" :label-position="formalign" :model="form" class="dialog_rig" label-width="2rem" size="mini">
             <ul class="form dialog_form">
                 <el-form-item label="· 课时选择:">
-                    <el-select v-model="form.hourId" placeholder="请选择课时">
+                    <el-select v-model="form.hour_id" placeholder="请选择课时">
                     <el-option :key="i" v-for="(item,i) in courseList" :label="item.name" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
@@ -121,7 +121,7 @@ export default {
           task:'',
           feedback:'',
           behavior:'',
-          hourId:'',
+          hour_id:'',
           operation:'',
           innovate:'',
           exchange:'',
@@ -142,6 +142,7 @@ export default {
   },
   created() {
       this.getStuInfo(this.curStudent.id);
+      this.getReportInfo();
   },
   methods: {
       getReportInfo() {

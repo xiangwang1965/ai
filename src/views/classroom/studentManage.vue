@@ -101,6 +101,7 @@ export default {
         }
     },
     created(){
+        // 获取激活码
         if (this.currentClass && this.currentClass.id) {
             this.getCodeList(this.currentClass.id);
         }

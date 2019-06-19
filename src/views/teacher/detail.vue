@@ -82,12 +82,6 @@
         <el-table-column align="center" prop="student_count" label="学员数" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="start_end_time" label="课程起止日期" width="200px" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="join_time" label="加入班级时间" width="200px" show-overflow-tooltip></el-table-column>
-        <!-- <el-table-column align="center" label="操作" min-width="125px">
-          <template slot-scope="scope">
-            <el-button type="text" @click="transformClass(scope.row)" :disabled="scope.row.status===3">转班</el-button>
-            <el-button type="text" @click="handleDelete(scope.$index,scope.row)" :disabled="scope.row.status===3">退班</el-button>
-          </template>
-        </el-table-column> -->
       </el-table>
     </el-tabs>
     <el-dialog title="添加班级" :visible.sync="dialogTableVisible" width="1050px" top="5vh">

@@ -31,7 +31,7 @@ class Classroom extends CRUD {
     })
   }
 
-  getData(params){
+  queryClsListByTypeId(params){
     return this.sendGet(this.dataUrl,params).then(res => {
       return res;
     });

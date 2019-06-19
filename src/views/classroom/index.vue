@@ -11,112 +11,40 @@
           <div class="title_right">历史班级</div>
         </div>
         <div class="class_title_list">
-          <div class="class_title class_S" @click="getData(1)"></div>
-          <el-collapse-transition>
-            <ul class="class_list" v-show="show1" v-scrollBar>
-              <li
-                :class="{class_dis:currentClass == item.id}"
-                class="class_item class_item_yellow"
-                v-for="(item,index) in courseList.course1"
-                :key="index"
-                @click="getList(item,index)"
-              >
-                <div class="class_fixed"></div>
-                <div class="class_text">
-                  <p class="class_text_row">
-                    <span class="class_name">{{item.name}}</span>
-                    <span class="class_time">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
-                  </p>
-                  <p class="class_text_row">
-                    <span class="class_level">{{item.courseName}}</span>
-                    <span class="class_teacher">{{item.teacherName}}</span>
-                  </p>
-                </div>
-              </li>
-              <div class="nodata" v-show="nodata1">暂无数据</div>
-            </ul>
-          </el-collapse-transition>
-          <div class="class_title class_P" @click="getData(2)"></div>
-          <el-collapse-transition class="class_list">
-            <ul class="class_list" v-show="show2" v-scrollBar>
-              <li
-                :class="{class_dis:currentClass == item.id}"
-                class="class_item class_item_blue"
-                v-for="(item,index) in courseList.course2"
-                :key="index"
-                @click="getList(item,index)"
-              >
-                <div class="class_fixed"></div>
-                <div class="class_text">
-                  <p class="class_text_row">
-                    <span class="class_name">{{item.name}}</span>
-                    <span class="class_time">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
-                  </p>
-                  <p class="class_text_row">
-                    <span class="class_level">{{item.courseName}}</span>
-                    <span class="class_teacher">{{item.teacherName}}</span>
-                  </p>
-                </div>
-              </li>
-              <div class="nodata" v-show="nodata2">暂无数据</div>
-            </ul>
-          </el-collapse-transition>
-          <div class="class_title class_N" @click="getData(3)"></div>
-          <el-collapse-transition>
-            <ul class="class_list" v-show="show3" v-scrollBar>
-              <li
-                :class="{class_dis:currentClass == item.id}"
-                class="class_item class_item_red"
-                v-for="(item,index) in courseList.course3"
-                :key="index"
-                @click="getList(item,index)"
-              >
-                <div class="class_fixed"></div>
-                <div class="class_text">
-                  <p class="class_text_row">
-                    <span class="class_name">{{item.name}}</span>
-                    <span class="class_time">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
-                  </p>
-                  <p class="class_text_row">
-                    <span class="class_level">{{item.courseName}}</span>
-                    <span class="class_teacher">{{item.teacherName}}</span>
-                  </p>
-                </div>
-              </li>
-              <div class="nodata" v-show="nodata3">暂无数据</div>
-            </ul>
-          </el-collapse-transition>
-          <div class="class_title class_A" @click="getData(4)"></div>
-          <el-collapse-transition>
-            <ul class="class_list" v-show="show4" v-scrollBar>
-              <li
-                :class="{class_dis:currentClass == item.id}"
-                class="class_item class_item_purple"
-                v-for="(item,index) in courseList.course4"
-                :key="index"
-                @click="getList(item,index)"
-              >
-                <div class="class_fixed"></div>
-                <div class="class_text">
-                  <p class="class_text_row">
-                    <span class="class_name">{{item.name}}</span>
-                    <span class="class_time">{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
-                  </p>
-                  <p class="class_text_row">
-                    <span class="class_level">{{item.courseName}}</span>
-                    <span class="class_teacher">{{item.teacherName}}</span>
-                  </p>
-                </div>
-              </li>
-              <div class="nodata" v-show="nodata4">暂无数据</div>
-            </ul>
-          </el-collapse-transition>
+          <div :key="i" v-for="(type,i) in typeList">
+            <div class="class_title" :class="type.titClass" @click="getClsListByTypeId(type.id)"></div>
+            <el-collapse-transition>
+              <ul class="class_list" v-show="type.listShow" v-scrollBar>
+                <li :class="curClassDetail.id == item.id ? 'class_dis '+ type.listItemClass :type.listItemClass"
+                  class="class_item"
+                  v-for="(item,index) in type.classList"
+                  :key="index"
+                  @click="getList(item,index)"
+                >
+                  <div class="class_fixed"></div>
+                  <div class="class_text">
+                    <p class="class_text_row">
+                      <span class="class_name">{{item.name}}</span>
+                      <span
+                        class="class_time"
+                      >{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</span>
+                    </p>
+                    <p class="class_text_row">
+                      <span class="class_level">{{item.courseName}}</span>
+                      <span class="class_teacher">{{item.teacherName}}</span>
+                    </p>
+                  </div>
+                </li>
+                <div class="nodata" v-show="type.nodata">暂无数据</div>
+              </ul>
+            </el-collapse-transition>
+          </div>
         </div>
       </div>
       <div type="default" @click="classHandle" class="btn_124 classManagement_btn">管理</div>
     </div>
     <div class="content2">
-      <div class="content_title">SCRATCH初级编程1班</div>
+      <div class="content_title">{{curClassDetail.name}}</div>
       <div class="right_content">
         <div class="tab">
           <ul>
@@ -147,33 +75,32 @@
                 <div class="lesson_item_icon">
                   <div :class="item.pointclass"></div>
                 </div>
-                <div v-if="c >1" :class="item.status == 0? 'lesson_box_active':'lesson_box'" >
-                            <div class="lesson_name">{{item.name}}</div>
-                            <div class="lesson_info">
-                                <div class="lesson_step_lable" v-if="item.status == 0">
-                                    <img class="fixed_lock" :src="lockImg" alt="">
-                                    </div>
-                                <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1" >进行中</div>
-                                <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
-                                <div class="lesson_step" v-if="item.status != 0">
-                                    <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
-                                    <div class="lesson_step_bg"></div>
-                                </div>
-                            </div>
-                        </div>
-                         <div class="lesson_box" v-else>
-                            <div class="lesson_name">{{item.name}}</div>
-                            <div class="lesson_info">
-                                <div class="lesson_step_lable" v-if="item.status == 0">
-                                    未开始</div>
-                                <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1" >进行中</div>
-                                <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
-                                <div class="lesson_step">
-                                    <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
-                                    <div class="lesson_step_bg"></div>
-                                </div>
-                            </div>
-                        </div>
+                <div v-if="c >1" :class="item.status == 0? 'lesson_box_active':'lesson_box'">
+                  <div class="lesson_name">{{item.name}}</div>
+                  <div class="lesson_info">
+                    <div class="lesson_step_lable" v-if="item.status == 0">
+                      <img class="fixed_lock" :src="lockImg" alt>
+                    </div>
+                    <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1">进行中</div>
+                    <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
+                    <div class="lesson_step" v-if="item.status != 0">
+                      <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
+                      <div class="lesson_step_bg"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="lesson_box" v-else>
+                  <div class="lesson_name">{{item.name}}</div>
+                  <div class="lesson_info">
+                    <div class="lesson_step_lable" v-if="item.status == 0">未开始</div>
+                    <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1">进行中</div>
+                    <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
+                    <div class="lesson_step">
+                      <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
+                      <div class="lesson_step_bg"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -193,15 +120,15 @@
             <div class="class_infomation">
               <div class="item1">班级信息</div>
               <div class="item2">
-                <span>{{startTime}}-{{endTime}}</span>
+                <span>{{curClassDetail.startTime}}-{{curClassDetail.endTime}}</span>
                 <span>时间</span>
               </div>
               <div class="item3">
-                <span class="item_num">{{level}}</span>
+                <span class="item_num">{{curClassDetail.level}}</span>
                 <span class="item_txt">等级</span>
               </div>
               <div class="item3">
-                <span class="item_num">{{stuCnt}}</span>
+                <span class="item_num">{{curClassDetail.stuCnt}}</span>
                 <span class="item_txt">班级人数</span>
               </div>
             </div>
@@ -217,9 +144,9 @@
           </div>
         </div>
       </div>
-      <div class="btn_124 personManagement_btn" id="showPersonDialog" @click="handleManage2">管理</div>
+      <div class="btn_124 personManagement_btn" id="showPersonDialog" @click="handleStuManage">管理</div>
     </div>
-    <el-dialog center append-to-body title="学生管理" class="el-dialog2" :visible.sync="showManage2">
+    <el-dialog center append-to-body title="学生管理" class="el-dialog2" :visible.sync="showStuManage">
       <studentManage
         :currentType="currentType"
         ref="studentsManage"
@@ -228,13 +155,12 @@
         :courseId="courseId"
       ></studentManage>
     </el-dialog>
-    <el-dialog center append-to-body title="班级管理" :visible.sync="showManage1">
+    <el-dialog center append-to-body title="班级管理" :visible.sync="showClassManage">
       <classManage
         v-on:refresh="refresh"
         ref="classManage"
         class="el-dialog1"
         :currentIndex="currentIndex"
-        :datalist="currentList"
       ></classManage>
     </el-dialog>
 
@@ -251,7 +177,7 @@
       <courseReportAdd
         :courseList="coursePlanData.list"
         ref="courseReportAdd"
-        :curClsId="currentClass"
+        :curClsId="curClassDetail.id"
         v-on:toggleReportAdd="toggleReportAdd"
         :curStudent="curStudent"
         :studentlist="studentsList"
@@ -270,7 +196,7 @@
       <courseReport
         v-on:refresh="refresh"
         ref="courseReport"
-        :curClsId="currentClass"
+        :curClsId="curClassDetail.id"
         :curStudent="curStudent"
         :courseList="coursePlanData.list"
       ></courseReport>
@@ -287,39 +213,51 @@ import courseReport from "./courseReport";
 export default {
   data() {
     return {
-        lockImg:require('../../../static/image/lock.png'),
+      lockImg: require("../../../static/image/lock.png"),
       courseId: "",
       activeNames: ["1"],
-      courseList: {
-        course1: [],
-        course2: [],
-        course3: [],
-        course4: []
-      },
       studentsList: [],
-      show1: false,
-      show2: false,
-      show3: false,
-      show4: false,
-      nodata1: false,
-      nodata2: false,
-      nodata3: false,
-      nodata4: false,
-      classTitle: "",
-      startDate: "",
-      startTime: "",
-      endTime: "",
-      level: "",
-      stuCnt: "",
+      typeList: [
+        {
+          id: 1,
+          titClass: "class_S",
+          listItemClass: "class_item_yellow",
+          listShow: true,
+          classList: [],
+          nodata: false
+        },
+        {
+          id: 2,
+          titClass: "class_P",
+          listItemClass: "class_item_blue",
+          listShow: false,
+          classList: [],
+          nodata: false
+        },
+        {
+          id: 3,
+          titClass: "class_N",
+          listItemClass: "class_item_red",
+          listShow: false,
+          classList: [],
+          nodata: false
+        },
+        {
+          id: 4,
+          titClass: "class_A",
+          listItemClass: "class_item_purple",
+          listShow: false,
+          classList: [],
+          nodata: false
+        }
+      ],
       isFirst: true,
-      currentClass: "",
-      showManage1: false,
-      showManage2: false,
+      showClassManage: false,
+      showStuManage: false,
       currentIndex: "",
       currentList: [],
       currentType: "",
       searchData: "",
-      userInfo: {},
       /**右侧tab显示模块 */
       studentTabShow: true,
       coursePlanData: {},
@@ -327,24 +265,25 @@ export default {
       showCourseReportAdd: false,
       showCourseReport: false,
       curStudent: {},
-      lockScroll: true
+      lockScroll: true,
+      // 当前显示课程信息
+      curClassDetail:{},
     };
   },
   computed: {
     current() {
-      return this.courseList["course" + this.currentType][this.currentIndex];
+      return this.typeList[this.currentType-1][this.currentIndex];
     }
   },
   created() {
-    this.userInfo = authUtils.getUser();
-    this.getData(1);
+    this.getClsListByTypeId(1);
   },
   mounted() {
     let that = this;
     window.addEventListener(
       "scroll",
       function(e) {
-        if (this.showManage1 || this.showManage2) {
+        if (this.showClassManage || this.showStuManage) {
           e.preventDefault();
         }
       },
@@ -361,15 +300,10 @@ export default {
     toggleReportAdd() {
       this.showCourseReportAdd = !this.showCourseReportAdd;
     },
+    // 获取学生列表或者课程数据
     getList(item, index) {
-      this.classTitle = item.name;
-      this.startDate = item.startDate;
-      this.startTime = item.startTime;
-      this.endTime = item.endTime;
-      this.level = item.level;
-      this.stuCnt = item.stuCnt;
-      this.currentClass = item.id;
-      this.courseId = item.courseId;
+      // 默认班级展示信息
+      this.curClassDetail = item;
       this.currentIndex = index;
       if (this.isFirst) {
         this.getStudent();
@@ -384,8 +318,7 @@ export default {
     },
     getCoursePlan() {
       let params = {
-        clsId: this.currentClass
-        // clsId: 1,
+        clsId: this.curClassDetail.id
       };
       classApi.getCoursePlan(params).then(res => {
         if (res.code === "001") {
@@ -412,16 +345,18 @@ export default {
       }
     },
     classHandle() {
-      this.showManage1 = true;
+      this.showClassManage = true;
       if (this.$refs.classManage) {
-        this.$refs.classManage.gecurClassDetail(this.currentList[this.currentIndex]);
+        this.$refs.classManage.gecurClassDetail(
+          this.currentList[this.currentIndex]
+        );
       }
     },
-    handleManage2() {
-      this.showManage2 = true;
+    handleStuManage() {
+      this.showStuManage = true;
       if (this.$refs.studentsManage) {
         this.$refs.studentsManage.setClass();
-        this.$refs.studentsManage.getCodeList(this.currentClass);
+        this.$refs.studentsManage.getCodeList(this.curClassDetail.id);
       }
     },
 
@@ -442,7 +377,7 @@ export default {
     },
     search() {
       let params = {
-        clsId: this.currentClass,
+        clsId: this.curClassDetail.id,
         courseId: this.courseId,
         searchTxt: this.searchData
       };
@@ -451,48 +386,52 @@ export default {
       });
     },
     refresh(data) {
-      this.courseList["course" + this.currentType] = Object.assign({}, data);
+      this.typeList[this.currentType-1].classList = Object.assign({}, this.$store.state.currentList);
+
       this.getList(data[0], 0);
+      this.showClassManage = false;
+      this.showStuManage = false;
     },
-    getData(typeId) {
+    getClsListByTypeId(typeId) {
       let params = {
         schoolId: 1,
         typeId: typeId
       };
       let that = this;
-      for (let i = 1; i <= 4; i++) {
-        if (typeId !== i) {
-          this["show" + i] = false;
+      this.typeList.forEach((type, i) => {
+        if (type.id == typeId) {
+          this.typeList[i].listShow = true;
+        } else {
+          this.typeList[i].listShow = false;
         }
-      }
+      });
       this.currentType = typeId;
-      this["show" + typeId] = !this["show" + typeId];
-      if (!this.courseList["course" + typeId.length]) {
-        classApi.getData(params).then(res => {
+      if (!this.typeList[typeId - 1].classList.length) {
+        classApi.queryClsListByTypeId(params).then(res => {
           if (res.data && res.data.length) {
-            this.courseList["course" + typeId] = Object.assign({}, res.data);
-            console.log(this.courseList);
+            this.typeList[typeId - 1].classList = Object.assign({}, res.data);
             this.currentList = res.data;
+            this.$store.state.currentList = this.currentList;
+            console.log(this.$store.state);
             if (this.isFirst) {
-              this.currentClass = res.data[0].id;
-              this.courseId = res.data[0].courseId;
               this.getList(res.data[0], 0);
-              this["nodata" + typeId] = false;
+              this.typeList[typeId - 1].nodata = false;
             }
           } else {
-            this.courseList["course" + typeId] = [];
             this.currentList = [];
-            this["nodata" + typeId] = true;
+            this.$store.state.currentList = this.currentList;
+            console.log(this.$store.state);
+            this.typeList[typeId - 1].nodata = true;
           }
         });
       } else {
-        this.currentList = this.courseList["course" + typeId.length];
+        this.currentList = this.typeList[typeId - 1].classList;
       }
     },
     getStudent() {
       let params = {
-        clsId: this.currentClass,
-        courseId: this.courseId,
+        clsId: this.curClassDetail.id,
+        courseId: this.curClassDetail.courseId,
         searchTxt: ""
       };
       classApi.getStudent(params).then(res => {
@@ -542,7 +481,7 @@ export default {
     .left_content {
       .class_title_list {
         .class_list {
-            position:relative;
+          position: relative;
           .class_item {
             // width: 4.35rem;
             height: 0.68rem;
@@ -765,13 +704,14 @@ export default {
             width: 0;
           }
         }
-         .lesson_box_active {
-            background: #E7EEFF;
-          }
-        .lesson_box {
-            background: #fff;
+        .lesson_box_active {
+          background: #e7eeff;
         }
-        .lesson_box, .lesson_box_active{
+        .lesson_box {
+          background: #fff;
+        }
+        .lesson_box,
+        .lesson_box_active {
           flex: 1;
           height: 0.8rem;
           border-radius: 0.42rem;
@@ -792,10 +732,10 @@ export default {
               margin-right: 0.25rem;
               margin-top: 0.14rem;
               .fixed_lock {
-                    position: relative;
-                    width: 0.21rem;
-                    height: 0.2rem;
-                    top: 0.15rem;
+                position: relative;
+                width: 0.21rem;
+                height: 0.2rem;
+                top: 0.15rem;
               }
             }
             .lesson_step_lable_ing {
