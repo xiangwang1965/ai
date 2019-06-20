@@ -136,8 +136,8 @@ logout() {
     text-align: left;
     padding-left: 0.5rem;
     .photo {
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 0.68rem;
+      height: 0.68rem;
     }
     .userName {
       padding-top: 0.11rem;
