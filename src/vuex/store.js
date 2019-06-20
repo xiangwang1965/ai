@@ -7,6 +7,7 @@ var state = {
   list: [],
   userInfo:{},
   currentList:[],
+  curClsStuList:[],
 }
 
 var mutations = {

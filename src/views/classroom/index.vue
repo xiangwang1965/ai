@@ -151,8 +151,7 @@
         :currentType="currentType"
         ref="studentsManage"
         :currentClass="current"
-        :studentlist="studentsList"
-        :courseId="courseId"
+        :courseId="curClassDetail.courseId"
       ></studentManage>
     </el-dialog>
     <el-dialog center append-to-body title="班级管理" :visible.sync="showClassManage">
@@ -214,7 +213,6 @@ export default {
   data() {
     return {
       lockImg: require("../../../static/image/lock.png"),
-      courseId: "",
       activeNames: ["1"],
       studentsList: [],
       typeList: [
@@ -272,7 +270,8 @@ export default {
   },
   computed: {
     current() {
-      return this.typeList[this.currentType-1][this.currentIndex];
+        console.log(this.typeList[this.currentType-1].classList[this.currentIndex]);
+      return this.typeList[this.currentType-1].classList[this.currentIndex];
     }
   },
   created() {
@@ -378,7 +377,7 @@ export default {
     search() {
       let params = {
         clsId: this.curClassDetail.id,
-        courseId: this.courseId,
+        courseId: this.curClassDetail.courseId,
         searchTxt: this.searchData
       };
       classApi.search(params).then(res => {
@@ -393,7 +392,6 @@ export default {
     },
     getClsListByTypeId(typeId) {
       let params = {
-        // schoolId: this.$store.state.userInfo.id,
         typeId: typeId
       };
       let that = this;
@@ -436,6 +434,7 @@ export default {
       };
       classApi.getStudent(params).then(res => {
         this.studentsList = res.data;
+        this.$store.state.curClsStuList = this.studentsList;
       });
     }
   }

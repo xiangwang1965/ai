@@ -74,6 +74,14 @@
             <el-button type="default" class="cac-button-one">取消</el-button>
             <el-button type="default" @click="createStudent" class="cac-button-one">确定</el-button>
         </el-dialog>
+
+         <el-dialog :visible.sync="showSucBox" custom-class="dialog_result" center append-to-body  width="30%" id="dialog_result">
+            <div class="dialog_center">
+                <img :src="sucImg" class="result_icon">
+                <p class="result_txt">创建成功！</p>
+            </div>
+
+    </el-dialog>
     </div>
 </template>
 <script>
@@ -83,6 +91,8 @@ export default {
     props:['currentType','currentClass','codeOptions','courseId'],
     data(){
         return {
+            showSucBox:false,
+            sucImg: require('../../../static/image/result_success.png'),
             value:'',
             value1:'',
             showConfirm:false,
@@ -226,11 +236,9 @@ export default {
             classApi.createStudent(this.form).then(res => {
                 if(res.code === '001'){
                     this.showConfirm = false;
-                    this.$message({
-                        message: '创建学生信息成功！',
-                        type: 'success'
-                    });
-                    this.$router.push('/class');
+                    this.$store.state.curClsStuList.push(res.data);
+                    this.showSucBox = true;
+                    this.$emit('toggleCreate');
                 }else{
                     this.$message({
                         message: res.msg,
@@ -280,6 +288,29 @@ export default {
             letter-spacing: 0;
             text-align: center;
         }
+    }
+
+     #dialog_result {
+       .dialog_center {
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-top: 0;
+        text-align:center;
+        overflow:auto;
+         .result_icon {
+            width: 1.1rem;
+            height: 1.14rem;
+            display: block;
+        }
+       .result_txt {
+            text-align: center;
+            color: #4A4A4A;
+            font-size: 0.25rem;
+            margin-top: 0.27rem;
+       }
+       }
     }
 </style>
 
