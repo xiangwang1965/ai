@@ -55,6 +55,7 @@ export default {
     },
     computed: {
         currentList(){
+            console.log(this.$store.state.currentList);
             return this.$store.state.currentList;
         }
     },
@@ -67,7 +68,7 @@ export default {
     methods:{
         toggleCreate(){
             this.showCreate = !this.showCreate;
-            this.$emit("refresh",this.currentList);
+            this.$emit("refresh");
         },
         gecurClassDetail(data){
             if(!data){
@@ -109,7 +110,7 @@ export default {
                     });
                     this.gecurClassDetail(this.currentList[0]);
                     this.$store.state.currentList = this.currentList;
-                    this.$emit('refresh',this.currentList);
+                    this.$emit('refresh');
                 })
             }).catch(() => {
                 this.$message({

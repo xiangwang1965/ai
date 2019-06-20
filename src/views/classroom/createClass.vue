@@ -223,6 +223,9 @@ export default {
           if (res.code === "001") {
             this.showConfirm = false;
             this.showSucBox = true;
+            console.log(this.$store.state.currentList);
+            this.$store.state.currentList.push(res.data);
+            // this.$store.commit('pushCurrentList',res.data);
             this.$emit("toggleCreate");
           } else {
             this.$message({

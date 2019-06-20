@@ -5,13 +5,17 @@ Vue.use(Vuex)
 var state = {
   count: 1,
   list: [],
+  userInfo:{},
   currentList:[],
 }
 
 var mutations = {
   setCurrentList (list) {
       state.currentList = list;
-  }
+  },
+  pushCurrentList(data) {
+     return state.currentList.push(data);
+  },
 }
 
 var getters = {

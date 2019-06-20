@@ -386,15 +386,14 @@ export default {
       });
     },
     refresh(data) {
-      this.typeList[this.currentType-1].classList = Object.assign({}, this.$store.state.currentList);
-
-      this.getList(data[0], 0);
+      this.typeList[this.currentType-1].classList = this.$store.state.currentList;
+      this.getList(this.typeList[this.currentType-1].classList[0], 0);
       this.showClassManage = false;
       this.showStuManage = false;
     },
     getClsListByTypeId(typeId) {
       let params = {
-        schoolId: 1,
+        // schoolId: this.$store.state.userInfo.id,
         typeId: typeId
       };
       let that = this;
@@ -426,6 +425,7 @@ export default {
         });
       } else {
         this.currentList = this.typeList[typeId - 1].classList;
+        this.$store.state.currentList = this.currentList;
       }
     },
     getStudent() {

@@ -1,7 +1,7 @@
 <template>
   <div class="appSideWrap">
     <div class="userInfo">
-      <div class="photo"></div>
+        <img :src="photo" class="photo">
       <p class="userName">{{userInfo.name}}</p>
       <p class="userID">ID:{{userInfo.id}}</p>
     </div>
@@ -48,6 +48,7 @@ export default {
     return {
       menuList: [],
       logoImg: require("../../static/img/logo-white.png"),
+      photo:require('../../static/image/photo_t.png'),
       liveList: [
         {
           path: "/class",
@@ -103,6 +104,7 @@ export default {
       },
     getUser() {
       this.userInfo = authUtils.getUser();
+      this.$store.state.userInfo = this.userInfo;
     },
 go(item) {},
 logout() {
@@ -134,10 +136,8 @@ logout() {
     text-align: left;
     padding-left: 0.5rem;
     .photo {
-      width: 0.68rem;
-      height: 0.68rem;
-      border-radius: 100%;
-      border: 2px solid #fff;
+      width: 1.5rem;
+      height: 1.5rem;
     }
     .userName {
       padding-top: 0.11rem;
