@@ -1,7 +1,7 @@
 <template>
   <div class="classContainer">
      <div class="content1" style="width: 7.44rem">
-        <p class="content_title">购买激活码</p>
+        <p class="content_title">课程订单</p>
         <div class="left_content " style="overflow: auto">
             <div class="toggle_wrap" :key="i" v-for="(item,i) in tabs">
                 <div class="toggle_title" :class="item.colorCls" @click="switchTab(item.id)">
