@@ -2,7 +2,7 @@
       <div class="wrap">
         <!-- <appHeader></appHeader> -->
         <div class="content">
-            <div class="content_left">
+            <div class="content_left" style="display: none;">
                 <div class="top">
                     <img :src="images.back" alt="" class="back" @click="goBack">
                     <span class="tit">小智AI助教</span>
@@ -30,7 +30,7 @@
                 </div>
 
             </div>
-            <div class="content_c" v-if="!showPractice">
+            <div class="content_c" style="display: none!important;" v-if="!showPractice">
                 <ul class="page_list">
                     <li :key="i" v-for="(item,i) in pptData">
                         <div class="num">{{item.index}}</div>
@@ -56,6 +56,7 @@
             </div>
         </div>
         <footer>
+            <div class="btn_254" @click="goBack" style="background: #ACCFFF;margin: 0 0.17rem 0 1rem;">返回</div>
             <div class="btn_254" @click="changeTab(false)" style="background: #ACCFFF;margin: 0 0.17rem 0 4.02rem;">讲解模式</div>
             <div class="btn_254" @click="changeTab(true)">实践模式</div>
         </footer>
