@@ -131,7 +131,7 @@
                         </div>
                         <div class="lesson_step_list">
                             <div
-                                @click="practiceHandle(item)"
+                                @click="item.locked!=1?practiceHandle(item):''"
                                 :class="{lesson_item: true, locked: item.locked==1 }"
                                 :key="c"
                                 v-for="(item,c) in coursePlanData.list"
