@@ -8,7 +8,6 @@
               <p class="name">{{stuInfo.name}}</p>
               <p class="id">ID:{{stuInfo.id}}</p>
               <span class="grade">level:{{stuInfo.level}}</span>
-              <p class="phone">联系电话：{{stuInfo.phone}}</p>
             </div>
             <div class="intr_box" style="width: 1.82rem">
               <div class="intr_row">

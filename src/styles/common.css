@@ -421,6 +421,7 @@ html body {
   form {
     padding-top: 0.26rem;
     text-align: left;
+    position:relative;
   }
   .form .form_row {
     color: #4A4A4A;

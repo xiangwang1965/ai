@@ -63,7 +63,7 @@ export default {
         },
         {
           path: "/buy",
-          title: "购买激活码",
+          title: "课程盒子",
           icon: "icon-cac-magic"
         },
         {

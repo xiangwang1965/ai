@@ -28,9 +28,6 @@
                     </li>
                 </ul>
             </div>
-            <!-- <div class="save">
-                <div type="default" class="btn_172">保存</div>
-            </div> -->
         </div>
         <el-dialog append-to-body width="50%" title="创建班级" :visible.sync="showCreate">
             <createClass ref="child" v-on:toggleCreate="toggleCreate"></createClass>

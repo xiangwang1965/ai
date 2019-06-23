@@ -150,7 +150,7 @@
       <studentManage
         :currentType="currentType"
         ref="studentsManage"
-        :currentClass="current"
+        :currentClass="curClassDetail"
         :courseId="curClassDetail.courseId"
       ></studentManage>
     </el-dialog>
@@ -198,6 +198,7 @@
         :curClsId="curClassDetail.id"
         :curStudent="curStudent"
         :courseList="coursePlanData.list"
+        :currentClass="curClassDetail"
       ></courseReport>
     </el-dialog>
   </div>
@@ -257,7 +258,7 @@ export default {
       currentType: "",
       searchData: "",
       /**右侧tab显示模块 */
-      studentTabShow: true,
+      studentTabShow: false,
       coursePlanData: {},
       curCourProcess: "0%",
       showCourseReportAdd: false,
@@ -267,12 +268,6 @@ export default {
       // 当前显示课程信息
       curClassDetail:{},
     };
-  },
-  computed: {
-    current() {
-        console.log(this.typeList[this.currentType-1].classList[this.currentIndex]);
-      return this.typeList[this.currentType-1].classList[this.currentIndex];
-    }
   },
   created() {
     this.getClsListByTypeId(1);
@@ -317,7 +312,8 @@ export default {
     },
     getCoursePlan() {
       let params = {
-        clsId: this.curClassDetail.id
+        clsId: this.curClassDetail.id,
+        courseId:this.curClassDetail.courseId
       };
       classApi.getCoursePlan(params).then(res => {
         if (res.code === "001") {
@@ -653,7 +649,7 @@ export default {
           line-height: 0.38rem;
           position: absolute;
           top: -0.52rem;
-          left: 50%;
+          left: 100%;
           margin-left: -0.33rem;
           color: #fff;
           font-size: 0.16rem;
@@ -668,7 +664,7 @@ export default {
         width: 100%;
         margin-bottom: 0.25rem;
         .lesson_item_icon {
-          width: 0.9rem;
+            margin-left:0.3rem;
           .dian_icon {
             width: 0.25rem;
             height: 0.25rem;

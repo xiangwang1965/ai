@@ -19,6 +19,12 @@ class Classroom extends CRUD {
     this.getStuInfoUrl = '/ws/api/class/getUserInfo';
     this.courseReportAddUrl = '/ws/api/report/add';
     this.courseReportUrl = '/ws/api/report/info';
+    this.addStuForClass = '/ws/api/class/addStudentForClass';
+  }
+  addStuForClass(params){
+    return this.sendGet(this.getStuInfoUrl,params).then(res => {
+        return res;
+    })
   }
   getStuInfo(params) {
     return this.sendGet(this.getStuInfoUrl,params).then(res => {

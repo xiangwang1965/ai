@@ -3,6 +3,9 @@
         <el-dialog center append-to-body title="创建学生信息" :visible.sync="showCreate">
             <createStudent :codeOptions="codeList" :currentClass="currentClass" :currentType="currentType" :courseId="courseId" ref="child" v-on:toggleCreate="toggleCreate"></createStudent>
         </el-dialog>
+         <el-dialog center append-to-body title="添加管理" :visible.sync="showAddStuToClass" top="2vh">
+            <addStuToCurClass :codeOptions="codeList" :currentClass="currentClass" :courseId="courseId" ref="child" v-on:toggleCreate="toggleCreate"></addStuToCurClass>
+        </el-dialog>
                 <div class="dialog_center">
                     <div class="dialog_l_r">
                         <div class="dialog_left">
@@ -20,7 +23,9 @@
                                 </div>
                             </div>
                              <div class="dialog_l_btn">
+                                  <div class="btn_172" id="add_info"  @click="showAddStuToClass = true">添加已有学生</div>
                                     <div class="btn_172" id="add_info"  @click="showCreate = true">添加学生信息</div>
+
                                 </div>
                             <div class="dialog_l_bottom">
                                 <div class="dialog_title">未激活</div>
@@ -79,10 +84,12 @@
 <script>
 import classApi from '../../services/classroom';
 import createStudent from "./createStudent";
+import addStuToCurClass from "./addStuToCurClass";
 export default {
     props:['currentClass','currentType','courseId'],
     data(){
         return {
+            showAddStuToClass:false,
             showManage:true,
             defaultImg:require('../../../static/image/person_photo.png'),
             iconDel:require('../../../static/image/delete_icon.png'),
@@ -98,7 +105,8 @@ export default {
         }
     },
     components:{
-        createStudent
+        createStudent,
+        addStuToCurClass
     },
     watch:{
         currentClass(){

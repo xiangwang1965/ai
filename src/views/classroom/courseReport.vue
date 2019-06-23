@@ -8,22 +8,15 @@
               <p class="name">{{stuInfo.name}}</p>
               <p class="id">ID:{{stuInfo.id}}</p>
               <span class="grade">level:{{stuInfo.level}}</span>
-              <p class="phone">联系电话：{{stuInfo.phone}}</p>
             </div>
-            <div class="intr_box" style="width: 1.82rem">
-              <div class="intr_row">
-                <img :src="tInfo.nameIcon" alt style="width: 0.1rem;height: 0.13rem;;"> 机构：
-                <span>{{stuInfo.shcoolName}}</span>
-              </div>
+            <div style="width:100%;margin:0.29rem auto">
+                    <el-select v-model="form.hour_id" placeholder="请选择课时" style="margin-right:0.1rem;" @change="getReportInfo">
+                    <el-option :key="i" v-for="(item,i) in courseList" :label="item.name" :value="item.id"></el-option>
+                    </el-select>
             </div>
           </div>
             <el-form ref="form" :label-position="formalign" :model="form" class="dialog_rig" label-width="2rem" size="mini">
             <ul class="form dialog_form">
-                <el-form-item label="· 课时选择:">
-                    <el-select v-model="form.hour_id" placeholder="请选择课时">
-                    <el-option :key="i" v-for="(item,i) in courseList" :label="item.name" :value="item.id"></el-option>
-                    </el-select>
-                </el-form-item>
                 <el-form-item label="· 学习内容:" prop="value">
                     <el-input type="textarea" v-model="form.value" :rows="4" size="mini"></el-input>
                 </el-form-item>
@@ -99,7 +92,7 @@
 import classApi from "../../services/classroom";
 import createStudent from "./createStudent";
 export default {
-  props: ["curStudent", 'curClsId','studentlist','courseList'],
+  props: ["curStudent", 'curClsId','studentlist','courseList','currentClass'],
   data() {
     return {
         formalign:'left',
@@ -145,15 +138,35 @@ export default {
       this.getReportInfo();
   },
   methods: {
-      getReportInfo() {
+    getReportInfo(hourId) {
         let params = {
             clsId:this.curClsId,
             studentId:this.curStudent.id,
-            hourId:this.courseList[0].id
+            hourId: hourId || this.courseList[0].id
         }
         classApi.courseReportInfo(params).then(res=>{
             if (res.code === '001') {
-                this.form = res.data;
+                if (res.data) {
+                    this.form = res.data;
+                } else {
+                    this.form = {
+          studentId:1,
+          classId:1,
+          courseId:1,
+          value:'',
+          task:'',
+          feedback:'',
+          behavior:'',
+          hour_id:'',
+          operation:'',
+          innovate:'',
+          exchange:'',
+          team:'',
+          createDate:'',
+          resist:'',
+          createId:''
+      }
+                }
             }
             console.log(res.data);
         });
