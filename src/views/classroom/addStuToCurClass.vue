@@ -21,28 +21,29 @@
                         </el-input>
                     </div>
                     <el-form ref="form" :rules="formRules" :model="form" size="mini" class='form' :label-position="formalign" v-scrollBar>
-                    <el-form-item label-width="120px" prop="name" label-position="center" label="姓名">
-                            <el-input style="width:3rem" placeholder="请输入姓名" v-model="form.name"></el-input>
+                    <!-- <el-form-item label-width="120px" prop="name" label-position="center" label="姓名">
+                            <el-input style="width:3rem" v-show="false" v-model="form.name"></el-input>
+                             <el-autocomplete
+                                class="inline-input"
+                                v-model.trim="form.name"
+                                :fetch-suggestions="stuInfo"
+                                placeholder="请输入姓名"
+                                @select="handleSelect"
+                                clearable
+                            ></el-autocomplete>
+                        </el-form-item> -->
+                        <el-form-item label-width="120px" label="姓名">
+                            <el-select v-model="form.studentId" placeholder="请选择姓名">
+                            <el-option  v-for="item in stuInfo"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id">
+                            </el-option>
+                            </el-select>
                         </el-form-item>
-                        <el-form-item label="性别" prop="sex" label-width="120px">
-                            <el-radio-group v-model="form.sex">
-                                <el-radio :label="1">男</el-radio>
-                                <el-radio :label="2">女</el-radio>
-                            </el-radio-group>
-                        </el-form-item>
-                        <el-form-item label-position="center" prop="birthday" label-width="120px" label="出生年月">
-                            <el-date-picker
-                                v-model="form.birthday"
-                                type="date"
-                                value-format="yyyy-MM-dd"
-                                placeholder="选择日期">
-                            </el-date-picker>
-                        </el-form-item>
+
                         <el-form-item label-position="center" prop="phone" label-width="120px" label="手机号">
                             <el-input v-model="form.phone" style="width:3rem;"></el-input>
-                        </el-form-item>
-                        <el-form-item label-position="center" prop="passwd" label-width="120px" label="密码">
-                            <el-input type="password" v-model="form.passwd" style="width:3rem;"></el-input>
                         </el-form-item>
                         <el-form-item label-position="center" prop="verificode"  label-width="120px" label="验证码">
                             <el-input v-model="form.verificode" style="width:2rem;">
@@ -64,7 +65,7 @@
                 </div>
             </div>
             <div class="dialog_footer">
-                <div class="btn_172" id="submit_form">保存</div>
+                <div class="btn_172" id="submit_form" @click="submit">保存</div>
             </div>
         </div>
     </div>
@@ -86,26 +87,19 @@ export default {
             code:'',
             form:{
                 clsId:'',
-                sex:1,
-                name:'',
+                studentId:'',
                 phone:'',
-                birthday:'',
                 cdk:'',
-                courseId:'',
+                is_cdk:'',
                 verificode:'',
-                passwd:'',
-                is_cdk:''
             },
             timer:'',
             codeTime:60,
             codeTxt:'获取验证码',
             classTime:'',
             formRules:{
-                name:[
-                    { required: true, message: '请输入姓名', trigger: 'blur' }
-                ],
-                sex:[
-                    { required: true, message: '请选择性别', trigger: 'blur' }
+                studentId:[
+                    { required: true, message: '请选择学生', trigger: 'change' }
                 ],
                 phone:[
                     { required: true, message: '请输入手机号', trigger: 'blur' }
@@ -113,14 +107,8 @@ export default {
                 is_cdk:[
                     {required:true, message:'请选择或者输入激活码',trigger:'change'}
                 ],
-                birthday:[
-                    { required: true, message: '请选择出生日期', trigger: 'blur' }
-                ],
                 verificode:[
                     { required: true, message: '请填写验证码', trigger: 'blur' }
-                ],
-                passwd:[
-                    { required: true, message: '请填写密码', trigger: 'blur' }
                 ]
             },
             stuInfo:{},
@@ -163,18 +151,15 @@ export default {
         reset(){
             this.form = {
                 clsId:'',
-                sex:1,
-                name:'',
+                studentId:'',
                 phone:'',
-                birthday:'',
                 cdk:'',
-                courseId:'',
+                is_cdk:'',
                 verificode:''
             }
             this.$refs.form.resetFields();
         },
         setCodeOptions(data){
-            debugger;
             this.codeOptions = data;
         },
         getCode(){
@@ -222,16 +207,15 @@ export default {
         submit(){
             this.$refs.form.validate(valid => {
                 if(valid){
-                    this.showConfirm = true;
+                   this.addStudent();
                 }else{
                     return false;
                 }
             })
         },
-        createStudent(){
+        addStudent(){
             this.form.clsId = this.currentClass.id;
-            this.form.courseId = this.courseId;
-            classApi.createStudent(this.form).then(res => {
+            classApi.addhaveStu(this.form).then(res => {
                 if(res.code === '001'){
                     this.showConfirm = false;
                     this.$store.state.curClsStuList.push(res.data);
@@ -246,7 +230,7 @@ export default {
                 console.log(res);
             }).catch(err => {
                 this.$message({
-                    message: '创建学生信息失败！',
+                    message: '添加学生信息失败！',
                     type: 'error'
                 });
             })

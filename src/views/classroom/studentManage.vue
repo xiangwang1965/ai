@@ -122,6 +122,7 @@ export default {
     methods:{
         toggleCreate(){
             this.showCreate = !this.showCreate;
+            this.showAddStuToClass = !this.showAddStuToClass;
         },
         setClass(){
             console.log(this.currentClass);
