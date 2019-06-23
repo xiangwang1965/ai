@@ -199,7 +199,7 @@
                 userInfo: {},
                 /** 右侧tab显示模块 */
                 coursePlanData: {},
-                curCourProcess: '0%',
+                curCourProcess: '0',
                 hourInfo: {},
                 courseItem: {}
             };
@@ -235,8 +235,7 @@
                 this.level = item.level;
                 this.stuCnt = item.stuCnt;
                 this.currentClass = item.clsId;
-                this.courseId = item.id;
-
+                this.courseId = item.courseId;
                 this.currentIndex = index;
                 this.getCoursePlan();
             },
