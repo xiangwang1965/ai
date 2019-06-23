@@ -296,7 +296,7 @@ export default {
                     display: block;
                     height: 0.3rem;
                      color: #fff;
-                    font-size: 0.3rem;
+                    font-size: 0.2rem;
                     text-align: center;
                 }
             }
