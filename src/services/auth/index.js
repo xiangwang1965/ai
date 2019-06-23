@@ -10,8 +10,17 @@ class Auth extends Base {
     this.logoutUrl = '/auth/logout'
     this.resetPwdUrl = '/ws/api/user/modifyPwd'
     this.queryUserListUrl = '/auth/users'
+    this.uploadUrl = '/ws/api/user/updateHeadPortrait'
   }
-
+  /**
+   *
+   * @param {上传头像接口} params
+   */
+   uploadAvatar(params) {
+        return this.sendFilePost(this.uploadUrl, params).then(res => {
+            return res;
+        })
+   }
   /**
    * 认证接口
    * @param { Object } params {telephone, password, type: 1 教师APP、2教师PC、3学生端}

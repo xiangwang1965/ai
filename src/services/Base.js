@@ -51,6 +51,19 @@ class Base {
       return response
     })
   }
+  /**
+   * Post 请求
+   * @param { String } url
+   * @param { Object } data
+   */
+  sendFilePost (url, data) {
+    return api.post(url, Qs.stringify(data),{headers: {'Content-Type':'multipart/form-data;boundary=---------------------------7d33a816d302b6'}}).then(response => {
+      return response.data
+    }).catch((response) => {
+      return response
+    })
+  }
+
 
   /**
    * service 中处理错误信息，一般在 新增，修改，删除等操作中调用

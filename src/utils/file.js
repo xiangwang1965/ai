@@ -4,6 +4,8 @@ export function readFileAsBase64 (file) {
   reader.readAsDataURL(file)
   return new Promise((resolve, reject) => {
     reader.onload = () => {
+      let res = reader.result.replace(/^data:.+;base64,/, '');
+      console.log(res);
       resolve(reader.result.replace(/^data:.+;base64,/, ''))
     }
   })

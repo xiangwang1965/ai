@@ -229,6 +229,7 @@ export default {
       // 当前显示课程信息
       curClassDetail:{},
        userInfo:{},
+       curBackground:'y',
     };
   },
   created() {
@@ -373,13 +374,13 @@ export default {
         }
       });
       this.currentType = typeId;
+      this.curBackground = '#'
       if (!this.typeList[typeId - 1].classList.length) {
         classApi.queryClsListByTypeId(params).then(res => {
           if (res.data && res.data.length) {
             this.typeList[typeId - 1].classList = Object.assign({}, res.data);
             this.currentList = res.data;
             this.$store.state.currentList = this.currentList;
-            console.log(this.$store.state);
             if (this.isFirst) {
               this.getList(res.data[0], 0);
               this.typeList[typeId - 1].nodata = false;

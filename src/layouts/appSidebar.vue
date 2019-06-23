@@ -3,7 +3,8 @@
     <div class="content_left">
       <img class="person" :src="person">
       <div class="teacher_box">
-        <img :src="logoImg" alt class="photo">
+        <img :src="avatar?avatar:logoImg" alt class="photo">
+         <input type="file" ref="avatarInput" class="upload__input" @change="addImg">
         <p class="name">{{tInfo.name}}</p>
         <p class="id">ID:{{tInfo.id}}</p>
         <span class="grade">Level{{tInfo.level}}</span>
@@ -43,7 +44,8 @@ import authUtils from "@/services/auth/utils";
 import authApi from "@/services/auth";
 import teacherApi from "@/services/teacher";
 import eventHub from "@/utils/eventHub";
-import { IMS_URL } from "@/config";
+import { getObjectURL, deleteArray, RndNumber } from '@/utils'
+import { readFileAsBase64 } from '@/utils/file'
 export default {
   data() {
     return {
@@ -143,8 +145,19 @@ export default {
       ],
       temp: [],
       userInfo:{},
-      tInfo:{}
+      tInfo:{},
+      imgUrls:[],
+      avatar:'',
     };
+  },
+   // props: ['images', 'type', 'store', 'placeholder', 'role'],
+  props: {
+    images: { required: false },
+    type: { required: false },
+    store: { required: false },
+    placeholder: { required: false },
+    role: { required: false },
+    size: { type: Number, default: 2 }
   },
   computed: {
     defaultActive() {
@@ -174,8 +187,6 @@ export default {
   },
   methods: {
     getUser() {
-
-      // 判断是否是平台双师1或魔法双师0
       console.log(authUtils.getUser());
       this.userInfo = authUtils.getUser();
       if (this.userInfo.id) {
@@ -215,7 +226,65 @@ export default {
           }
         }
       });
-    }
+    },
+     // 上传图像的格式
+    beforeImgUpload (file) {
+      const isIMG = file.type === 'image/jpeg' || file.type === 'image/png'
+      // const isLt2M = file.size / 1024 / 1024 < 2
+      const isLt2M = file.size / 1024 / 1024 < this.size
+      if (!isIMG) {
+        this.$message({
+          type: 'warning',
+          message: '上传图片必须是 JPG/PNG 格式',
+          center: true
+        })
+      }
+      if (!isLt2M) {
+        this.$message({
+          type: 'warning',
+          // message: '上传图片大小不能超过 2MB',
+          message: `上传图片大小不能超过 ${this.size}MB`,
+          center: true
+        })
+      }
+      return isIMG && isLt2M
+    },
+    // 上传图片到服务器
+    addImg (e) {
+      this.file = e.target.files[0]
+      if (this.beforeImgUpload(this.file)) {
+        this.visible = false
+        // let loadingInstance = this.$loading({
+        //   text: '上传图片中...'
+        // })
+        if(this.file) {
+            let reader = new FileReader()
+            let that = this
+            reader.readAsDataURL(this.file)
+            reader.onload= function(e){
+                // 这里的this 指向reader
+                that.avatar = this.result
+            }
+        }
+
+         let files = this.$refs.avatarInput.files
+          let fileData = {}
+          if(files instanceof Array) {
+            fileData = files[0]
+          } else {
+            fileData = this.file
+          }
+          let data = new FormData()
+          data.append('multfile', fileData)
+          data.append('operaType', this.uploadType)
+
+        // let params = new FormData();
+        //         params.append('file',this.file,this.file.name); //append 向form表单添加数据
+            authApi.uploadAvatar(data).then(res=>{
+                console.log(res);
+            })
+      }
+    },
   }
 };
 </script>
@@ -252,6 +321,73 @@ export default {
             left:1.19rem;
         }
     }
-
+  .images {
+    height: 140px;
+  }
+  .images__item__wrap {
+    border: 1px dashed #c0ccda;
+    background-color: #fbfdff;
+    border-radius: 5px;
+    width: 140px;
+    height: 140px;
+    position: relative;
+    float: left;
+    margin-right: 10px;
+    input {
+      width: 100%;
+      height: 100% !important;
+    }
+    .upload__wrap {
+      color: #ABB9C6;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      text-align: center;
+      transform: translateX(-50%) translateY(-50%);
+      -ms-transform: translateX(-50%) translateY(-50%);
+      -moz-transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      -o-transform: translateX(-50%) translateY(-50%);
+      i {
+        display: block;
+        font-size: 30px;
+      }
+      span {
+        font-size: 12px;
+      }
+    }
+  }
+  .images__item__wrap.img:hover {
+    background-color: #000;
+  }
+  .images__item__wrap.upload:hover {
+    border: 1px dashed rgba(32, 117, 255, 0.815);
+  }
+  .images__item {
+    width: 100%;
+    height: 100%;
+  }
+  .images__item__edit {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 24px;
+    color: rgba(32, 117, 255, 0.815);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding-top: 40px;
+  }
+  .images__item__edit i {
+    cursor: pointer;
+  }
+  .upload__input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
 }
 </style>
