@@ -262,7 +262,8 @@ export default {
          this.$router.push({
              name:'practice',
              query:{
-                 hourid:item.hour_id
+                 hourid:item.hour_id,
+                 clsId:this.curClassDetail.id
              }
          });
      },

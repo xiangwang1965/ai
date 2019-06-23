@@ -20,6 +20,12 @@ class Classroom extends CRUD {
     this.courseReportUrl = '/ws/api/report/info';
     this.getTeaCourseHaveClass = '/ws/api/course/getTeaCourseHaveClass';
     this.getStuInfoUrl = '/ws/api/class/getUserInfo';
+    this.saveTeaCourseHaveClass = '/ws/api/course/saveTeaCourseHaveClass';
+  }
+  saveCourseStatus(params){
+    return this.sendPost(this.saveTeaCourseHaveClass,params).then(res => {
+      return res;
+    })
   }
   getStuInfo(params) {
     return this.sendGet(this.getStuInfoUrl,params).then(res => {

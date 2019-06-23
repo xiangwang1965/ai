@@ -81,6 +81,7 @@ export default {
         showDetail:[],
         hourid:this.$route.query.hourid,
         showPractice:false,
+        clsId:this.$route.query.clsId,
     };
   },
   components: {
@@ -96,6 +97,14 @@ export default {
       this.getpptData(1);
   },
   methods: {
+      saveCourseStatus(haveClsId){
+          let params = {
+              clsId:this.clsId,
+              hourId:this.hourid,
+              haveClsId:haveClsId
+          }
+           classApi.saveCourseStatus(params);
+      },
       changeTab(flag) {
           this.showPractice = flag;
       },
@@ -112,8 +121,7 @@ export default {
             const ps = new PerfectScrollbar(this.$el.querySelector('.talk_list'));
             this.$el.querySelector('.talk_list').scrollTop =this.$el.querySelector('.talk_list').scrollHeight;
             ps.update();
-        // let scrollH = ;
-        // this.$el.querySelector('.talk_list').scrollTop = scrollH+'px';
+        this.saveCourseStatus(item.id);
       },
       getpptData(hourtype) {
         let params = {
@@ -131,6 +139,7 @@ export default {
                         if (i === 0) {
                             this.showPic = this.pptData[i].image;
                             this.showDetail[i] = this.pptData[i].detail;
+                            this.saveCourseStatus(this.pptData[i].id)
                         }
                     })
                 }
