@@ -273,7 +273,7 @@ export default {
             border-top-left-radius: 0.25rem;
             .top{
                 background:#2878e8;
-                height: 0.49rem;
+                height: 0.4rem;
                 padding-top: 0.2rem;
                 display:flex;
                 flex:1;
