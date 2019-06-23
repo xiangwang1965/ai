@@ -5,7 +5,7 @@
             <div class="content_left">
                 <div class="top">
                     <img :src="images.back" alt="" class="back" @click="goBack">
-                    <span class="tit">小智AI助教</span>
+                    <span class="tit">小智AI智能助教</span>
                     </div>
                 <div class="talk_list">
                       <transition-group name="list" tag="div">
@@ -262,19 +262,22 @@ export default {
         display: flex;
         border-bottom: 0.01rem solid #979797;
         margin-top: 0.3rem;
-        border-radius:0;
+        border-radius:0.25rem;
         .content_left{
-            width:3.84rem;
+            width:3.54rem;
             height: 100%;
             position: relative;
             background: #F3F6FC;
             border-right: 0.01rem solid #979797;
+            border-bottom-left-radius: 0.25rem;
+            border-top-left-radius: 0.25rem;
             .top{
                 background:#2878e8;
                 height: 0.49rem;
                 padding-top: 0.2rem;
                 display:flex;
                 flex:1;
+                border-top-left-radius: 0.25rem;
                 .back{
                     padding-left: 0.3rem;
                     padding-right: 0.25rem;
@@ -345,7 +348,7 @@ export default {
             }
         }
         .content_c{
-            width: 2.9rem;
+            width: 2.6rem;
             border-right: 0.01rem solid #979797;
             background: #DAE9FF;
             height: 100%;
@@ -356,7 +359,7 @@ export default {
                     height: 1.25rem;
                     margin-top: 0.25rem;
                     .num{
-                        width: 0.57rem;
+                        width: 0.47rem;
                         text-align: center;
                         color: green;
                         font-size: 0.2rem;
@@ -368,7 +371,7 @@ export default {
                         }
                     }
                     .page{
-                        width: 1.95rem;
+                        width: 1.55rem;
                         height: 1.25rem;
                         background: #fff;
                         position: relative;
