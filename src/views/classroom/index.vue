@@ -137,7 +137,6 @@
                 <div class="person_name">{{item.name}}</div>
                 <div class="person_handle">
                   <div class="icon1" @click="courseReport(item)"></div>
-                  <div class="icon2" @click="handleReportCreate(item)"></div>
                 </div>
               </div>
             </div>
