@@ -8,13 +8,6 @@
               <p class="name">{{stuInfo.name}}</p>
               <p class="id">ID:{{stuInfo.id}}</p>
               <span class="grade">level:{{stuInfo.level}}</span>
-              <p class="phone">联系电话：{{stuInfo.phone}}</p>
-            </div>
-            <div class="intr_box" style="width: 1.82rem">
-              <div class="intr_row">
-                <img :src="tInfo.nameIcon" alt style="width: 0.1rem;height: 0.13rem;;"> 机构：
-                <span>{{stuInfo.shcoolName}}</span>
-              </div>
             </div>
           </div>
             <el-form ref="form" :label-position="formalign" :model="form"  @keyup.enter.native="handleSub" class="dialog_rig" label-width="2rem" size="mini">
@@ -219,7 +212,7 @@ export default {
       });
     },
     handleSub() {
-    this.$emit('toggleReportAdd');
+        this.$emit('toggleReportAdd');
       classApi
         .courseReportAdd(this.form)
         .then(res => {
