@@ -22,6 +22,7 @@ class Classroom extends CRUD {
         this.getUserInfoUrl = "/ws/api/class/getUserInfo";
         this.getCurrentCoursesUrl = "/ws/api/course/currentCourses";
         this.getHisCoursesUrl = "/ws/api/course/hisCourses";
+        this.getStuCourseHaveClassUrl = "/ws/api/course/getStuCourseHaveClass";
     }
     getUserInfo(params) {
         return this.sendGet(this.getUserInfoUrl, params).then(res => {
@@ -30,6 +31,11 @@ class Classroom extends CRUD {
     }
     getpptData(params) {
         return this.sendGet(this.getTeaCourseHaveClass, params).then(res => {
+            return res;
+        });
+    }
+    getStuCourseHaveClass(params){
+        return this.sendGet(this.getStuCourseHaveClassUrl, params).then(res => {
             return res;
         });
     }

@@ -230,7 +230,8 @@
                 this.$router.push({
                     name: 'practice',
                     query: {
-                        hourid: item.hour_id
+                        hourid: item.hour_id,
+                        clsid: item.class_id
                     }
                 });
             },
