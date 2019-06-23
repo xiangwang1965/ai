@@ -250,8 +250,7 @@ export default {
             .back{
                 padding-left: 0.3rem;
                 padding-right: 0.25rem;
-                width: 0.25rem;
-                height: 0.4rem;
+                height: 0.3rem;
                 display: block;
                 margin:auto;
             }
@@ -290,13 +289,12 @@ export default {
                 .back{
                     padding-left: 0.3rem;
                     padding-right: 0.25rem;
-                    width: 0.25rem;
-                    height: 0.4rem;
+                    height: 0.3rem;
                     display: block;
                 }
                 .tit{
                     display: block;
-                    height: 0.4rem;
+                    height: 0.3rem;
                      color: #fff;
                     font-size: 0.3rem;
                     text-align: center;
