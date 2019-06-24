@@ -26,8 +26,9 @@ const courseWrap = () => import('@/views/course/courseWrap')
 // 数据魔方
 const report = ()=>import('@/views/report')
 const reportWrap = () => import('@/views/report/reportWrap')
-
-
+// 联系客服/意见反馈
+const feedback = ()=>import('@/views/feedback')
+const feedbackWrap = ()=>import('@/views/feedback/feedbackWrap')
 Vue.use(Router)
 
 function requireAuth(to, from, next) {
@@ -118,6 +119,14 @@ const router = new Router({
                     beforeEnter: requireAuth,
                     children: [
                         { path: '/', name: 'report', component: report }
+                    ]
+                },
+                {
+                    path: '/feedback',
+                    component: feedbackWrap,
+                    beforeEnter: requireAuth,
+                    children: [
+                        { path: '/', name: 'feedback', component: feedback }
                     ]
                 },
             ]
