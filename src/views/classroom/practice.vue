@@ -56,8 +56,8 @@
         </div>
         <footer>
             <div class="btn_254" @click="goBack" style="background: #ACCFFF;margin: 0 0.17rem 0 1rem;">返回</div>
-            <div class="btn_254" @click="changeTab(false)" style="background: #ACCFFF;margin: 0 0.17rem 0 4.02rem;">讲解模式</div>
-            <div class="btn_254" @click="changeTab(true)">实践模式</div>
+<!--            <div class="btn_254" @click="changeTab(false)" style="background: #ACCFFF;margin: 0 0.17rem 0 4.02rem;">讲解模式</div>-->
+<!--            <div class="btn_254" @click="changeTab(true)">实践模式</div>-->
         </footer>
 
     </div>
@@ -83,7 +83,8 @@
                 showDetail: [],
                 hourId: this.$route.query.hourid,
                 clsId: this.$route.query.clsid,
-                showPractice: false
+                showPractice: true,
+                timer: -1
             };
         },
         components: {},
@@ -93,9 +94,7 @@
             }
         },
         created () {
-            setInterval(() => {
-                this.getStuCourseHaveClass(); // 10s 获取一次数据
-            }, 10 * 1000);
+            this.getStuCourseHaveClass();
         },
         methods: {
             changeTab (flag) {
@@ -237,7 +236,15 @@
                     });
             }
         },
-        mounted () {}
+        mounted () {
+            this.timer = setInterval(() => {
+                this.getStuCourseHaveClass(); // 10s 获取一次数据
+            }, 10 * 1000);
+        },
+        destroyed () {
+            clearInterval(this.timer);
+            this.timer = -1;
+        }
     };
 </script>
 <style lang="less" scoped>
