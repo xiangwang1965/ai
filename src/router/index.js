@@ -23,10 +23,9 @@ const success = () => import('@/views/buy/success')
 // 课程订单
 const course = () => import('@/views/course')
 const courseWrap = () => import('@/views/course/courseWrap')
-
-
-
-
+// 数据魔方
+const report = ()=>import('@/views/report')
+const reportWrap = () => import('@/views/report/reportWrap')
 
 
 Vue.use(Router)
@@ -112,7 +111,15 @@ const router = new Router({
                     children: [
                         { path: '/', name: 'course', component: course }
                     ]
-                }
+                },
+                {
+                    path: '/report',
+                    component: reportWrap,
+                    beforeEnter: requireAuth,
+                    children: [
+                        { path: '/', name: 'report', component: report }
+                    ]
+                },
             ]
         }
     ]

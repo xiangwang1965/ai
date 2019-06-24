@@ -72,7 +72,7 @@ export default {
           icon: "icon-cac-wisroom"
         },
         {
-        path: "",
+        path: "/report",
         title: "数据魔方",
         icon: "icon-cac-platform"
         },
