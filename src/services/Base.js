@@ -57,7 +57,7 @@ class Base {
    * @param { Object } data
    */
   sendFilePost (url, data) {
-    return api.post(url, Qs.stringify(data),{headers: {'Content-Type':'multipart/form-data;boundary=---------------------------7d33a816d302b6'}}).then(response => {
+    return api.post(url, Qs.stringify(data),{headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}}).then(response => {
       return response.data
     }).catch((response) => {
       return response
