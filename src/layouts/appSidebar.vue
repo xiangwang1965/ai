@@ -46,6 +46,7 @@ import teacherApi from "@/services/teacher";
 import eventHub from "@/utils/eventHub";
 import { getObjectURL, deleteArray, RndNumber } from '@/utils'
 import { readFileAsBase64 } from '@/utils/file'
+import config from '@/config'
 export default {
   data() {
     return {
@@ -147,7 +148,7 @@ export default {
       userInfo:{},
       tInfo:{},
       imgUrls:[],
-      avatar:this.userInfo.image,
+      avatar:'',
     };
   },
    // props: ['images', 'type', 'store', 'placeholder', 'role'],
@@ -189,6 +190,9 @@ export default {
     getUser() {
       console.log(authUtils.getUser());
       this.userInfo = authUtils.getUser();
+      if (this.userInfo.image) {
+          this.avatar =  config.API_URL+this.userInfo.image;
+      }
       if (this.userInfo.id) {
           this.queryTeacherInfo(this.userInfo.id);
       } else {
