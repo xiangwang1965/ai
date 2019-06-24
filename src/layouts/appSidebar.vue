@@ -227,6 +227,7 @@ export default {
     .photo {
       width: 0.68rem;
       height: 0.68rem;
+      border-radius: 0.34rem;
     }
     .userName {
       padding-top: 0.11rem;
