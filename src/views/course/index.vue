@@ -85,6 +85,10 @@ export default {
     this.queryCourseInfo(this.queryCourseType);
   },
   methods: {
+    courseInfoHandle(flag) {
+        this.queryCourseType = this.flag ? 1: 0;
+        this.queryCourseInfo(this.queryCourseType);
+    },
     queryCourseInfo(state) {
         let params = {
             state:state
