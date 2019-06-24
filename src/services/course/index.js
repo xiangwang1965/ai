@@ -6,6 +6,7 @@ class Teacher extends CRUD {
     this.allOrdersUrl = '/ws/api/order/orders'
     this.curOrdersUrl = '/ws/api/order/curOrders'
     this.hisOrdersUrl = '/ws/api/order/hisOrders'
+    this.courseInfoUrl = '/ws/api/order/courseInfos'
   }
   queryOrders (params) {
         if (params.typeid === '1') {
@@ -15,6 +16,9 @@ class Teacher extends CRUD {
         } else if (params.typeid === '3') {
             return this.sendGet(this.hisOrdersUrl, params)
         }
+    }
+    queryCourseInfo (params) {
+        return this.sendGet(this.courseInfoUrl, params)
     }
 
 }

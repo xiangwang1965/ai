@@ -1,7 +1,7 @@
 <template>
   <div class="classContainer content_right">
     <div class="content1">
-        <p class="content_title">购买激活码</p>
+        <p class="content_title">课程订单</p>
         <div class="left_content ">
             <div class="tab_blue">
                 <ul>
@@ -47,7 +47,7 @@
     </div>
     <div class="content2">
         <div class="content_title">
-            购买激活码清单
+            课程列表
         </div>
         <div class="right_content " style="height: 6.67rem">
             <!-- <img src="../img/order.png" alt="" class="center_img"> -->
@@ -60,6 +60,7 @@ import courseApi from "@/services/course";
 export default {
   data() {
     return {
+    queryCourseType:1, // 0 wei'sh
     tabList:[
           {
               id:'1',
@@ -81,8 +82,17 @@ export default {
   },
   created() {
     this.getData();
+    this.queryCourseInfo(this.queryCourseType);
   },
   methods: {
+    queryCourseInfo(state) {
+        let params = {
+            state:state
+        }
+        courseApi.queryCourseInfo(params).then(res=>{
+            console.log(res);
+        })
+    },
     getData(index) {
         let params ={
             typeid : index || '1'
