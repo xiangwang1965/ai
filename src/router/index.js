@@ -46,6 +46,7 @@ function requireAuth(to, from, next) {
 
 const router = new Router({
     mode: 'history',
+    base:'school',
     scrollBehavior(to, from, savedPosition) {
         return { x: 0, y: 0 }
     },

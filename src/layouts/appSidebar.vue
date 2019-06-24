@@ -1,7 +1,8 @@
 <template>
   <div class="appSideWrap">
     <div class="userInfo">
-      <img :src="photo" class="photo">
+      <img :src="avatar?avatar:photo" alt class="photo">
+        <input type="file" ref="avatarInput" class="upload__input" @change="addImg">
       <p class="userName">{{userInfo.name}}</p>
       <p class="userID">ID:{{userInfo.id}}</p>
     </div>
@@ -43,7 +44,7 @@
 import authUtils from "@/services/auth/utils";
 import authApi from "@/services/auth";
 import eventHub from "@/utils/eventHub";
-import { IMS_URL } from "@/config";
+import { IMS_URL, API_URL} from "@/config";
 export default {
   data() {
     return {
@@ -82,8 +83,17 @@ export default {
       is_live: 1,
       temp: [],
       phoneBoxShow: false,
-      userInfo: {}
+      userInfo: {},
+      avatar:'',
     };
+  },
+   props: {
+    images: { required: false },
+    type: { required: false },
+    store: { required: false },
+    placeholder: { required: false },
+    role: { required: false },
+    size: { type: Number, default: 2 }
   },
   computed: {
     defaultActive() {
@@ -106,6 +116,9 @@ export default {
     getUser() {
       this.userInfo = authUtils.getUser();
       this.$store.state.userInfo = this.userInfo;
+      if (this.userInfo.image) {
+          this.avatar =  API_URL+this.userInfo.image;
+      }
     },
     go(item) {},
     logout() {
@@ -117,7 +130,80 @@ export default {
           }
         });
       });
-    }
+    },
+      // 上传图像的格式
+    beforeImgUpload (file) {
+      const isIMG = file.type === 'image/jpeg' || file.type === 'image/png'
+      // const isLt2M = file.size / 1024 / 1024 < 2
+      const isLt2M = file.size / 1024 / 1024 < this.size
+      if (!isIMG) {
+        this.$message({
+          type: 'warning',
+          message: '上传图片必须是 JPG/PNG 格式',
+          center: true
+        })
+      }
+      if (!isLt2M) {
+        this.$message({
+          type: 'warning',
+          // message: '上传图片大小不能超过 2MB',
+          message: `上传图片大小不能超过 ${this.size}MB`,
+          center: true
+        })
+      }
+      return isIMG && isLt2M
+    },
+    // 上传图片到服务器
+    addImg (e) {
+      this.file = e.target.files[0]
+      if (this.beforeImgUpload(this.file)) {
+        this.visible = false
+        // let loadingInstance = this.$loading({
+        //   text: '上传图片中...'
+        // })
+        if(this.file) {
+            let reader = new FileReader()
+            let that = this
+            reader.readAsDataURL(this.file)
+            reader.onload= function(e){
+                // 这里的this 指向reader
+                that.avatar = this.result
+            }
+        }
+
+         let files = this.$refs.avatarInput.files
+          let fileData = {}
+          if(files instanceof Array) {
+            fileData = files[0]
+          } else {
+            fileData = this.file
+          }
+          let data = new FormData()
+          data.append('multfile', fileData)
+          data.append('operaType', this.uploadType)
+          data.append('userId', this.userInfo.id)
+
+        // let params = new FormData();
+        //         params.append('file',this.file,this.file.name); //append 向form表单添加数据
+
+
+            authApi.uploadAvatar(data).then(res=>{
+                console.log(res);
+                if (res.code === '001' && res.data) {
+                    let { id, name, user_type, username, class_id,image,school_id } = res.data
+                    authUtils.setUser({
+                    id,
+                    name,
+                    user_type,
+                    username,
+                    class_id,
+                    image,
+                    school_id
+                    })
+                }
+            })
+      }
+    },
   }
 };
 </script>
@@ -200,6 +286,29 @@ export default {
     border: 1px solid #fff;
     bottom: 0.42rem;
     left: 1.19rem;
+  }
+
+   .images__item__edit {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 24px;
+    color: rgba(32, 117, 255, 0.815);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding-top: 40px;
+  }
+  .images__item__edit i {
+    cursor: pointer;
+  }
+  .upload__input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
   }
 }
 </style>
