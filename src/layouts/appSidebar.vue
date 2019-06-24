@@ -1,7 +1,7 @@
 <template>
   <div class="appSideWrap">
     <div class="userInfo">
-        <img :src="photo" class="photo">
+      <img :src="photo" class="photo">
       <p class="userName">{{userInfo.name}}</p>
       <p class="userID">ID:{{userInfo.id}}</p>
     </div>
@@ -34,8 +34,9 @@
       <p @click="phonBoxHandle">联系客服</p>
     </div>
     <div class="btn_124 out_login" @click="logout">退出登录</div>
-    <el-dialog  title="客服电话" :visible.sync="phoneBoxShow" width="30%"
-  center> <span class="phone">客服电话：010-8288 6681</span></el-dialog>
+    <el-dialog title="客服电话" :visible.sync="phoneBoxShow" width="30%" center>
+      <span class="phone">客服电话：010-8288 6681</span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -48,7 +49,7 @@ export default {
     return {
       menuList: [],
       logoImg: require("../../static/img/logo-white.png"),
-      photo:require('../../static/image/photo_t.png'),
+      photo: require("../../static/image/photo_t.png"),
       liveList: [
         {
           path: "/class",
@@ -72,16 +73,16 @@ export default {
           icon: "icon-cac-wisroom"
         },
         {
-        path: "/report",
-        title: "数据魔方",
-        icon: "icon-cac-platform"
-        },
+          path: "/report",
+          title: "数据魔方",
+          icon: "icon-cac-platform"
+        }
       ],
       routes: ["/class", "/teacher", "/buy", "/course", "/classroom"],
       is_live: 1,
       temp: [],
-      phoneBoxShow:false,
-      userInfo:{},
+      phoneBoxShow: false,
+      userInfo: {}
     };
   },
   computed: {
@@ -91,39 +92,39 @@ export default {
         return this.routes[index];
       }
       return "";
-    },
+    }
   },
   created() {
-    this.getUser()
+    this.getUser();
     //this.handleSelect(this.$route.path)
     eventHub.$on("updateUser", this.getUser);
   },
   methods: {
-      phonBoxHandle(){
-          this.phoneBoxShow = true;
-      },
+    phonBoxHandle() {
+      this.phoneBoxShow = true;
+    },
     getUser() {
       this.userInfo = authUtils.getUser();
       this.$store.state.userInfo = this.userInfo;
     },
-go(item) {},
-logout() {
-        authApi.logout().then(res=>{
-            this.$router.push({
-                name:'auth',
-                query:{
-                    showLogin:true
-                }
-            })
+    go(item) {},
+    logout() {
+      authApi.logout().then(res => {
+        this.$router.push({
+          name: "auth",
+          query: {
+            showLogin: true
+          }
         });
-    },
+      });
+    }
   }
 };
 </script>
 
 <style lang="less" scoped>
 .phone {
-        margin-left: 1rem;
+  margin-left: 1rem;
 }
 .appSideWrap {
   width: 3.62rem;
@@ -161,8 +162,8 @@ logout() {
       background-color: transparent !important;
       box-shadow: none;
       .el-menu-item {
-        height:0.5rem;
-        line-height:0.5rem;
+        height: 0.5rem;
+        line-height: 0.5rem;
         font-size: 0.18rem;
         color: #ffffff;
         cursor: pointer;
@@ -191,15 +192,14 @@ logout() {
       font-size: 0.18rem;
       padding-top: 0.14rem;
       cursor: pointer;
-      padding-left:20px;
+      padding-left: 20px;
     }
   }
-    .out_login {
-        position: absolute;
-        border: 1px solid #fff;
-        bottom: 0.42rem;
-        left: 1.19rem;
-
-    }
+  .out_login {
+    position: absolute;
+    border: 1px solid #fff;
+    bottom: 0.42rem;
+    left: 1.19rem;
+  }
 }
 </style>
