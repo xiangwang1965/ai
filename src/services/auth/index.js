@@ -10,8 +10,17 @@ class Auth extends Base {
     this.logoutUrl = '/auth/logout'
     this.resetPwdUrl = '/ws/api/user/modifyPwd'
     this.queryUserListUrl = '/auth/users'
+    this.uploadUrl = '/ws/api/user/updateHeadPortrait'
   }
-
+ /**
+   *
+   * @param {上传头像接口} params
+   */
+  uploadAvatar(params) {
+    return this.sendFilePost(this.uploadUrl, params).then(res => {
+        return res;
+    })
+}
   /**
    * 认证接口
    * @param { Object } params {telephone, password, type: 1 教师APP、2教师PC、3学生端}
@@ -43,13 +52,16 @@ class Auth extends Base {
     return this.sendPost(this.loginUrl, params).then(res => {
       if (res.code == '001') {
         authUtils.setToken(res.data.token)
-        let { id, name, user_type, username } = res.data
+        let { id, name, user_type, username, class_id,image,school_id } = res.data
         code: null
         authUtils.setUser({
-          id,
-          name,
-          user_type,
-          username
+        id,
+        name,
+        user_type,
+        username,
+        class_id,
+        image,
+        school_id
         })
       }
       this.handleError(res, {

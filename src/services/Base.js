@@ -3,6 +3,9 @@ import api from './api'
 // import 'element-ui/lib/theme-chalk/index.css'
 import { Message } from 'element-ui'
 import Qs from 'qs'
+import config from '@/config'
+import axios from 'axios'
+
 // service 基础类，只用于继承
 class Base {
   /**
@@ -51,6 +54,19 @@ class Base {
       return response
     })
   }
+  /**
+   * Post 请求
+   * @param { String } url
+   * @param { Object } data
+   */
+  sendFilePost (url, data) {
+    return axios.post(config.API_URL+url, data,{ headers: {'Content-Type':'multipart/form-data'}}).then(response => {
+      return response.data
+    }).catch((response) => {
+      return response
+    })
+  }
+
 
   /**
    * service 中处理错误信息，一般在 新增，修改，删除等操作中调用

@@ -2,7 +2,10 @@
   <div class="appSideWrap">
     <div class="content_left">
       <div class="teacher_box">
-        <img :src="logoImg" alt class="photo">
+        <div style="position:relative;z-index:1">
+        <img :src="avatar?avatar:logoImg" alt class="photo">
+         <input type="file" ref="avatarInput" class="upload__input" @change="addImg">
+         </div>
         <p class="name">{{tInfo.name}}</p>
         <p class="id">ID:{{tInfo.id}}</p>
           <el-popover
@@ -59,14 +62,15 @@ import authApi from "@/services/auth";
 import studentApi from "@/services/student";
 import reportApi from "@/services/report";
 import eventHub from "@/utils/eventHub";
-import { IMS_URL } from "@/config";
+import { IMS_URL,API_URL } from "@/config";
 export default {
   data() {
     return {
       logoImg: require("../../static/image/person_background.png"),
       userInfo: {},
       tInfo: {},
-      processAndLevel: {}
+      processAndLevel: {},
+      avatar:'',
     };
   },
   created() {
@@ -74,10 +78,21 @@ export default {
     this.getProcessAndLevel();
     eventHub.$on("updateUser", this.getUser);
   },
+  props: {
+    images: { required: false },
+    type: { required: false },
+    store: { required: false },
+    placeholder: { required: false },
+    role: { required: false },
+    size: { type: Number, default: 2 }
+  },
   methods: {
     getUser() {
       this.userInfo = authUtils.getUser();
-
+      console.log(this.userInfo);
+    if (this.userInfo.image) {
+          this.avatar =  API_URL+this.userInfo.image;
+      }
       if (this.userInfo.id) {
         this.getUserInfo(this.userInfo.id);
       } else {
@@ -120,7 +135,79 @@ export default {
                       this.processAndLevel.nowLeverPercent = parseInt(this.processAndLevel.nowLeverPercent, 10);
                   }
               });
+      }, // 上传图像的格式
+    beforeImgUpload (file) {
+      const isIMG = file.type === 'image/jpeg' || file.type === 'image/png'
+      // const isLt2M = file.size / 1024 / 1024 < 2
+      const isLt2M = file.size / 1024 / 1024 < this.size
+      if (!isIMG) {
+        this.$message({
+          type: 'warning',
+          message: '上传图片必须是 JPG/PNG 格式',
+          center: true
+        })
       }
+      if (!isLt2M) {
+        this.$message({
+          type: 'warning',
+          // message: '上传图片大小不能超过 2MB',
+          message: `上传图片大小不能超过 ${this.size}MB`,
+          center: true
+        })
+      }
+      return isIMG && isLt2M
+    },
+    // 上传图片到服务器
+    addImg (e) {
+      this.file = e.target.files[0]
+      if (this.beforeImgUpload(this.file)) {
+        this.visible = false
+        // let loadingInstance = this.$loading({
+        //   text: '上传图片中...'
+        // })
+        if(this.file) {
+            let reader = new FileReader()
+            let that = this
+            reader.readAsDataURL(this.file)
+            reader.onload= function(e){
+                // 这里的this 指向reader
+                that.avatar = this.result
+            }
+        }
+
+         let files = this.$refs.avatarInput.files
+          let fileData = {}
+          if(files instanceof Array) {
+            fileData = files[0]
+          } else {
+            fileData = this.file
+          }
+          let data = new FormData()
+          data.append('multfile', fileData)
+          data.append('operaType', this.uploadType)
+          data.append('userId', this.userInfo.id)
+
+        // let params = new FormData();
+        //         params.append('file',this.file,this.file.name); //append 向form表单添加数据
+
+
+            authApi.uploadAvatar(data).then(res=>{
+                console.log(res);
+                if (res.code === '001' && res.data) {
+                    let { id, name, user_type, username, class_id,image,school_id } = res.data
+                    authUtils.setUser({
+                    id,
+                    name,
+                    user_type,
+                    username,
+                    class_id,
+                    image,
+                    school_id
+                    })
+                }
+            })
+      }
+    },
   }
 };
 </script>
@@ -271,5 +358,19 @@ export default {
             }
         }
     }
+
 }
+.images__item__edit i {
+    cursor: pointer;
+  }
+  .upload__input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index:200;
+  }
 </style>
