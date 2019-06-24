@@ -147,7 +147,7 @@ export default {
       userInfo:{},
       tInfo:{},
       imgUrls:[],
-      avatar:'',
+      avatar:this.userInfo.image,
     };
   },
    // props: ['images', 'type', 'store', 'placeholder', 'role'],
@@ -285,6 +285,18 @@ export default {
 
             authApi.uploadAvatar(data).then(res=>{
                 console.log(res);
+                if (res.code === '001' && res.data) {
+                    let { id, name, user_type, username, class_id,image,school_id } = res.data
+                    authUtils.setUser({
+                    id,
+                    name,
+                    user_type,
+                    username,
+                    class_id,
+                    image,
+                    school_id
+                    })
+                }
             })
       }
     },
