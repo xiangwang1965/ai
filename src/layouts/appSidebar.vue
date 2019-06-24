@@ -3,8 +3,10 @@
     <div class="content_left">
       <img class="person" :src="person">
       <div class="teacher_box">
-        <img :src="avatar?avatar:logoImg" alt class="photo">
+         <div style="position:relative;z-index:1">
+         <img :src="avatar?avatar:logoImg" alt class="photo">
          <input type="file" ref="avatarInput" class="upload__input" @change="addImg">
+         </div>
         <p class="name">{{tInfo.name}}</p>
         <p class="id">ID:{{tInfo.id}}</p>
         <span class="grade">Level{{tInfo.level}}</span>
@@ -407,6 +409,7 @@ export default {
     width: 100%;
     height: 100%;
     cursor: pointer;
+    z-index:200;
   }
 }
 </style>
