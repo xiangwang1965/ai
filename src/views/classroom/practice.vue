@@ -107,7 +107,11 @@ export default {
       },
       changeTab(flag) {
           this.showPractice = flag;
-           this.getpptData(0);
+           if (flag) {
+            this.getpptData(0);
+           } else {
+               this.getpptData(1);
+           }
       },
       goBack(){
            this.$router.back()
