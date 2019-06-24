@@ -1,8 +1,10 @@
 <template>
   <div class="appSideWrap">
     <div class="userInfo">
+        <div style="position:relative;z-index:1">
       <img :src="avatar?avatar:photo" alt class="photo">
         <input type="file" ref="avatarInput" class="upload__input" @change="addImg">
+        </div>
       <p class="userName">{{userInfo.name}}</p>
       <p class="userID">ID:{{userInfo.id}}</p>
     </div>
@@ -309,6 +311,7 @@ export default {
     width: 100%;
     height: 100%;
     cursor: pointer;
+    z-index:200;
   }
 }
 </style>

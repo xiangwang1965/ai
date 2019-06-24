@@ -55,13 +55,14 @@ class Auth extends Base {
     return this.sendPost(this.loginUrl, params).then(res => {
       if (res.code == '001') {
         authUtils.setToken(res.data.token)
-        let { id, name, user_type, username } = res.data
+        let { id, name, user_type, username,image } = res.data
         code: null
         authUtils.setUser({
           id,
           name,
           user_type,
-          username
+          username,
+          image
         })
       }
       this.handleError(res, {
