@@ -3,6 +3,9 @@ import api from './api'
 // import 'element-ui/lib/theme-chalk/index.css'
 import { Message } from 'element-ui'
 import Qs from 'qs'
+import config from '@/config'
+import axios from 'axios'
+
 // service 基础类，只用于继承
 class Base {
   /**
@@ -57,7 +60,7 @@ class Base {
    * @param { Object } data
    */
   sendFilePost (url, data) {
-    return api.post(url, Qs.stringify(data),{headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}}).then(response => {
+    return axios.post(config.API_URL+url, data,{ headers: {'Content-Type':'multipart/form-data'}}).then(response => {
       return response.data
     }).catch((response) => {
       return response

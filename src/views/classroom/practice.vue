@@ -131,6 +131,7 @@ export default {
       getpptData(hourtype) {
         let params = {
             hourId:this.hourid,
+            clsId:this.clsId,
             hourType: hourtype
         }
         classApi.getpptData(params).then(res=>{
@@ -166,64 +167,6 @@ export default {
         }
       });
     },
-    deleteStudent(student) {
-      this.$confirm("确定删除学生" + student.name + "吗？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-        center: false
-      }).then(() => {
-        let params = {
-          clsId: this.currentClass.id,
-          studentId: student.id
-        };
-        classApi
-          .deleteStudent(params)
-          .then(res => {
-            if (res.code === "001") {
-              this.$message({
-                message: "删除成功",
-                type: "success"
-              });
-              this.$router.push({ path: "/class" });
-            } else {
-              this.$message({
-                message: "删除失败",
-                type: "error"
-              });
-            }
-          })
-          .catch(err => {
-            this.$message({
-              message: "删除失败",
-              type: "error"
-            });
-          });
-      });
-    },
-    handleSub() {
-      classApi
-        .courseReportAdd(this.form)
-        .then(res => {
-          if (res.code === "001") {
-            this.$message({
-              message: "提交成功",
-              type: "success"
-            });
-          } else {
-            this.$message({
-              message: "提交失败",
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          this.$message({
-            message: "删除失败",
-            type: "error"
-          });
-        });
-    }
   },
   mounted() {}
 };

@@ -277,9 +277,12 @@ export default {
           let data = new FormData()
           data.append('multfile', fileData)
           data.append('operaType', this.uploadType)
+          data.append('userId', this.userInfo.id)
 
         // let params = new FormData();
         //         params.append('file',this.file,this.file.name); //append 向form表单添加数据
+
+
             authApi.uploadAvatar(data).then(res=>{
                 console.log(res);
             })
