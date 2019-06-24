@@ -161,6 +161,8 @@ logout() {
       background-color: transparent !important;
       box-shadow: none;
       .el-menu-item {
+        height:0.5rem;
+        line-height:0.5rem;
         font-size: 0.18rem;
         color: #ffffff;
         cursor: pointer;

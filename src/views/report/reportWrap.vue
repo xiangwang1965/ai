@@ -17,5 +17,8 @@ export default {
 }
 </script>
 <style scoped>
-
+#courseWrapPage {
+    width:100%;
+    height:100%;
+}
 </style>

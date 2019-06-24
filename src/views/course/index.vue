@@ -45,12 +45,51 @@
             </div>
         </div>
     </div>
-    <div class="content2">
+    <div class="content2" style="width:6rem;">
         <div class="content_title">
             课程列表
         </div>
-        <div class="right_content " style="height: 6.67rem">
-            <!-- <img src="../img/order.png" alt="" class="center_img"> -->
+        <div class="right_content" style="height: 6.47rem;display: block;overflow: hidden;padding-bottom: 0.2rem;">
+                <div class="tab_blue">
+                    <ul>
+                        <li class="tab_item" :class="{tab_active:queryCourseType == item.id}" :key="t" v-for="(item,t) in righttabList" @click="courseInfoHandle(item.id)">
+                            {{item.name}}
+                        </li>
+                    </ul>
+                </div>
+            <div class="orderListBox" id="orderListBox">
+                <div class="orderList" style="display: block" v-scrollBar>
+                    <div class="order_Item" style="width:5.8rem" :key="i" v-for = "(item,i) in list">
+                        <div class='order_header'>
+                            <span>订单号:{{item.orderNo}}</span>
+                            <span v-if="item.status == 1">交易成功</span>
+                            <span v-if="item.status == 0">待支付</span>
+                            <span v-if="item.status == 2">作废</span>
+                        </div>
+                        <div class="order_con">
+                            <div class="con_left">
+                                SCRATH
+                            </div>
+                            <div class="con_right">
+                                <div class="row" style="font-size: 0.12rem">
+                                    <span>{{item.orderName}}</span>
+                                </div>
+                                <div class="row">
+                                    <span>校区：{{item.schoolName}}</span>
+                                </div>
+                                <div class="row">
+                                    <span>课时</span>
+                                    <span>合计：￥{{item.totlaPic}}</span>
+                                </div>
+                                <div class="row">
+                                    <span></span>
+                                    <span>交易时间：{{item.tradeTime}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
   </div>
@@ -75,6 +114,16 @@ export default {
               name:'历史订单'
           }
       ],
+       righttabList:[
+          {
+              id:'1',
+              name:'已使用'
+          },
+          {
+              id:'0',
+              name:'未使用'
+          }
+      ],
       activeTab:'1',
       list:[],
       url: require("../../../static/img/minipic.png")
@@ -85,8 +134,8 @@ export default {
     this.queryCourseInfo(this.queryCourseType);
   },
   methods: {
-    courseInfoHandle(flag) {
-        this.queryCourseType = this.flag ? 1: 0;
+    courseInfoHandle(id) {
+        this.queryCourseType = id;
         this.queryCourseInfo(this.queryCourseType);
     },
     queryCourseInfo(state) {
@@ -116,6 +165,9 @@ export default {
 </script>
 <style lang="less" scoped>
 .classContainer {
+   .right_content {
+       display:block;
+   }
   .orderListBox{
       height:100%;
     .orderList{
@@ -172,8 +224,6 @@ export default {
 }
 .right_content{
     display: flex;
-    align-items: center;
-    justify-content: center;
     .center_img{
         width: 2.64rem;
         height: 1.67rem;
