@@ -3,6 +3,7 @@
   <div id='footerpage' class="footer">
     <!--<img src="../../static/img/logo-footer.png">-->
     <!--<div class="line"></div>-->
+    ©2019 北京微思幼教机器人科技有限公司. All Rights Reserved.
   </div>
 </template>
 
@@ -16,14 +17,15 @@ export default {
 </script>
 <style scoped>
 .footer{
-  height: 90px;
-  background-color: transparent;
+  color:white;
+  height: 50px;
+  font-size: 16px;
   padding-top: 30px;
   /* position: fixed;
   bottom: 0; */
   width:100%;
   position: relative;
-  margin-top: -90px;
+  /* margin-top: -90px; */
 }
 .footer img{
   vertical-align: middle;

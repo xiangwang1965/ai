@@ -8,6 +8,7 @@
             <router-view></router-view>
         </el-main>
     </el-container>
+    <appFooter></appFooter>
   </div>
 </template>
 
