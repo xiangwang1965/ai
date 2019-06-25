@@ -4,7 +4,7 @@
             <createStudent :codeOptions="codeList" :currentClass="currentClass" :currentType="currentType" :courseId="courseId" ref="child" v-on:toggleCreate="toggleCreate"></createStudent>
         </el-dialog>
          <el-dialog center append-to-body title="添加管理" :visible.sync="showAddStuToClass" top="2vh">
-            <addStuToCurClass :codeOptions="codeList" :currentClass="currentClass" :courseId="courseId" ref="child" v-on:toggleCreate="toggleCreate"></addStuToCurClass>
+            <addStuToCurClass :codeOptions="codeList" :currentClass="currentClass" :courseId="courseId" ref="child" v-on:toggleAddStuToClass="toggleAddStuToClass"></addStuToCurClass>
         </el-dialog>
                 <div class="dialog_center">
                     <div class="dialog_l_r">
@@ -115,6 +115,7 @@ export default {
     },
     created(){
         // 获取激活码
+        this.setRight(this.$store.state.curClsStuList[0]);
         if (this.currentClass && this.currentClass.id) {
             this.getCodeList(this.currentClass.id);
         }
@@ -122,13 +123,14 @@ export default {
     methods:{
         toggleCreate(){
             this.showCreate = !this.showCreate;
+        },
+        toggleAddStuToClass(){
             this.showAddStuToClass = !this.showAddStuToClass;
         },
         setClass(){
             console.log(this.currentClass);
         },
         setRight(student){
-            console.log(student);
             this.currentStudent = student;
         },
         getCodeList(classId){
@@ -329,6 +331,9 @@ export default {
             align-items: center;
             justify-content:center;
             border-top: 0.01rem solid #979797;
+        }
+        .active {
+            background: #f3f6fc;
         }
     }
 </style>

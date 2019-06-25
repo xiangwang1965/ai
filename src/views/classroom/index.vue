@@ -75,27 +75,16 @@
                 <div class="lesson_item_icon">
                   <div :class="item.pointclass"></div>
                 </div>
-                <div v-if="c >1" :class="item.status == 0? 'lesson_box_active':'lesson_box'">
+                <div :class="item.locked == 1? 'lesson_box_active':'lesson_box'">
                   <div class="lesson_name">{{item.name}}</div>
                   <div class="lesson_info">
-                    <div class="lesson_step_lable" v-if="item.status == 0">
+                    <div class="lesson_step_lable" v-if="item.locked == 1">
                       <img class="fixed_lock" :src="lockImg" alt>
                     </div>
-                    <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1">进行中</div>
-                    <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
-                    <div class="lesson_step" v-if="item.status != 0">
-                      <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
-                      <div class="lesson_step_bg"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="lesson_box" v-else>
-                  <div class="lesson_name">{{item.name}}</div>
-                  <div class="lesson_info">
-                    <div class="lesson_step_lable" v-if="item.status == 0">未开始</div>
-                    <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1">进行中</div>
-                    <div class="lesson_step_lable" v-if="item.status == 2">{{item.plan}}%</div>
-                    <div class="lesson_step">
+                    <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 0 && item.locked != 1">未开始</div>
+                     <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1 && item.locked != 1">进行中</div>
+                    <div class="lesson_step_lable" v-if="item.status == 2 && item.locked != 1">{{item.plan}}%</div>
+                    <div class="lesson_step" v-if="item.locked != 1">
                       <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
                       <div class="lesson_step_bg"></div>
                     </div>
@@ -351,6 +340,7 @@ export default {
       if (this.$refs.studentsManage) {
         this.$refs.studentsManage.setClass();
         this.$refs.studentsManage.getCodeList(this.curClassDetail.id);
+        this.$refs.studentsManage.setRight(this.$store.state.curClsStuList[0]);
       }
     },
 

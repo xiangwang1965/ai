@@ -1,7 +1,7 @@
 <template>
     <div class="chart-container">
-            <div class="chartBox" id="chartColumn" style="width:80%; height:5rem;"></div>
-            <div class="chartBox" id="chartLine" style="width:80%; height:5rem;"></div>
+            <div class="chartBox" id="chartColumn" ></div>
+            <div class="chartBox" id="chartLine"></div>
     </div>
 </template>
 
@@ -88,14 +88,12 @@
         width: 100%;
         height:100%;
     }
-    .chart div {
-        height: 400px;
-        float: left;
-    }
     .chartBox {
-        margin: auto;
+        margin-top:1rem;
         display: flex;
         flex: 1;
-        width: 40%;
+      width:50%;
+      height:5rem;
+      float:left;
     }
 </style>

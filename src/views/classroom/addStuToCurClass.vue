@@ -220,7 +220,7 @@ export default {
                     this.showConfirm = false;
                     this.$store.state.curClsStuList.push(res.data);
                     this.showSucBox = true;
-                    this.$emit('toggleCreate');
+                    this.$emit('toggleAddStuToClass');
                 }else{
                     this.$message({
                         message: res.msg,

@@ -6,7 +6,7 @@
             <ul class="students">
                 <li v-for="item in currentList" :class="{active:currentClass=== item.id}" @click="gecurClassDetail(item)" :key="item.id">
                     <div>
-                        <p>{{item.courseName}}</p>
+                        <p>{{item.name}}</p>
                         <p style="margin-top:4px;">时间：{{item.hebdomad}}({{item.startTime}}-{{item.endTime}})</p>
                     </div>
                     <i class="el-icon-delete" @click="showDeleteConfirm(item)"></i>
