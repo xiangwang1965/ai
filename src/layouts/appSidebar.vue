@@ -34,12 +34,9 @@
       <!-- 侧栏下部纹理 -->
     </el-aside>
     <div class="contact">
-      <p @click="phonBoxHandle">联系客服</p>
+      <p @click="gofeeback">联系客服</p>
     </div>
     <div class="btn_124 out_login" @click="logout">退出登录</div>
-    <el-dialog title="客服电话" :visible.sync="phoneBoxShow" width="30%" center>
-      <span class="phone">客服电话：010-8288 6681</span>
-    </el-dialog>
   </div>
 </template>
 <script>
@@ -123,6 +120,9 @@ export default {
       }
     },
     go(item) {},
+    gofeeback() {
+        this.$router.push('/feedback')
+    },
     logout() {
       authApi.logout().then(res => {
         this.$router.push({
