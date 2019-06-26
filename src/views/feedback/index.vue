@@ -9,8 +9,8 @@
     </div>
     <div class="content2">
       <div class="content_title">教师信息</div>
-      <div class="right_content teacher_info" style="height: 6.67rem">
- <iframe src="http://web.wisetechai.com/userInfo/index.html" frameborder="0" width="100%" height="100%" id="childFrame" scrolling="no" style="border-radius:0.2rem;"></iframe>
+      <div class="right_content teacher_info" style="height: 6.67rem;position:relative;">
+ <iframe src="http://web.wisetechai.com/userInfo/index.html" frameborder="0" width="100%" height="100%" id="childFrame" style="border-radius:0.2rem;position:relative;" v-scrollBar></iframe>
       </div>
     </div>
   </div>
