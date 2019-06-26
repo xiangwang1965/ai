@@ -21,24 +21,50 @@
             drawColumnChart() {
                 this.chartColumn = echarts.init(document.getElementById('chartColumn'));
                 this.chartColumn.setOption({
-                  title: { text: '学生课程' },
-                  tooltip: {},
-                  xAxis: {
-                      data: ["SCRATCH", "PYTHON", "NOIP", "AI"]
-                  },
-                  yAxis: {},
-                  series: [{
-                      name: '学生数量',
-                      type: 'bar',
-                      data: [5, 20, 36, 10]
-                    }]
+                  color: ['#3398DB'],
+                  title: { text: '本月新增学生数' },
+                  tooltip : {
+                        trigger: 'axis',
+                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data :  ["SCRATCH", "PYTHON", "NOIP", "AI"],
+                            axisTick: {
+                                alignWithLabel: true
+                            }
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'学员数',
+                            type:'bar',
+                            barWidth: '40%',
+                            data: [15, 3, 5, 10]
+                        }
+                    ]
                 });
             },
             drawLineChart() {
                 this.chartLine = echarts.init(document.getElementById('chartLine'));
                 this.chartLine.setOption({
+                    color: ['#3398DB'],
                     title: {
-                        text: '学生'
+                        text: '收入情况'
                     },
                     tooltip: {
                         trigger: 'axis'
@@ -51,18 +77,18 @@
                     },
                     xAxis: {
                         type: 'category',
-                        boundaryGap: false,
-                        data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月','八月','九月','十月','十月','十二月']
+                        boundaryGap: true,
+                        data: ['一月', '二月', '三月', '四月', '五月', '六月']
                     },
                     yAxis: {
                         type: 'value'
                     },
                     series: [
                         {
-                            name: '加入学生',
-                            type: 'line',
-                            stack: '总量',
-                            data: [820, 932, 901, 934, 1290, 1330, 1320,500,600,900,1000,800]
+                            name: '收入',
+                            type: 'bar',
+                            sbarWidth: '20%',
+                            data: [8200, 9320, 9001, 9340, 12900, 13300]
                         }
                     ]
                 });
@@ -89,10 +115,10 @@
         height:100%;
     }
     .chartBox {
-        margin-top:1rem;
+        margin-top:1.5rem;
         display: flex;
         flex: 1;
-      width:50%;
+      width:48%;
       height:5rem;
       float:left;
     }
