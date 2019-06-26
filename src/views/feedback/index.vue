@@ -4,7 +4,7 @@
       <p class="content_title">客服电话</p>
       <div class="left_content" style="height: 6.67rem;background: #fff;border-radius: 0.2rem;">
 
-      <div class="phone" style="margin: auto;position: relative;text-align: center;top: 50%;">客服电话：010-8288 6681</div>
+      <div class="phone" style="margin: auto;position: relative;text-align: center;top: 50%;font-size:24px">客服电话：010-8288 6681</div>
       </div>
     </div>
     <div class="content2">
