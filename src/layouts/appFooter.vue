@@ -3,7 +3,7 @@
   <div id='footerpage' class="footer">
     <!--<img src="../../static/img/logo-footer.png">-->
     <!--<div class="line"></div>-->
-    ©2019 北京微思幼教机器人科技有限公司. All Rights Reserved.
+    ©2019 北京微思优教机器人科技有限公司. All Rights Reserved.
   </div>
 </template>
 
