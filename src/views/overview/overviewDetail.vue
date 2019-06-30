@@ -90,10 +90,10 @@ export default {
         arrowLeft: require("../../../static/image/arrow_fff.png")
       },
       imgList:[
-        './../../static/image/show1.jpeg',
-        './../../static/image/show2.jpeg',
-        './../../static/image/show1.jpeg',
-        './../../static/image/show2.jpeg',
+        require('../../../static/image/show1.jpeg'),
+        require('../../../static/image/show2.jpeg'),
+        require('../../../static/image/show1.jpeg'),
+        require('../../../static/image/show2.jpeg'),
       ]
     };
   },

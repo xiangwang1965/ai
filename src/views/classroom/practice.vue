@@ -87,6 +87,7 @@
                 hourId: this.$route.query.hourid,
                 clsId: this.$route.query.clsid,
                 showPractice: true,
+                loading_length:0,
                 timer: -1
             };
         },
@@ -172,7 +173,9 @@
                 classApi.getStuCourseHaveClass(params).then(res => {
                     console.log(config.API_URL);
                     if (res.code === '001') {
+                         this.loading_length++;
                         if (res.data.hour_type === 1) {
+                            
                             this.pptData = [];
                             this.showDetail = [];
                             res.data.image = config.API_URL + res.data.image;
@@ -183,7 +186,11 @@
                             this.showPic = this.pptData[0].image;
                             this.changeTab(false);
                         } else {
+                           
                             this.changeTab(true);
+                            if(this.loading_length<2){
+                                this.loading = true
+                            }
                         }
                         this.check();
                     }
