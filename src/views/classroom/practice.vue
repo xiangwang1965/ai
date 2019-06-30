@@ -2,7 +2,7 @@
       <div class="wrap">
         <!-- <appHeader></appHeader> -->
         <div class="content">
-            <div class="content_left">
+            <div class="content_left" :style="colorClassList.leftBgStyle">
                 <div class="top">
                     <img :src="images.back" alt="" class="back" @click="goBack">
                     <span class="tit">小智AI智能助教</span>
@@ -27,9 +27,9 @@
             <div class="content_c" v-if="!showPractice">
                 <ul class="page_list">
                     <li :key="i" v-for="(item,i) in pptData">
-                        <div class="num"><span :class="{active:showPicNum == item.index}">{{item.index}}</span></div>
+                        <div class="num" :style="colorClassList.itemFontColor"><span :class="{active:showPicNum == item.index}">{{item.index}}</span></div>
                         <div class="page" @click="changeShowInfo(item,i)">
-                            <img class="page_img" :class="showPicNum == item.index? 'page_img_active':''" :src="item.image" alt="">
+                            <img class="page_img" :class="showPicNum == item.index? 'page_img_active':''" :style="colorClassList.borderStyle" :src="item.image" alt="">
                         </div>
                     </li>
                     <!-- <li>
@@ -82,6 +82,20 @@ export default {
         hourid:this.$route.query.hourid,
         showPractice:false,
         clsId:this.$route.query.clsId,
+         // 颜色切换 数组
+      colorList:['#FFC151',' #6EDBEF','#FF696C','#8B90FF'],
+      leftBgColorList:['#f6e5cc','#cdedf8','#f6ced3','#cfd3fd'],
+      colorClassList:{
+             borderStyle:{
+                 borderColor:'#FFC151'
+             },
+             itemFontColor:{
+                 color:'#FFC151'
+             },
+             leftBgStyle:{
+                 background:'#f6e5cc'
+             }
+        }
     };
   },
   components: {
@@ -94,6 +108,9 @@ export default {
     }
   },
   created() {
+      this.colorClassList.borderStyle.borderColor = this.colorList[this.$route.query.typeId -1];
+      this.colorClassList.itemFontColor.color = this.colorList[this.$route.query.typeId -1];
+      this.colorClassList.leftBgStyle.background = this.leftBgColorList[this.$route.query.typeId -1];
       this.getpptData(1);
   },
   methods: {
@@ -224,6 +241,7 @@ export default {
             height: 100%;
             position: relative;
             background: #F3F6FC;
+            // background:url("../../../static/image/A底.png") no-repeat;
             border-right: 0.01rem solid #979797;
             border-bottom-left-radius: 0.25rem;
             border-top-left-radius: 0.25rem;
@@ -316,7 +334,7 @@ export default {
                     .num{
                         width: 0.47rem;
                         text-align: center;
-                        color: green;
+                        color:#fff;
                         font-size: 0.2rem;
                         line-height:1.25rem;
                         .active {
