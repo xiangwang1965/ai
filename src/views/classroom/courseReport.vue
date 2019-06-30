@@ -228,6 +228,14 @@ export default {
     font-size: 0.16rem;
     color: #9B9B9B;
   }
+  .grade {
+    background: #FFC151;
+    border-radius: 6px;
+    text-align: center;
+    padding: 0.05rem 0.15rem;
+    margin: 0.05rem 0 0.08rem 0;
+    display: inline-block;
+  }
   }
 
 </style>
