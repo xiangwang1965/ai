@@ -920,7 +920,7 @@ export default {
                 z-index: 10;
                 position: relative;
               }
-              .lesson_step_width:after {
+              .lesson_step_width.bg_y:after {
                 content: "";
                 width: 0.08rem;
                 height: 0.08rem;
@@ -929,6 +929,36 @@ export default {
                 right: -0.04rem;
                 top: -0.02rem;
                 background: #ffc151;
+              }
+              .lesson_step_width.bg_b:after {
+                content: "";
+                width: 0.08rem;
+                height: 0.08rem;
+                border-radius: 100%;
+                position: absolute;
+                right: -0.04rem;
+                top: -0.02rem;
+                background:#6EDBEF;
+              }
+              .lesson_step_width.bg_r:after {
+                content: "";
+                width: 0.08rem;
+                height: 0.08rem;
+                border-radius: 100%;
+                position: absolute;
+                right: -0.04rem;
+                top: -0.02rem;
+                background: #ff696c;
+              }
+              .lesson_step_width.bg_p:after {
+                content: "";
+                width: 0.08rem;
+                height: 0.08rem;
+                border-radius: 100%;
+                position: absolute;
+                right: -0.04rem;
+                top: -0.02rem;
+                background:#8B90FF;
               }
             }
           }
