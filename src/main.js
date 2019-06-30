@@ -7,7 +7,6 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import filters from '@/utils/filters'
-import dialogUtils from './dialogs/utils'
 import eventHub, * as EVENTS from './utils/eventHub'
 import store from './vuex/store.js'
 import pkg from '../package.json'
@@ -27,7 +26,6 @@ Object.keys(filters).forEach(v => Vue.filter(v, filters[v]))
 
 Vue.prototype.$eventHub = eventHub
 Vue.prototype.$EVENTS = EVENTS
-Vue.prototype.$dialog = dialogUtils
 
 Vue.directive('loadmore', {
   bind (el, binding) {

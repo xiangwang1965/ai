@@ -46,16 +46,15 @@
     <div class="content2">
       <div class="content_title">{{curClassDetail.name}}</div>
       <div class="right_content">
-        <div class="tab">
+        <div class="tab" :style="colorClassList.tab.bottomStyle">
           <ul>
-            <li
+              <li
               class="tab_item"
-              :class="{tab_active:studentTabShow == false}"
-              @click="rightTabHandle(false)"
-            >课程</li>
-            <li
+              :style="studentTabShow == false ? colorClassList.tab.tabItemActiveStyle:colorClassList.tab.tabItemStyle"
+              @click="rightTabHandle(false)">课程</li>
+             <li
               class="tab_item"
-              :class="{tab_active:studentTabShow == true}"
+               :style="studentTabShow == true ? colorClassList.tab.tabItemActiveStyle:colorClassList.tab.tabItemStyle"
               @click="rightTabHandle(true)"
             >学员管理</li>
           </ul>
@@ -63,11 +62,11 @@
         <div class="classInfo" id="classInfo">
           <div class="classInfoItem class_management" v-show="!studentTabShow">
             <div class="step_wrap">
-              <p>课程总进度</p>
+              <p :style="colorClassList.tab.itemFontColor">课程总进度</p>
               <div class="step_line">
-                <div class="step_line_label">{{curCourProcess}}%</div>
+                <div :class="colorClassList.tab.stepLineClass">{{curCourProcess}}%</div>
                 <div class="step_line_bg"></div>
-                <div class="step_line_width" :style="{width:curCourProcess+'%'}"></div>
+                <div class="step_line_width" :class="curClass" :style="{width:curCourProcess+'%'}"></div>
               </div>
             </div>
             <div class="lesson_step_list">
@@ -85,7 +84,7 @@
                      <div class="lesson_step_lable lesson_step_lable_ing" v-if="item.status == 1 && item.locked != 1">进行中</div>
                     <div class="lesson_step_lable" v-if="item.status == 2 && item.locked != 1">{{item.plan}}%</div>
                     <div class="lesson_step" v-if="item.locked != 1">
-                      <div class="lesson_step_width" :style="{width:item.plan+'%'}"></div>
+                      <div class="lesson_step_width" :class="curClass" :style="{width:item.plan+'%'}"></div>
                       <div class="lesson_step_bg"></div>
                     </div>
                   </div>
@@ -107,7 +106,7 @@
               </div>
             </div>
             <div class="class_infomation">
-              <div class="item1">班级信息</div>
+              <div class="item1" :style="colorClassList.tab.itemFontColor">班级信息</div>
               <div class="item2">
                 <span>{{curClassDetail.startTime}}-{{curClassDetail.endTime}}</span>
                 <span>时间</span>
@@ -255,6 +254,35 @@ export default {
       lockScroll: true,
       // 当前显示课程信息
       curClassDetail:{},
+      curClass:'bg_y',
+      // 颜色切换 数组
+      colorList:['#FFC151',' #6EDBEF','#FF696C','#8B90FF'],
+      colortabItem:['#FFD893',' #6eebef7d','#ff696cad','#8b90ff80'],
+      bgsufix:['y','b','r','p'],
+      colorClassList:{
+          bg:{
+            1:'bg_y',
+            2:'bg_b',
+            3:'bg_r',
+            4:'bg_p'
+          },
+          tab:{
+             bottomStyle:{
+                 borderBottomColor:'#FFC151'
+             },
+             tabItemStyle:{
+                 background:'#FFD893'
+             },
+            tabItemActiveStyle:{
+                 background:'#FFC151'
+             },
+             itemFontColor:{
+                 color:'#FFC151'
+             },
+             stepLineClass:'step_line_label_y',
+             dianIconUp:'dian_icon_up_r'
+          }
+      }
     };
   },
   created() {
@@ -299,6 +327,9 @@ export default {
       }
     },
     getCoursePlan() {
+        if (!this.curClassDetail.id) {
+            return false;
+        }
       let params = {
         clsId: this.curClassDetail.id,
         courseId:this.curClassDetail.courseId
@@ -310,7 +341,7 @@ export default {
           if (this.coursePlanData.list.length) {
             this.coursePlanData.list.forEach((item, index) => {
               this.coursePlanData.list[index].pointclass =
-                item.status == 0 ? "dian_icon_up" : "dian_icon";
+                item.status == 0 ? this.colorClassList.tab.dianIconUp : this.colorClassList.tab.dianIcon;
               if (index == this.coursePlanData.list.length - 1) {
                 this.coursePlanData.list[index].pointclass += " dian_icon_last";
               }
@@ -376,6 +407,14 @@ export default {
       this.showStuManage = false;
     },
     getClsListByTypeId(typeId) {
+     this.curClass = this.colorClassList.bg[typeId];
+     this.colorClassList.tab.bottomStyle.borderBottomColor = this.colorList[typeId-1];
+     this.colorClassList.tab.itemFontColor.color = this.colorList[typeId-1];
+     this.colorClassList.tab.tabItemStyle.background = this.colortabItem[typeId-1];
+     this.colorClassList.tab.tabItemActiveStyle.background = this.colorList[typeId-1];
+      this.colorClassList.tab.stepLineClass = 'step_line_label_'+this.bgsufix[typeId-1];
+       this.colorClassList.tab.dianIconUp = 'dian_icon_up_'+this.bgsufix[typeId-1];
+       this.colorClassList.tab.dianIcon = 'dian_icon_'+this.bgsufix[typeId-1];
       let params = {
         typeId: typeId
       };
@@ -401,6 +440,9 @@ export default {
             }
           } else {
             this.currentList = [];
+            this.coursePlanData = {};
+            this.curCourProcess = "0";
+            this.curClassDetail = {};
             this.$store.state.currentList = this.currentList;
             console.log(this.$store.state);
             this.typeList[typeId - 1].nodata = true;
@@ -412,6 +454,9 @@ export default {
       }
     },
     getStudent() {
+      if (!this.curClassDetail.id) {
+          return false;
+      }
       let params = {
         clsId: this.curClassDetail.id,
         courseId: this.curClassDetail.courseId,
@@ -624,15 +669,57 @@ export default {
           position: absolute;
           top: 0;
           left: 0;
-          background: #ffc151;
+        //   background: #ffc151;
           //   width: curCourProcess;
           height: 0.06rem;
           z-index: 10;
         }
-        .step_line_label {
+        .step_line_label_y {
           width: 0.67rem;
           height: 0.42rem;
-          background: url("../../../static/image/step_label.png");
+          background: url("../../../static/image/step_label_y.png");
+          background-size: 100%;
+          text-align: center;
+          line-height: 0.38rem;
+          position: absolute;
+          top: -0.52rem;
+          left: 100%;
+          margin-left: -0.33rem;
+          color: #fff;
+          font-size: 0.16rem;
+        }
+        .step_line_label_b {
+          width: 0.67rem;
+          height: 0.42rem;
+          background: url("../../../static/image/step_label_b.png");
+          background-size: 100%;
+          text-align: center;
+          line-height: 0.38rem;
+          position: absolute;
+          top: -0.52rem;
+          left: 100%;
+          margin-left: -0.33rem;
+          color: #fff;
+          font-size: 0.16rem;
+        }
+        .step_line_label_r {
+          width: 0.67rem;
+          height: 0.42rem;
+          background: url("../../../static/image/step_label_r.png");
+          background-size: 100%;
+          text-align: center;
+          line-height: 0.38rem;
+          position: absolute;
+          top: -0.52rem;
+          left: 100%;
+          margin-left: -0.33rem;
+          color: #fff;
+          font-size: 0.16rem;
+        }
+        .step_line_label_p {
+          width: 0.67rem;
+          height: 0.42rem;
+          background: url("../../../static/image/step_label_p.png");
           background-size: 100%;
           text-align: center;
           line-height: 0.38rem;
@@ -654,30 +741,114 @@ export default {
         margin-bottom: 0.25rem;
         .lesson_item_icon {
             margin-left:0.3rem;
-          .dian_icon {
+          .dian_icon_y {
             width: 0.25rem;
             height: 0.25rem;
-            background: url("../../../static/image/step_done.png");
+            background: url("../../../static/image/step_done_y.png");
             background-size: 100%;
             position: relative;
             margin: 0.3rem auto;
             position: relative;
           }
-          .dian_icon_up {
+          .dian_icon_up_y {
             width: 0.25rem;
             height: 0.25rem;
-            background: url("../../../static/image/step_up.png");
+            background: url("../../../static/image/step_up_y.png");
             background-size: 100%;
             position: relative;
             margin: 0.3rem auto;
             position: relative;
           }
-          .dian_icon_up:after,
-          .dian_icon:after {
+          .dian_icon_up_y:after,
+          .dian_icon_y:after {
             content: "";
             height: 0.78rem;
             width: 0.02rem;
             background: #ffc55e;
+            position: absolute;
+            bottom: -0.83rem;
+            right: 0.11rem;
+          }
+          .dian_icon_b {
+            width: 0.25rem;
+            height: 0.25rem;
+            background: url("../../../static/image/step_done_b.png");
+            background-size: 100%;
+            position: relative;
+            margin: 0.3rem auto;
+            position: relative;
+          }
+          .dian_icon_up_b {
+            width: 0.25rem;
+            height: 0.25rem;
+            background: url("../../../static/image/step_up_b.png");
+            background-size: 100%;
+            position: relative;
+            margin: 0.3rem auto;
+            position: relative;
+          }
+          .dian_icon_up_b:after,
+          .dian_icon_b:after {
+            content: "";
+            height: 0.78rem;
+            width: 0.02rem;
+            background: #6EDBEF;
+            position: absolute;
+            bottom: -0.83rem;
+            right: 0.11rem;
+          }
+        .dian_icon_r {
+            width: 0.25rem;
+            height: 0.25rem;
+            background: url("../../../static/image/step_done_r.png");
+            background-size: 100%;
+            position: relative;
+            margin: 0.3rem auto;
+            position: relative;
+          }
+          .dian_icon_up_r {
+            width: 0.25rem;
+            height: 0.25rem;
+            background: url("../../../static/image/step_up_r.png");
+            background-size: 100%;
+            position: relative;
+            margin: 0.3rem auto;
+            position: relative;
+          }
+          .dian_icon_up_r:after,
+          .dian_icon_r:after {
+            content: "";
+            height: 0.78rem;
+            width: 0.02rem;
+            background: #FF696C;
+            position: absolute;
+            bottom: -0.83rem;
+            right: 0.11rem;
+          }
+          .dian_icon_p {
+            width: 0.25rem;
+            height: 0.25rem;
+            background: url("../../../static/image/step_done_p.png");
+            background-size: 100%;
+            position: relative;
+            margin: 0.3rem auto;
+            position: relative;
+          }
+          .dian_icon_up_p {
+            width: 0.25rem;
+            height: 0.25rem;
+            background: url("../../../static/image/step_up_p.png");
+            background-size: 100%;
+            position: relative;
+            margin: 0.3rem auto;
+            position: relative;
+          }
+          .dian_icon_up_p:after,
+          .dian_icon_p:after {
+            content: "";
+            height: 0.78rem;
+            width: 0.02rem;
+            background: #8B90FF;
             position: absolute;
             bottom: -0.83rem;
             right: 0.11rem;
@@ -743,7 +914,7 @@ export default {
                 position: absolute;
                 top: 0;
                 left: 0;
-                background: #ffc151;
+                // background: #ffc151;
                 width: 0%;
                 height: 0.03rem;
                 z-index: 10;

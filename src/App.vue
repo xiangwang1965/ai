@@ -3,19 +3,16 @@
     <transition>
       <router-view/>
     </transition>
-    <dialogs></dialogs>
   </div>
 </template>
 
 <script>
-import dialogs from '@/dialogs'
 import authUtils from '@/services/auth/utils'
 import authApi from '@/services/auth'
 import eventHub from '@/utils/eventHub'
 export default {
   name: 'app',
   components: {
-    dialogs
   },
   beforeCreate () {
     if (location.search.toLowerCase().indexOf('token') !== -1) {
