@@ -14,11 +14,11 @@
                                 <div class="top_list" scrollBar>
                                     <div class="item" @click="setRight(student)" :class="{active:currentStudent.id === student.id}" :key="index" v-for="(student,index) in studentlist">
                                         <img :src="defaultImg" class="item_photo">
-                                        <div class="item_center">
+                                        <div style="cursor: pointer;" class="item_center">
                                             <p class="name">{{student.name}}</p>
                                             <p class="name_label">激活码：{{student.cdk}}</p>
                                         </div>
-                                        <img :src="iconDel" class="item_delete" @click="deleteStudent(student)">
+                                        <img style="cursor: pointer;" :src="iconDel" class="item_delete" @click="deleteStudent(student)">
                                     </div>
                                 </div>
                             </div>

@@ -4,15 +4,15 @@
       <p class="content_title">课程订单</p>
       <div class="left_content" style="overflow: auto">
         <div class="toggle_wrap" :key="i" v-for="(item,i) in tabs">
-          <div class="toggle_title" :class="item.colorCls" @click="switchTab(item.id)">
+          <div style="cursor: pointer;" class="toggle_title" :class="item.colorCls" @click="switchTab(item.id)">
             <span>{{item.name}}</span>
             <i :class="item.IconCls"></i>
           </div>
           <div class="toggle_box" v-show="activeIndex === item.id">
             <div class="item" :key="k" v-for="(course,k) in dataList">
-              <div class="img">
+              <div class="img" @click="toDetail(course)" style="cursor: pointer;">
                 <el-image :src="url"></el-image>
-                <span>LEVEL{{course.id}}</span>
+                <span>Level{{course.id}}</span>
               </div>
               <div class="btn_148 bg_y" @click="dataHandle(course)">添加</div>
             </div>
@@ -181,6 +181,15 @@ export default {
       this.totalPrice = this.totalPrice.toFixed(2);
       let checkedCount = value.length;
       this.checkAll = checkedCount === this.switchData.length;
+    },
+     toDetail(item){
+      this.$router.push({
+            name: "overviewDetail",
+            query: {
+              level:item.level,
+              id:item.id
+            }
+          });
     },
     payHandle() {
       let result = [];

@@ -16,11 +16,11 @@
           </div>
         </div>
         <div class="photo_list">
-          <div class="item" :class="{class_dis:teachId == item.id}" :key="i" v-for="(item,i) in list" @click="queryTeacherInfo(item.id)">
+          <div class="item" style="cursor: pointer;" :class="{class_dis:teachId == item.id}" :key="i" v-for="(item,i) in list" @click="queryTeacherInfo(item.id)">
             <img :src="url" alt class="item_img">
             <p>{{item.name}}</p>
           </div>
-          <div class="item" id="updata" @click="handleTeacher">
+          <div class="item" style="cursor: pointer;" id="updata" @click="handleTeacher">
                 <img :src="updateImg" alt="" class="item_img">
           </div>
         </div>

@@ -6,6 +6,8 @@ class Teacher extends CRUD {
     this.queryUrl = '/ws/api/user/getTeachers'
     this.queryTeacherUrl = '/ws/api/class/teacherInfo'
     this.addTeacherUrl = '/ws/api/class/addTeacher'
+    this.faq = '/ws/api/feedback/faq'
+    this.feedBack = '/ws/api/feedback/add'
   }
   addTeacher(params) {
     return this.sendPost(this.addTeacherUrl, params)
@@ -28,6 +30,17 @@ class Teacher extends CRUD {
       return res
     })
   }
+  queryFaq(params) {
+    return this.sendPost(this.faq, params).then(res => {
+        return res;
+    });
+  }
+  queryFeedBack(params) {
+    return this.sendPost(this.feedBack, params).then(res => {
+        return res;
+    });
+  }
+  
   // 获取学生列表（全部或未分班）
   getStudentList (params) {
     return this.sendGet('/phoenix/eduadmin/scene/wait-class-student-list', params)

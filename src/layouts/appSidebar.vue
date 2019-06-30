@@ -36,7 +36,7 @@
     <div class="contact">
       <p @click="gofeeback">联系客服</p>
     </div>
-    <div class="btn_124 out_login" @click="logout">退出登录</div>
+    <div  style="cursor: pointer;" class="btn_124 out_login" @click="logout">退出登录</div>
   </div>
 </template>
 <script>

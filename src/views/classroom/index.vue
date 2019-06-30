@@ -12,10 +12,10 @@
         </div>
         <div class="class_title_list">
           <div :key="i" v-for="(type,i) in typeList">
-            <div class="class_title" :class="type.titClass" @click="getClsListByTypeId(type.id)"></div>
+            <div style="cursor: pointer;" class="class_title" :class="type.titClass" @click="getClsListByTypeId(type.id)"></div>
             <el-collapse-transition>
               <ul class="class_list" v-show="type.listShow" v-scrollBar>
-                <li :class="curClassDetail.id == item.id ? 'class_dis '+ type.listItemClass :type.listItemClass"
+                <li style="cursor: pointer;" :class="curClassDetail.id == item.id ? 'class_dis '+ type.listItemClass :type.listItemClass"
                   class="class_item"
                   v-for="(item,index) in type.classList"
                   :key="index"
@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-      <div type="default" @click="classHandle" class="btn_124 classManagement_btn">管理</div>
+      <div style="cursor: pointer;" type="default" @click="classHandle" class="btn_124 classManagement_btn">管理</div>
     </div>
     <div class="content2">
       <div class="content_title">{{curClassDetail.name}}</div>
@@ -124,14 +124,14 @@
               <div class="person_box" v-for="(item,i) in studentsList" :key="i">
                 <div class="person_name">{{item.name}}</div>
                 <div class="person_handle">
-                  <div class="icon1" @click="courseReport(item)"></div>
+                  <div style="cursor: pointer;" class="icon1" @click="courseReport(item)"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="btn_124 personManagement_btn" id="showPersonDialog" @click="handleStuManage">管理</div>
+      <div style="cursor: pointer;" class="btn_124 personManagement_btn" id="showPersonDialog" @click="handleStuManage">管理</div>
     </div>
     <el-dialog center append-to-body title="学生管理" class="el-dialog2" :visible.sync="showStuManage">
       <studentManage

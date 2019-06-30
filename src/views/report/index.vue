@@ -21,7 +21,7 @@
             drawColumnChart() {
                 this.chartColumn = echarts.init(document.getElementById('chartColumn'));
                 this.chartColumn.setOption({
-                  color: ['#3398DB'],
+                  color: ['#4B92F8'],
                   title: { text: '本月新增学生数' },
                   tooltip : {
                         trigger: 'axis',
@@ -62,7 +62,7 @@
             drawLineChart() {
                 this.chartLine = echarts.init(document.getElementById('chartLine'));
                 this.chartLine.setOption({
-                    color: ['#3398DB'],
+                    color: ['#4B92F8'],
                     title: {
                         text: '收入情况'
                     },

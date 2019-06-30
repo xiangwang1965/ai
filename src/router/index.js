@@ -20,6 +20,10 @@ const buy = () => import('@/views/buy')
 const buyWrap = () => import('@/views/buy/buyWrap')
 const payOrder = () => import('@/views/buy/payOrder')
 const success = () => import('@/views/buy/success')
+
+const overviewDetail = () => import('@/views/buy/overviewDetail')
+
+
 // 课程订单
 const course = () => import('@/views/course')
 const courseWrap = () => import('@/views/course/courseWrap')
@@ -103,6 +107,7 @@ const router = new Router({
                     children: [
                         {path: '/', name: 'buy', component: buy},
                         {path: 'payOrder',name:'payorder',component: payOrder},
+                        {path: 'overviewDetail' ,name:'overviewDetail', component:overviewDetail},
                         {path: 'success' ,name:'success', component:success}
                     ]
                 },

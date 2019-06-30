@@ -58,7 +58,7 @@
     <el-button type="default" @click="submit" class="cac-button-one">创建</el-button>
     <el-dialog
       class="confirmWrap"
-      width="80%"
+      width="60%"
       center
       append-to-body
       title="创建班级"
