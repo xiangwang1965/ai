@@ -5,7 +5,7 @@ class Report extends CRUD {
         super();
 
         this.getAllCoursesUrl = "/ws/api/course/getAllCourses";
-        this.getCoursesDetailsUrl = "/ws/api/course/getCoursesDetails";
+        this.getCoursesDetailsUrl = "/ws/api/course/getCoursesDetails2";
         this.getProcessAndLevelUrl = "/ws/api/course/getProcessAndLevel";
     }
 

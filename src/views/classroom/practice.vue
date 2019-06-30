@@ -1,5 +1,7 @@
 <template>
-    <div class="wrap">
+    <div class="wrap" v-loading="loading" element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="content">
             <div class="content_left" style="display: none;">
                 <div class="top">
@@ -51,7 +53,7 @@
                           style="width: 100%; height: 100%"
                           :src="showPic"
                           :fit="fit"></el-image>
-                <iframe v-if="showPractice" src="http://edu.wiser-bot.com/wsedu/scratch/build/index.html" frameborder="0" width="100%" height="100%" id="childFrame" scrolling="no"></iframe>
+                <iframe v-if="showPractice" src="http://edu.wiser-bot.com/wsedu/scratch/build/index.html" frameborder="0" width="100%" height="100%" id="ifra" scrolling="no"></iframe>
             </div>
         </div>
         <footer>
@@ -77,6 +79,7 @@
                     robot: require('../../../static/image/robot.jpeg')
                 },
                 fit: 'contain',
+                loading:false,
                 showPic: '',
                 codeList: [],
                 pptData: [],
@@ -99,6 +102,7 @@
         methods: {
             changeTab (flag) {
                 this.showPractice = flag;
+                
             },
             goBack () {
                 this.$router.back()
@@ -112,6 +116,28 @@
                 const ps = new PerfectScrollbar(this.$el.querySelector('.talk_list'));
                 this.$el.querySelector('.talk_list').scrollTop = this.$el.querySelector('.talk_list').scrollHeight;
                 ps.update();
+            },
+            check(){
+                const self = this
+                this.$nextTick(() =>{
+                    const iframe = document.querySelector('#ifra')
+
+                    if (iframe.attachEvent) { 
+
+                        iframe.attachEvent("onload", function() {    
+                            //const iframeNode = window.frames["ifra"].document
+                            //self.getDom(iframeNode) 
+                            self.loading = false  
+                        });    
+                    } else {   
+
+                        iframe.onload = function() {    
+                            //const iframeNode = window.frames["ifra"].document
+                            //self.getDom(iframeNode)
+                            self.loading = false
+                        };    
+                    }
+                })
             },
             getpptData (hourType) {
                 let params = {
@@ -130,11 +156,12 @@
                                 if (i === 0) {
                                     this.showPic = this.pptData[i].image;
                                     this.showDetail[i] = this.pptData[i].detail;
+                                    
                                 }
                             })
                         }
                     }
-                    console.log(this.pptData);
+                   
                 });
             },
             getStuCourseHaveClass () {
@@ -158,6 +185,7 @@
                         } else {
                             this.changeTab(true);
                         }
+                        this.check();
                     }
                 });
             },
