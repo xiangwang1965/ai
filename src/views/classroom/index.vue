@@ -13,10 +13,10 @@
           </div>
         </div>
         <div class="class_title_list">
-          <div class="class_title class_S" @click="getCurrentCourses(1)"></div>
+          <div style="cursor: pointer;" class="class_title class_S" @click="getCurrentCourses(1)"></div>
           <el-collapse-transition>
             <ul class="class_list" v-show="show1">
-              <li
+              <li style="cursor: pointer;"
                 :class="{class_dis:currentClass == item.id}"
                 class="class_item class_item_yellow"
                 v-for="(item,index) in courseList.course1"
@@ -38,10 +38,10 @@
               <div class="nodata" v-show="nodata1">暂无数据</div>
             </ul>
           </el-collapse-transition>
-          <div class="class_title class_P" @click="getCurrentCourses(2)"></div>
+          <div style="cursor: pointer;" class="class_title class_P" @click="getCurrentCourses(2)"></div>
           <el-collapse-transition class="class_list">
             <ul class="class_list" v-show="show2">
-              <li
+              <li style="cursor: pointer;"
                 :class="{class_dis:currentClass == item.id}"
                 class="class_item class_item_blue"
                 v-for="(item,index) in courseList.course2"
@@ -63,10 +63,10 @@
               <div class="nodata" v-show="nodata2">暂无数据</div>
             </ul>
           </el-collapse-transition>
-          <div class="class_title class_N" @click="getCurrentCourses(3)"></div>
+          <div style="cursor: pointer;" class="class_title class_N" @click="getCurrentCourses(3)"></div>
           <el-collapse-transition>
             <ul class="class_list" v-show="show3">
-              <li
+              <li style="cursor: pointer;"
                 :class="{class_dis:currentClass == item.id}"
                 class="class_item class_item_red"
                 v-for="(item,index) in courseList.course3"
@@ -88,10 +88,10 @@
               <div class="nodata" v-show="nodata3">暂无数据</div>
             </ul>
           </el-collapse-transition>
-          <div class="class_title class_A" @click="getCurrentCourses(4)"></div>
+          <div style="cursor: pointer;" class="class_title class_A" @click="getCurrentCourses(4)"></div>
           <el-collapse-transition>
             <ul class="class_list" v-show="show4">
-              <li
+              <li style="cursor: pointer;"
                 :class="{class_dis:currentClass == item.id}"
                 class="class_item class_item_purple"
                 v-for="(item,index) in courseList.course4"
@@ -130,7 +130,7 @@
               </div>
             </div>
             <div class="lesson_step_list">
-              <div
+              <div style="cursor: pointer;"
                 @click="item.locked!=1?practiceHandle(item):''"
                 :class="{lesson_item: true, locked: item.locked==1 }"
                 :key="c"
