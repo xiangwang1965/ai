@@ -131,7 +131,11 @@ export default {
             console.log(this.currentClass);
         },
         setRight(student){
+            if (student) {
             this.currentStudent = student;
+            } else {
+                this.currentStudent = '';
+            }
         },
         getCodeList(classId){
             let params = {
