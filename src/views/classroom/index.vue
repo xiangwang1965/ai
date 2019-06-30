@@ -12,10 +12,10 @@
         </div>
          <div class="class_title_list">
           <div :key="i" v-for="(type,i) in typeList">
-            <div class="class_title" :class="type.titClass" @click="getClsListByTypeId(type.id)"></div>
+            <div  style="cursor: pointer;" class="class_title" :class="type.titClass" @click="getClsListByTypeId(type.id)"></div>
             <el-collapse-transition>
               <ul class="class_list" v-show="type.listShow" v-scrollBar>
-                <li :class="curClassDetail.id == item.id ? 'class_dis '+ type.listItemClass :type.listItemClass"
+                <li style="cursor: pointer;" :class="curClassDetail.id == item.id ? 'class_dis '+ type.listItemClass :type.listItemClass"
                   class="class_item"
                   v-for="(item,index) in type.classList"
                   :key="index"
@@ -69,7 +69,7 @@
               </div>
             </div>
             <div class="lesson_step_list">
-              <div @click="practiceHandle(item,c)" class="lesson_item" :key="c" v-for="(item,c) in coursePlanData.list">
+              <div  style="cursor: pointer;" @click="practiceHandle(item,c)" class="lesson_item" :key="c" v-for="(item,c) in coursePlanData.list">
                 <div class="lesson_item_icon">
                   <div :class="item.pointclass"></div>
                 </div>
@@ -134,8 +134,8 @@
               <div class="person_box" v-for="(item,i) in studentsList" :key="i">
                 <div class="person_name">{{item.name}}</div>
                 <div class="person_handle">
-                  <div class="icon1" @click="courseReport(item)"></div>
-                  <div class="icon2" @click="handleReportCreate(item)"></div>
+                  <div  style="cursor: pointer;" class="icon1" @click="courseReport(item)"></div>
+                  <div  style="cursor: pointer;" class="icon2" @click="handleReportCreate(item)"></div>
                 </div>
               </div>
             </div>
