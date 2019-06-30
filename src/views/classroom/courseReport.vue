@@ -209,6 +209,27 @@ export default {
     }
     }
 
+    .teacher_box {
+    text-align: center;
+    width: 3.6rem;
+    margin: 0 auto;
+    padding-top: 0.3rem;
+        .photo {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 100%;
+        padding-bottom: 0.12rem;
+    }
+    .name {
+    color: #4A4A4A;
+    font-size: 0.2rem;
+  }
+  .id {
+    font-size: 0.16rem;
+    color: #9B9B9B;
+  }
+  }
+
 </style>
 
 
